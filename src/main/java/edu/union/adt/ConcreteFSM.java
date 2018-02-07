@@ -1,11 +1,22 @@
 package edu.union.adt.fsm;
+import java.util.*;
 
-public interface FSM
+public class ConcreteFSM()
 {
+    private ArrayList<Node> nodes;
+    private ArrayList<Edge> edges;
+
+
+    public ConcreteFSM()
+    {
+      this.nodes = new ArrayList<Node>();
+      this.edges = new ArrayList<Edge>();
+    }
+
     /**
      * Add a blank node to the current FSM
      */
-    public void addNode(int x, int y);
+    public void addNode();
 
     /**
      * Add an arrow to the current FSM
@@ -15,17 +26,17 @@ public interface FSM
     /**
      * Edit the label of an element (arrow or node) of the FSM
      */
-    public void editLabel(Element toEdit, String newLabel);
+    public void editLabel(Element);
 
     /**
      * Remove an element from the FSM
      */
-    public void remove(Element toRemove);
+    public void remove(Element);
 
     /**
      * Move an element of the FSM
      */
-    public void move(Element toMove, int newX, int newY);
+    public void move(Element);
 
     /**
      * Returns an ArrayList len = 2
