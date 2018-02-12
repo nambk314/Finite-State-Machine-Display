@@ -2,6 +2,11 @@ package edu.union.adt.fsm;
 
 public class Node
 {
-    Char label;
+    char label;
     boolean state;
+
+    Node(char startLabel)
+    {
+      this.label = startLabel;
+    }
 }

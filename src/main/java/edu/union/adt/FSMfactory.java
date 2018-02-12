@@ -15,5 +15,4 @@ public class FSMfactory
        return new ConcreteFSM();
      }
    }
-
 }

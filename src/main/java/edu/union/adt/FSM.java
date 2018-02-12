@@ -5,7 +5,7 @@ public interface FSM
     /**
      * Add a blank node to the current FSM
      */
-    public void addNode(Char label);
+    public void addNode(char label);
 
     /**
      * Add an arrow to the current FSM
@@ -15,7 +15,7 @@ public interface FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public void editNodeLabel(Node toEdit);
+    public void setNodeLabel(Node toEdit, char newLabel);
 
     // /**
     //  * Remove a Node from the FSM
