@@ -21,12 +21,18 @@ public interface FSM
     /**
      * Add an arrow to the current FSM
      */
-    public void addArrow(Node from, Node to, String label);
+    public void addArrow(Node from, Node to, String label)
+    {
+      Edges.add(new Edge(from, to, label));
+    }
 
     /**
      * Edit the label of a node of the FSM
      */
-    public void editNodeLabel(Node toEdit);
+    public void editNodeLabel(Node toEdit, String newLabel)
+    {
+      toEdit.label = newLabel;
+    }
 
     // /**
     //  * Remove a Node from the FSM
@@ -47,7 +53,13 @@ public interface FSM
      * Each edge is an ArrayList containing
      * radius, label, fromX, fromY, toX, and toY
      */
-    public ArrayList getMachine();
+    public ArrayList getMachine()
+    {
+      ArrayList<ArrayList> toReturn = new ArrayList<ArrayList>;
+      toReturn.add(Nodes);
+      toReturn.add(Edges);
+      return toReturn;
+    }
 
     /**
      * Lets views know that an update has occurred
