@@ -10,22 +10,27 @@ public interface FSM
     /**
      * Add an arrow to the current FSM
      */
-    public void addArrow(Element from, Element to);
+    public void addArrow(Node from, Node to);
 
     /**
-     * Edit the label of an element (arrow or node) of the FSM
+     * Edit the label of a node of the FSM
      */
-    public void editLabel(Element toEdit, String newLabel);
+    public void editNodeLabel(Node toEdit);
 
     /**
-     * Remove an element from the FSM
+     * Remove a Node from the FSM
      */
-    public void remove(Element toRemove);
+    public void removeNode(Node toRemove);
+    
+    /**
+     * Remove an Edge from the FSM
+     */
+    public void removeEdge(Edge toRemove);
 
     /**
      * Move an element of the FSM
      */
-    public void move(Element toMove, int newX, int newY);
+    public void moveNode(Node toMove);
 
     /**
      * Returns an ArrayList len = 2

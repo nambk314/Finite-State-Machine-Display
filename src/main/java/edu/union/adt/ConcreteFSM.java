@@ -21,17 +21,27 @@ public class ConcreteFSM()
     /**
      * Add an arrow to the current FSM
      */
-    public void addArrow(Element from, Element to);
+    public void addArrow(Node from, Node to);
 
     /**
-     * Edit the label of an element (arrow or node) of the FSM
+     * Edit the label of a node of the FSM
      */
-    public void editLabel(Element);
+    public void setNodeLabel(Node toEdit, char newLabel);
 
     /**
-     * Remove an element from the FSM
+     * Edit the label of an edge of the FSM
      */
-    public void remove(Element);
+    public void setEdgeLabel(Edge toEdit, char newLabel);
+
+    /**
+     * Remove a node from the FSM
+     */
+    public void remove(Node toRemove);
+
+    /**
+     * Remove an edge from the FSM
+     */
+    public void remove(Edge toRemove);
 
     /**
      * Move an element of the FSM
@@ -47,7 +57,7 @@ public class ConcreteFSM()
      * Each edge is an ArrayList containing
      * radius, label, fromX, fromY, toX, and toY
      */
-    public ArrayList getMachine();
+    public ArrayList getMachine()
 
     /**
      * Lets views know that an update has occurred

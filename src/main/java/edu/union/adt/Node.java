@@ -1,13 +1,13 @@
 package edu.union.adt.fsm;
 
-public class Node extends Element
+public class Node
 {
     /**
      *
      */
     int x;
     int y;
-    String label;
+    Char label;
     boolean state;
 
 }
