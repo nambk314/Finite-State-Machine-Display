@@ -1,14 +1,15 @@
 package edu.union.adt.fsm;
+import java.util.*;
 
-public interface FSM
+public class ConcreteFSM implements FSM
 {
-    ArrayList<Node> Nodes = new ArrayList<Node>;
-    ArrayList<Edge> Edges = new ArrayList<Edge>;
+    ArrayList<Node> Nodes = new ArrayList<Node>();
+    ArrayList<Edge> Edges = new ArrayList<Edge>();
 
     /**
      * Add a blank node to the current FSM
      */
-    public void addNode(Char label)
+    public void addNode(char label)
     {
       Nodes.add(new Node(label));
     }
@@ -29,7 +30,7 @@ public interface FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public void editNodeLabel(Node toEdit, String newLabel)
+    public void setNodeLabel(Node toEdit, char newLabel)
     {
       toEdit.label = newLabel;
     }
@@ -55,7 +56,7 @@ public interface FSM
      */
     public ArrayList getMachine()
     {
-      ArrayList<ArrayList> toReturn = new ArrayList<ArrayList>;
+      ArrayList<ArrayList> toReturn = new ArrayList<ArrayList>();
       toReturn.add(Nodes);
       toReturn.add(Edges);
       return toReturn;

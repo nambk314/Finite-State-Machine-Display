@@ -1,4 +1,5 @@
 package edu.union.adt.fsm;
+import java.util.*;
 
 public interface FSM
 {

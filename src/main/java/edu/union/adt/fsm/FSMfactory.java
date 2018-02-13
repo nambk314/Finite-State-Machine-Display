@@ -7,12 +7,13 @@ public class FSMfactory
    * Create an empty FSM
    */
 
-   public FSM createFSM(boolean test = false)
+   public FSM createFSM()
    {
-     if (test){
-       return new FSMtest();
-     } else {
-       return new ConcreteFSM();
-     }
+     // if (test){
+       // return new FSMtest();
+     // } else {
+        FSM butt = new ConcreteFSM();
+        return butt;
+     // }
    }
 }
