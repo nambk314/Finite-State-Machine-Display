@@ -9,7 +9,7 @@ public class Edge
     Node to;
     Node from;
 
-    Edge(Node startTo, Node startFrom, String startLabel)
+    Edge(Node startFrom, Node startTo, String startLabel)
     {
       this.label = startLabel;
       this.to = startTo;
