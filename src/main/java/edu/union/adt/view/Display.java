@@ -23,6 +23,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 
 import java.awt.Shape;
 
@@ -116,6 +117,8 @@ public class Display extends JComponent
 			}
 			ViewEdge egdePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
+
+
 				egdePiece = viewEdgeList.get(i);
 				Line2D line = egdePiece.getLine();
 				Path2D path = egdePiece.getPath();
@@ -134,7 +137,7 @@ public class Display extends JComponent
 
 			if (selectedEdge != null) {
 				Line2D line = selectedEdge.getLine();
-				g.setStroke(new BasicStroke(3));
+				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLUE);
 				g.draw(line);
 			}
@@ -343,11 +346,6 @@ public class Display extends JComponent
  		 		}
 	 		}
 	 	}
-
-
-
-	 	
-	 	
 	 }
 	 //Check if the place the mouse click is occupied or not
 	 private boolean isStateOccupied (MouseEvent e) {
@@ -365,8 +363,12 @@ public class Display extends JComponent
 
 	 private boolean isEdgeOccupied (MouseEvent e) {
 	 	boolean temp = false;
+	 	double posX = (double) e.getX();
+		double posY = (double) e.getY();
+		Point2D point = new Point2D.Double(posX, posY);	
 			for (ViewEdge element : viewEdgeList) {
-	 		if (element.getLine().contains(e.getX(), e.getY())) {
+			
+	 		if (element.getLine().contains(point)) {
 	 			selectedNode = null;
 	 			selectedEdge = element;
 	 			temp = true;

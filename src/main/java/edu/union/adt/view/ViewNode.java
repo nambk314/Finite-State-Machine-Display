@@ -5,7 +5,6 @@ import edu.union.adt.fsm.Node;
 
 public class ViewNode
 {
-    boolean selected; //default false?
     Node node; //String, boolean
     Ellipse2D.Double circle; // int int int int
     private double posX;
@@ -13,7 +12,6 @@ public class ViewNode
 
     public ViewNode(double x, double y, double w, double h, Node newNode) {
     	circle = new Ellipse2D.Double(x - w/2, y - w/2, w ,h);
-    	selected = false;
     	node = newNode;
     	posX = x;
     	posY = y;
@@ -21,10 +19,6 @@ public class ViewNode
 
     public Ellipse2D getCircle() {
     	return circle;
-    }
-
-    public void changeSelected(boolean change) {
-    	selected = change;
     }
 
     public Node getNode() {
