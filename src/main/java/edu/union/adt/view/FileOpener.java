@@ -28,41 +28,9 @@ public class FileOpener.java
     public save(ArrayList machine)
     {
       try {
-        fw.write("NODES\n")
-        for (ViewNode v : machine.get(0)){
-          fw.write(v.node.label);
-          fw.write(",")
-          fw.write(v.node.accept);
-          fw.write("\n")
-        }
-        fw.write("EDGES\n");
-        for (ViewEdge e : machine.get(1)){
-          fw.write(e.edge.label);
-          fw.write(",")
-          fw.write(e.edge.to.label);
-          fw.write(",")
-          fw.write(e.edge.from.label);
-          fw.write("\n");
-        }
-        fw.write("NODES\n")
-        for (ViewNode v : machine.get(0)){
-          fw.write(v.node.label);
-          fw.write(",")
-          fw.write(v.node.accept);
-          fw.write("\n")
-        }
-        fw.write("EDGES\n");
-        for (ViewEdge e : machine.get(1)){
-          fw.write(e.edge.label);
-          fw.write(",")
-          fw.write(e.edge.to.label);
-          fw.write(",")
-          fw.write(e.edge.from.label);
-          fw.write("\n");
-        }
-    } catch (IOException ioexcept) {
+      } catch (IOException ioexcept) {
 
-    }
+      }
     }
 
 }
