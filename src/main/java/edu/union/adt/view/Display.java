@@ -74,8 +74,10 @@ public class Display extends JComponent
 
 	//count number of time T being press
 	private int tCount = 1;
-	private Point2D.Double T1;
-	private Point2D.Double T2;
+	private double[] T1= new double[2];
+	private double[] T2= new double[2];
+	private Node fromNode;
+	private Node toNode;
 	
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
@@ -112,6 +114,7 @@ public class Display extends JComponent
 			}
 			ViewEdge egdePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
+				egdePiece = viewEdgeList.get(i);
 				Line2D line = egdePiece.getLine();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
@@ -208,11 +211,66 @@ public class Display extends JComponent
 	        }
 	    });
 
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed E");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released E");
+	    Ac.put("pressed E", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "E";
+	                System.out.println("Pressed E");
+	            }
+	        });
+
+	    Ac.put("released E", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released E");
+	        }
+	    });
+
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, false), "pressed T");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, true), "released T");
+	    Ac.put("pressed T", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "T";
+	                System.out.println("Pressed T");
+	            }
+	        });
+
+	    Ac.put("released T", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released T");
+	        }
+	    });
+	    
 
 
 	    setFocusable(true);
 	    requestFocusInWindow(); 
 	}
+
+	// private void buttonInput(String input) {
+	// 		InputMap In = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	//     	ActionMap Ac = getActionMap();
+	//     	In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed " + input);
+	// 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released " + input);
+	// 	    Ac.put("pressed "  + input, new AbstractAction() {
+	// 	            @Override
+	// 	            public void actionPerformed(ActionEvent e) {
+	// 	            	Pressed =  input;
+	// 	                System.out.println("Pressed "  + input);
+	// 	            }
+	// 	        });
+
+	// 	    Ac.put("released "  + input, new AbstractAction() {
+	// 	        @Override
+	// 	        public void actionPerformed(ActionEvent e) {
+	// 	            System.out.println("released " + input);
+	// 	        }
+	// 	    });
+	//     }
 
 	//Handling mouse click events	
 	public void mouseClicked(MouseEvent e)
@@ -222,6 +280,7 @@ public class Display extends JComponent
 	 	y = e.getY();
 
 	 	if (Pressed.equals("S")) {
+	 		tCount = 1;
 	 		selectedNode = null;
 	 		System.out.println("click S");
 	 		Node newNode = finiteStateMachine.addNode('a');
@@ -231,10 +290,12 @@ public class Display extends JComponent
 	 	}
 
 	 	if (Pressed.equals("C")) {
+	 		tCount = 1;
 	 		selectedNode = null;
 	 	}
 
 	 	if (Pressed.equals("E")) {
+	 		tCount = 1;
 	 		if (checkOccupied) {
 	 			repaint();
 	 		}
@@ -242,20 +303,30 @@ public class Display extends JComponent
 	 	}
 
 	 	if (Pressed.equals("T")) {
+	 		
+	 		
+	 		
 	 		if (checkOccupied) {
 		 		if (tCount % 2 != 0) {
-		 			int posX = selectedNode.getX();
-		 			int posY = selectedNode.getY();
-		 			T1 = new Point2D.Double(posX, posY);
+		 			double posX = selectedNode.getX();
+		 			double posY = selectedNode.getY();
+		 			fromNode = selectedNode.getNode();
+		 			T1 = new double[2];
+		 			T1[0] = posX;
+		 			T1[1] = posY;
 		 			tCount = 0;
  		 		} else {
- 		 			int posX = selectedNode.getX();
-		 			int posY = selectedNode.getY();
-		 			T2 = new Point2D.Double(posX, posY);
-		 			Edge newEdge = finiteStateMachine.addArrow("a");
-		 			ViewEdge newViewEdge = new ViewEdge(T1.getX(), T1.getY(), T2.getX(), T2.getY());
+ 		 			double posX = selectedNode.getX();
+		 			double posY = selectedNode.getY();
+		 			toNode = selectedNode.getNode();
+		 			T2 = new double[2];
+		 			T2[0] = posX;
+		 			T2[1] = posY;
+		 			Edge newEdge = finiteStateMachine.addArrow(fromNode, toNode, "a");
+		 			ViewEdge newViewEdge = new ViewEdge(T1[0],T1[1],T2[0],T2[1], newEdge);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
+		 			selectedNode = null;
 		 			repaint();
  		 		}
 	 		}

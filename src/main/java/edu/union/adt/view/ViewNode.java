@@ -8,15 +8,15 @@ public class ViewNode
     boolean selected; //default false?
     Node node; //String, boolean
     Ellipse2D.Double circle; // int int int int
-    private int posX;
-    private int posY;
+    private double posX;
+    private double posY;
 
-    public ViewNode(int x, int y, int w, int h, Node newNode) {
+    public ViewNode(double x, double y, double w, double h, Node newNode) {
     	circle = new Ellipse2D.Double(x - w/2, y - w/2, w ,h);
     	selected = false;
     	node = newNode;
-    	posX = x - w/2;
-    	posY = y - w/2;
+    	posX = x;
+    	posY = y;
     }
 
     public Ellipse2D getCircle() {
@@ -27,11 +27,15 @@ public class ViewNode
     	selected = change;
     }
 
-    public int getX() {
+    public Node getNode() {
+    	return node;
+    }
+
+    public double getX() {
     	return posX;
     }
 
-    public int getY() {
+    public double getY() {
     	return posY;
     }
 

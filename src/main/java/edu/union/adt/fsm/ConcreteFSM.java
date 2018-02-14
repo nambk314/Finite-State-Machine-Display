@@ -32,8 +32,11 @@ public class ConcreteFSM implements FSM
      */
     public Edge addArrow(Node from, Node to, String label)
     {  
-      Edges.add(new Edge(from, to, label));
-      notifyListeners();
+      Edge newEdge = new Edge(from, to, label);
+      Edges.add(newEdge);
+      return newEdge;
+      // notifyListeners();
+
     }
 
     /**
@@ -42,8 +45,15 @@ public class ConcreteFSM implements FSM
     public void setNodeLabel(Node toEdit, char newLabel)
     {
       toEdit.label = newLabel;
-      notifyListeners();
+      // notifyListeners();
     }
+
+    public void setEdgeLabel(Edge toEdit, String newLabel)
+    {
+      toEdit.label = newLabel;
+      // notifyListeners();
+    }
+
 
     // /**
     //  * Remove a Node from the FSM
