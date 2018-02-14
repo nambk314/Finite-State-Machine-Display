@@ -14,7 +14,7 @@ public class ConcreteFSM implements FSM
      */
     public Node addNode(char label)
     {
-      Node newNode = new Node(label);
+      Node newNode = new Node(label);  
       Nodes.add(newNode);
 
 
@@ -30,12 +30,13 @@ public class ConcreteFSM implements FSM
     /**
      * Add an arrow to the current FSM
      */
-    public Edge addEdge(Node from, Node to, String label)
-    {
+    public Edge addArrow(Node from, Node to, String label)
+    {  
       Edge newEdge = new Edge(from, to, label);
       Edges.add(newEdge);
       return newEdge;
       // notifyListeners();
+
     }
 
     /**
@@ -53,6 +54,7 @@ public class ConcreteFSM implements FSM
       // notifyListeners();
     }
 
+
     // /**
     //  * Remove a Node from the FSM
     //  */
@@ -66,8 +68,7 @@ public class ConcreteFSM implements FSM
     /**
      * Returns an ArrayList len = 2
      * The first item is an ArrayList of nodes
-     * The second item is an ArrayList of edges>>>>>>> 7ed39c511264e189c98442804bae19801fbde4dd
-
+     * The second item is an ArrayList of edges
      * Each node is an ArrayList containing
      * x and y position, label, and whether or not it's accepting
      * Each edge is an ArrayList containing
@@ -89,12 +90,12 @@ public class ConcreteFSM implements FSM
     {
         listeners.add(l);
     }
-
+    
     public void removeListener(addFSMListener l)
     {
         listeners.remove(l);
     }
-
+    
     public void notifyListeners()
     {
         for (addFSMListener l : listeners) {

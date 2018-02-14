@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 
 import java.awt.Shape;
 
@@ -50,24 +52,34 @@ public class Display extends JComponent
 	implements addFSMListener, MouseListener
 {
 	private static final long serialVersionUID = 1;
-	
+	//Finite state machine
 	private ConcreteFSM finiteStateMachine;
 	private UpdateHandler myHandler;
 	
+	//defaut WIDTH and HEIGHT for the circle
 	private static int WIDTH = 30;
 	private static int HEIGHT = 30;
+
+	//Keep track of coordinates
 	private int x;
 	private int y;
-	private boolean blue = false;
+
+	//Keep track of the key being pressed
 	private String Pressed = "";
 
 	private ViewNode selectedNode = null;
+	private ViewEdge selectedEdge = null;
 
-	private Shape circle = new Ellipse2D.Float(0, 0, 0, 0);
-	private Shape arc = new Arc2D.Float(0,0,0,0,0,0,0);
-
+	//Keep track of viewNode and edgeNode
 	private ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
 	private ArrayList<ViewEdge> viewEdgeList = new ArrayList<ViewEdge>();
+
+	//count number of time T being press
+	private int tCount = 1;
+	private double[] T1= new double[2];
+	private double[] T2= new double[2];
+	private Node fromNode;
+	private Node toNode;
 	
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
@@ -86,7 +98,7 @@ public class Display extends JComponent
 
 	}
 	
-	
+	//Paint the graphics
 	public void paintComponent(Graphics graphics)
 	{
 		Graphics2D g = (Graphics2D) graphics;
@@ -102,12 +114,29 @@ public class Display extends JComponent
 				g.setColor(Color.BLACK);
 				g.draw(circle);
 			}
+			ViewEdge egdePiece;
+			for (int i=0; i < viewEdgeList.size(); i++) {
+				egdePiece = viewEdgeList.get(i);
+				Line2D line = egdePiece.getLine();
+				Path2D path = egdePiece.getPath();
+				g.setStroke(new BasicStroke(2));
+				g.setColor(Color.BLACK);
+				g.draw(line);
+				g.draw(path);
+			}
 
 			if (selectedNode != null) {
 				Ellipse2D circle = selectedNode.getCircle();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLUE);
 				g.draw(circle);
+			}
+
+			if (selectedEdge != null) {
+				Line2D line = selectedEdge.getLine();
+				g.setStroke(new BasicStroke(3));
+				g.setColor(Color.BLUE);
+				g.draw(line);
 			}
 
 			// Vector<Integer> piece;
@@ -193,24 +222,77 @@ public class Display extends JComponent
 	        }
 	    });
 
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed E");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released E");
+	    Ac.put("pressed E", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "E";
+	                System.out.println("Pressed E");
+	            }
+	        });
+
+	    Ac.put("released E", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released E");
+	        }
+	    });
+
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, false), "pressed T");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, true), "released T");
+	    Ac.put("pressed T", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "T";
+	                System.out.println("Pressed T");
+	            }
+	        });
+
+	    Ac.put("released T", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released T");
+	        }
+	    });
+	    
 
 
 	    setFocusable(true);
 	    requestFocusInWindow(); 
 	}
 
-	
+	// private void buttonInput(String input) {
+	// 		InputMap In = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	//     	ActionMap Ac = getActionMap();
+	//     	In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed " + input);
+	// 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released " + input);
+	// 	    Ac.put("pressed "  + input, new AbstractAction() {
+	// 	            @Override
+	// 	            public void actionPerformed(ActionEvent e) {
+	// 	            	Pressed =  input;
+	// 	                System.out.println("Pressed "  + input);
+	// 	            }
+	// 	        });
+
+	// 	    Ac.put("released "  + input, new AbstractAction() {
+	// 	        @Override
+	// 	        public void actionPerformed(ActionEvent e) {
+	// 	            System.out.println("released " + input);
+	// 	        }
+	// 	    });
+	//     }
+
+	//Handling mouse click events	
 	public void mouseClicked(MouseEvent e)
 	 {
-	 	boolean checkOccupied = isOccupied(e);
+	 	boolean checkOccupied = isStateOccupied(e);
+	 	boolean checkOccupied2 = isEdgeOccupied(e);
 	 	x = e.getX();
 	 	y = e.getY();
 
-	 	if (circle.contains(x, y)) {
-	 		blue = true;
-	 		repaint();
-	 	} 
 	 	if (Pressed.equals("S")) {
+	 		tCount = 1;
 	 		selectedNode = null;
 	 		System.out.println("click S");
 	 		Node newNode = finiteStateMachine.addNode('a');
@@ -220,14 +302,46 @@ public class Display extends JComponent
 	 	}
 
 	 	if (Pressed.equals("C")) {
+	 		tCount = 1;
 	 		selectedNode = null;
 	 	}
 
 	 	if (Pressed.equals("E")) {
-	 		if (checkOccupied) {
+	 		tCount = 1;
+	 		if (checkOccupied || checkOccupied2) {
 	 			repaint();
 	 		}
 	 		
+	 	}
+
+	 	if (Pressed.equals("T")) {
+	 		
+	 		
+	 		
+	 		if (checkOccupied) {
+		 		if (tCount % 2 != 0) {
+		 			double posX = selectedNode.getX();
+		 			double posY = selectedNode.getY();
+		 			fromNode = selectedNode.getNode();
+		 			T1 = new double[2];
+		 			T1[0] = posX;
+		 			T1[1] = posY;
+		 			tCount = 0;
+ 		 		} else {
+ 		 			double posX = selectedNode.getX();
+		 			double posY = selectedNode.getY();
+		 			toNode = selectedNode.getNode();
+		 			T2 = new double[2];
+		 			T2[0] = posX;
+		 			T2[1] = posY;
+		 			Edge newEdge = finiteStateMachine.addArrow(fromNode, toNode, "a");
+		 			ViewEdge newViewEdge = new ViewEdge(T1[0],T1[1],T2[0],T2[1], newEdge);
+		 			viewEdgeList.add(newViewEdge);
+		 			tCount = 1;
+		 			selectedNode = null;
+		 			repaint();
+ 		 		}
+	 		}
 	 	}
 
 
@@ -235,16 +349,29 @@ public class Display extends JComponent
 	 	
 	 	
 	 }
-
-	 private boolean isOccupied (MouseEvent e) {
+	 //Check if the place the mouse click is occupied or not
+	 private boolean isStateOccupied (MouseEvent e) {
 	 	boolean temp = false;
 	 	for (ViewNode element : viewNodeList) {
 	 		if (element.getCircle().contains(e.getX(), e.getY())) {
 	 			selectedNode = element;
+	 			selectedEdge = null;
 	 			temp = true;
 	 		}
 	 	}
 
+	 	return temp;
+	 }
+
+	 private boolean isEdgeOccupied (MouseEvent e) {
+	 	boolean temp = false;
+			for (ViewEdge element : viewEdgeList) {
+	 		if (element.getLine().contains(e.getX(), e.getY())) {
+	 			selectedNode = null;
+	 			selectedEdge = element;
+	 			temp = true;
+	 		}
+	 	}
 	 	return temp;
 	 }
 
