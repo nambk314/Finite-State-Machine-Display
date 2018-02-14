@@ -31,7 +31,7 @@ public class ConcreteFSM implements FSM
      * Add an arrow to the current FSM
      */
     public Edge addArrow(Node from, Node to, String label)
-    {
+    {  
       Edges.add(new Edge(from, to, label));
       notifyListeners();
     }

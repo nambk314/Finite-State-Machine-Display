@@ -12,8 +12,8 @@ public class FSMfactory
      // if (test){
        // return new FSMtest();
      // } else {
-        FSM butt = new ConcreteFSM();
-        return butt;
+        FSM toReturn = new ConcreteFSM();
+        return toReturn;
      // }
    }
 }
