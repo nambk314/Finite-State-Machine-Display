@@ -9,14 +9,19 @@ public interface FSM
     public Node addNode(char label);
 
     /**
-     * Add an arrow to the current FSM
+     * Add an edge to the current FSM
      */
-    public void addArrow(Node from, Node to, String label);
+    public Edge addEdge(Node from, Node to, String label);
 
     /**
      * Edit the label of a node of the FSM
      */
     public void setNodeLabel(Node toEdit, char newLabel);
+
+    /**
+     * Edit the label of an edge of the FSM
+     */
+    public void setEdgeLabel(Edge toEdit, String newLabel);
 
     // /**
     //  * Remove a Node from the FSM

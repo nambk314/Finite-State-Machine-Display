@@ -5,7 +5,7 @@ public class Node
     char label;
     boolean accept;
 
-    Node(char startLabel)
+    public Node(char startLabel)
     {
       this.label = startLabel;
     }
