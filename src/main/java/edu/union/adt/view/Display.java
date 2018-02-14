@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -61,6 +61,8 @@ public class Display extends JComponent
 	private boolean blue = false;
 	private String Pressed = "";
 
+	private ViewNode selectedNode = null;
+
 	private Shape circle = new Ellipse2D.Float(0, 0, 0, 0);
 	private Shape arc = new Arc2D.Float(0,0,0,0,0,0,0);
 
@@ -79,6 +81,7 @@ public class Display extends JComponent
 		finiteStateMachine = theFiniteStateMachine;
 		
 		myHandler = new UpdateHandler(this, finiteStateMachine);
+		addMouseListener(this);
 		buttonActions();
 
 	}
@@ -93,10 +96,17 @@ public class Display extends JComponent
 			ViewNode piece;
 			for (int i = 0; i < viewNodeList.size(); i++) {
 				piece = viewNodeList.get(i);
-				Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
-				//Ellipse2D circle = piece.getCircle();
+				// Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
+				Ellipse2D circle = piece.getCircle();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
+				g.draw(circle);
+			}
+
+			if (selectedNode != null) {
+				Ellipse2D circle = selectedNode.getCircle();
+				g.setStroke(new BasicStroke(2));
+				g.setColor(Color.BLUE);
 				g.draw(circle);
 			}
 
@@ -166,6 +176,23 @@ public class Display extends JComponent
 	        }
 	    });
 
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed E");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released E");
+	    Ac.put("pressed E", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "E";
+	                System.out.println("Pressed E");
+	            }
+	        });
+
+	    Ac.put("released E", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released E");
+	        }
+	    });
+
 
 
 	    setFocusable(true);
@@ -175,6 +202,7 @@ public class Display extends JComponent
 	
 	public void mouseClicked(MouseEvent e)
 	 {
+	 	boolean checkOccupied = isOccupied(e);
 	 	x = e.getX();
 	 	y = e.getY();
 
@@ -183,15 +211,46 @@ public class Display extends JComponent
 	 		repaint();
 	 	} 
 	 	if (Pressed.equals("S")) {
+	 		selectedNode = null;
+	 		System.out.println("click S");
 	 		Node newNode = finiteStateMachine.addNode('a');
 	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
 	 		viewNodeList.add(newViewNode);
 	 		repaint();
 	 	}
 
+	 	if (Pressed.equals("C")) {
+	 		selectedNode = null;
+	 	}
+
+	 	if (Pressed.equals("E")) {
+	 		if (checkOccupied) {
+	 			repaint();
+	 		}
+	 		
+	 	}
+
+
+
 	 	
 	 	
 	 }
+
+	 private boolean isOccupied (MouseEvent e) {
+	 	boolean temp = false;
+	 	for (ViewNode element : viewNodeList) {
+	 		if (element.getCircle().contains(e.getX(), e.getY())) {
+	 			selectedNode = element;
+	 			temp = true;
+	 		}
+	 	}
+
+	 	return temp;
+	 }
+
+	 // private ViewNode getOccupied () {
+
+	 // }
 
 
     public void mouseEntered(MouseEvent e)

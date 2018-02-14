@@ -18,7 +18,7 @@ public class ConcreteFSM implements FSM
       Nodes.add(newNode);
 
 
-      notifyListeners();
+      // notifyListeners();
       return newNode;
     }
 
