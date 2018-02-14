@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
 
 import java.awt.Shape;
 
@@ -50,24 +51,31 @@ public class Display extends JComponent
 	implements addFSMListener, MouseListener
 {
 	private static final long serialVersionUID = 1;
-	
+	//Finite state machine
 	private ConcreteFSM finiteStateMachine;
 	private UpdateHandler myHandler;
 	
+	//defaut WIDTH and HEIGHT for the circle
 	private static int WIDTH = 30;
 	private static int HEIGHT = 30;
+
+	//Keep track of coordinates
 	private int x;
 	private int y;
-	private boolean blue = false;
+
+	//Keep track of the key being pressed
 	private String Pressed = "";
 
 	private ViewNode selectedNode = null;
 
-	private Shape circle = new Ellipse2D.Float(0, 0, 0, 0);
-	private Shape arc = new Arc2D.Float(0,0,0,0,0,0,0);
-
+	//Keep track of viewNode and edgeNode
 	private ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
 	private ArrayList<ViewEdge> viewEdgeList = new ArrayList<ViewEdge>();
+
+	//count number of time T being press
+	private int tCount = 1;
+	private Point2D.Double T1;
+	private Point2D.Double T2;
 	
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
@@ -86,7 +94,7 @@ public class Display extends JComponent
 
 	}
 	
-	
+	//Paint the graphics
 	public void paintComponent(Graphics graphics)
 	{
 		Graphics2D g = (Graphics2D) graphics;
@@ -101,6 +109,13 @@ public class Display extends JComponent
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
 				g.draw(circle);
+			}
+			ViewEdge egdePiece;
+			for (int i=0; i < viewEdgeList.size(); i++) {
+				Line2D line = egdePiece.getLine();
+				g.setStroke(new BasicStroke(2));
+				g.setColor(Color.BLACK);
+				g.draw(line);
 			}
 
 			if (selectedNode != null) {
@@ -199,17 +214,13 @@ public class Display extends JComponent
 	    requestFocusInWindow(); 
 	}
 
-	
+	//Handling mouse click events	
 	public void mouseClicked(MouseEvent e)
 	 {
 	 	boolean checkOccupied = isOccupied(e);
 	 	x = e.getX();
 	 	y = e.getY();
 
-	 	if (circle.contains(x, y)) {
-	 		blue = true;
-	 		repaint();
-	 	} 
 	 	if (Pressed.equals("S")) {
 	 		selectedNode = null;
 	 		System.out.println("click S");
@@ -230,12 +241,32 @@ public class Display extends JComponent
 	 		
 	 	}
 
+	 	if (Pressed.equals("T")) {
+	 		if (checkOccupied) {
+		 		if (tCount % 2 != 0) {
+		 			int posX = selectedNode.getX();
+		 			int posY = selectedNode.getY();
+		 			T1 = new Point2D.Double(posX, posY);
+		 			tCount = 0;
+ 		 		} else {
+ 		 			int posX = selectedNode.getX();
+		 			int posY = selectedNode.getY();
+		 			T2 = new Point2D.Double(posX, posY);
+		 			Edge newEdge = finiteStateMachine.addArrow("a");
+		 			ViewEdge newViewEdge = new ViewEdge(T1.getX(), T1.getY(), T2.getX(), T2.getY());
+		 			viewEdgeList.add(newViewEdge);
+		 			tCount = 1;
+		 			repaint();
+ 		 		}
+	 		}
+	 	}
+
 
 
 	 	
 	 	
 	 }
-
+	 //Check if the place the mouse click is occupied or not
 	 private boolean isOccupied (MouseEvent e) {
 	 	boolean temp = false;
 	 	for (ViewNode element : viewNodeList) {

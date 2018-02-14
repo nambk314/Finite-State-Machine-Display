@@ -11,7 +11,7 @@ public interface FSM
     /**
      * Add an arrow to the current FSM
      */
-    public void addArrow(Node from, Node to, String label);
+    public Edge addArrow(Node from, Node to, String label);
 
     /**
      * Edit the label of a node of the FSM
