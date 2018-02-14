@@ -1,12 +1,30 @@
-package edu.union.adt.fsm;
+package edu.union.adt.view;
 
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
+import edu.union.adt.fsm.Node;
 
 public class ViewNode
 {
-    boolean[] selected = new boolean[]; //default false?
-    Node node = new createNode(); //String, boolean
-    Ellipse.Double circle = new Ellipse2D.Double() // int int int int
+    boolean selected; //default false?
+    Node node; //String, boolean
+    Ellipse2D.Double circle; // int int int int
+
+    public ViewNode(int x, int y, int w, int h, Node newNode) {
+    	circle = new Ellipse2D.Double(x + w, y - w, w ,h);
+    	selected = false;
+    	node = newNode;
+    }
+
+    public Ellipse2D getCircle() {
+    	return circle;
+    }
+
+    public boolean isSelected() {
+    	return selected;
+    }
+
+    public void changeSelected(boolean change) {
+    	selected = change;
+    }
 
 }

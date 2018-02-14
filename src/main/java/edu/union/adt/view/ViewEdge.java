@@ -1,11 +1,16 @@
-package edu.union.adt.fsm;
+package edu.union.adt.view;
 
+import java.awt.geom.Line2D;
+import edu.union.adt.fsm.Edge;
 
 public class ViewEdge
     
 {
-    boolean[] selected = new boolean[]; //default false?
+    boolean selected;; //default false?
     
-    Edge edge = new createEdge(); // String, node.getX, node.getY
-
+    Edge edge; // String, node.getX, node.getY
+    public ViewEdge () {
+    	selected = false;
+    	
+    }
 }

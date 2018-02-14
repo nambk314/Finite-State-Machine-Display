@@ -6,7 +6,7 @@ public interface FSM
     /**
      * Add a blank node to the current FSM
      */
-    public void addNode(char label);
+    public Node addNode(char label);
 
     /**
      * Add an arrow to the current FSM

@@ -12,11 +12,14 @@ public class ConcreteFSM implements FSM
     /**
      * Add a blank node to the current FSM
      */
-    public void addNode(char label)
+    public Node addNode(char label)
     {
-      Nodes.add(new Node(label));
+      Node newNode = new Node(label);  
+      Nodes.add(newNode);
+
 
       notifyListeners();
+      return newNode;
     }
 
     public void changeAccept(Node toChange)

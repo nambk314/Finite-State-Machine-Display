@@ -37,7 +37,8 @@ import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 
-import edu.union.adt.fsm.ConcreteFSM;
+import edu.union.adt.fsm.*;
+import java.util.ArrayList;
 
 /**
  * @author cassa
@@ -53,8 +54,8 @@ public class Display extends JComponent
 	private ConcreteFSM finiteStateMachine;
 	private UpdateHandler myHandler;
 	
-	private static int WIDTH = 80;
-	private static int HEIGHT = 80;
+	private static int WIDTH = 30;
+	private static int HEIGHT = 30;
 	private int x;
 	private int y;
 	private boolean blue = false;
@@ -62,6 +63,9 @@ public class Display extends JComponent
 
 	private Shape circle = new Ellipse2D.Float(0, 0, 0, 0);
 	private Shape arc = new Arc2D.Float(0,0,0,0,0,0,0);
+
+	private ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
+	private ArrayList<ViewEdge> viewEdgeList = new ArrayList<ViewEdge>();
 	
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
@@ -69,12 +73,14 @@ public class Display extends JComponent
 		this.setFont(myFont);
 		FontMetrics metrics = getFontMetrics(myFont);
 		
-		setSize(new Dimension(WIDTH*4, WIDTH*4));
-		setPreferredSize(new Dimension(WIDTH*4, WIDTH*4));
+		setSize(new Dimension(400, 400));
+		setPreferredSize(new Dimension(400, 400));
 				
 		finiteStateMachine = theFiniteStateMachine;
 		
 		myHandler = new UpdateHandler(this, finiteStateMachine);
+		buttonActions();
+
 	}
 	
 	
@@ -84,7 +90,16 @@ public class Display extends JComponent
 		
 		super.paintComponent(g);
 		
-			ConcreteFSM piece = finiteStateMachine.getMachine();
+			ViewNode piece;
+			for (int i = 0; i < viewNodeList.size(); i++) {
+				piece = viewNodeList.get(i);
+				Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
+				//Ellipse2D circle = piece.getCircle();
+				g.setStroke(new BasicStroke(2));
+				g.setColor(Color.BLACK);
+				g.draw(circle);
+			}
+
 			// Vector<Integer> piece;
 			// for (int i=0; i< finiteStateMachine.length(); i++) {
 			// 	piece = finiteStateMachine.getPosition(i);
@@ -168,7 +183,10 @@ public class Display extends JComponent
 	 		repaint();
 	 	} 
 	 	if (Pressed.equals("S")) {
-	 		finiteStateMachine.addNode('a');
+	 		Node newNode = finiteStateMachine.addNode('a');
+	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
+	 		viewNodeList.add(newViewNode);
+	 		repaint();
 	 	}
 
 	 	
