@@ -22,6 +22,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 
 import java.awt.Shape;
 
@@ -67,6 +68,7 @@ public class Display extends JComponent
 	private String Pressed = "";
 
 	private ViewNode selectedNode = null;
+	private ViewEdge selectedEdge = null;
 
 	//Keep track of viewNode and edgeNode
 	private ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
@@ -116,9 +118,11 @@ public class Display extends JComponent
 			for (int i=0; i < viewEdgeList.size(); i++) {
 				egdePiece = viewEdgeList.get(i);
 				Line2D line = egdePiece.getLine();
+				Path2D path = egdePiece.getPath();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
 				g.draw(line);
+				g.draw(path);
 			}
 
 			if (selectedNode != null) {
@@ -126,6 +130,13 @@ public class Display extends JComponent
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLUE);
 				g.draw(circle);
+			}
+
+			if (selectedEdge != null) {
+				Line2D line = selectedEdge.getLine();
+				g.setStroke(new BasicStroke(3));
+				g.setColor(Color.BLUE);
+				g.draw(line);
 			}
 
 			// Vector<Integer> piece;
@@ -275,7 +286,8 @@ public class Display extends JComponent
 	//Handling mouse click events	
 	public void mouseClicked(MouseEvent e)
 	 {
-	 	boolean checkOccupied = isOccupied(e);
+	 	boolean checkOccupied = isStateOccupied(e);
+	 	boolean checkOccupied2 = isEdgeOccupied(e);
 	 	x = e.getX();
 	 	y = e.getY();
 
@@ -296,7 +308,7 @@ public class Display extends JComponent
 
 	 	if (Pressed.equals("E")) {
 	 		tCount = 1;
-	 		if (checkOccupied) {
+	 		if (checkOccupied || checkOccupied2) {
 	 			repaint();
 	 		}
 	 		
@@ -338,15 +350,28 @@ public class Display extends JComponent
 	 	
 	 }
 	 //Check if the place the mouse click is occupied or not
-	 private boolean isOccupied (MouseEvent e) {
+	 private boolean isStateOccupied (MouseEvent e) {
 	 	boolean temp = false;
 	 	for (ViewNode element : viewNodeList) {
 	 		if (element.getCircle().contains(e.getX(), e.getY())) {
 	 			selectedNode = element;
+	 			selectedEdge = null;
 	 			temp = true;
 	 		}
 	 	}
 
+	 	return temp;
+	 }
+
+	 private boolean isEdgeOccupied (MouseEvent e) {
+	 	boolean temp = false;
+			for (ViewEdge element : viewEdgeList) {
+	 		if (element.getLine().contains(e.getX(), e.getY())) {
+	 			selectedNode = null;
+	 			selectedEdge = element;
+	 			temp = true;
+	 		}
+	 	}
 	 	return temp;
 	 }
 
