@@ -1,10 +1,13 @@
 package edu.union.adt.fsm;
 import java.util.*;
-
+import edu.union.adt.view.addFSMListener;
 public class ConcreteFSM implements FSM
 {
     ArrayList<Node> Nodes = new ArrayList<Node>();
     ArrayList<Edge> Edges = new ArrayList<Edge>();
+
+    //Listener to the view
+    private ArrayList<addFSMListener> listeners;
 
     /**
      * Add a blank node to the current FSM
@@ -12,6 +15,8 @@ public class ConcreteFSM implements FSM
     public void addNode(char label)
     {
       Nodes.add(new Node(label));
+
+      notifyListeners();
     }
 
     public void changeAccept(Node toChange)
@@ -25,6 +30,7 @@ public class ConcreteFSM implements FSM
     public void addArrow(Node from, Node to, String label)
     {
       Edges.add(new Edge(from, to, label));
+      notifyListeners();
     }
 
     /**
@@ -33,6 +39,7 @@ public class ConcreteFSM implements FSM
     public void setNodeLabel(Node toEdit, char newLabel)
     {
       toEdit.label = newLabel;
+      notifyListeners();
     }
 
     // /**
@@ -65,8 +72,21 @@ public class ConcreteFSM implements FSM
     /**
      * Lets views know that an update has occurred
      */
-    public void update()
-    {
 
+    public void addListener(addFSMListener l)
+    {
+        listeners.add(l);
+    }
+    
+    public void removeListener(addFSMListener l)
+    {
+        listeners.remove(l);
+    }
+    
+    public void notifyListeners()
+    {
+        for (addFSMListener l : listeners) {
+            l.update();
+        }
     }
 }

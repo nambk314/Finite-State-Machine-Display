@@ -1,16 +1,17 @@
-package cs260;
+package edu.union.adt.view;
 
 import javax.swing.JOptionPane;
+import edu.union.adt.fsm.ConcreteFSM;
 
 public class UpdateHandler implements Runnable 
 {
-	private FancyDisplay myDisplay;
-	private addCircle myGame;
+	private Display myDisplay;
+	private ConcreteFSM myFiniteStateMachine;
 	
-	public UpdateHandler(FancyDisplay d, addCircle g)
+	public UpdateHandler(Display d, ConcreteFSM f)
 	{
 		myDisplay = d;
-		myGame = g;
+		myFiniteStateMachine = f;
 	}
 	
 	public void run() 

@@ -1,31 +1,32 @@
-package cs260;
+package edu.union.adt.view;
 
 import javax.swing.JFrame;
-
-public class Execute {
-	private addCircle game;
-	private FancyDisplay display, display2;
+import edu.union.adt.fsm.ConcreteFSM;
+public class Main {
+	private ConcreteFSM finiteStateMachine;
+	private Display display, display2;
 	private JFrame frame, frame2;
 	
 	
 	public void start()
 	{
-		game = new addCircle();
+		finiteStateMachine = new ConcreteFSM ();
 		
-		frame = new JFrame("Fancy addCircle 1");
-		display = new FancyDisplay(game);
+		frame = new JFrame("Finite State Machine Display 1");
+		display = new Display(finiteStateMachine);
 		frame.getContentPane().add(display);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
-		game.addListener(display);
+		finiteStateMachine.addListener(display);
 		
 		display.go();
 	}
 	
 	public static void main(String[] args)
 	{
-		Execute app = new Execute();
+		Main app = new Main();
 		app.start();
 	}
 }

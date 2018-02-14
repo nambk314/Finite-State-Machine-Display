@@ -42,5 +42,6 @@ public interface FSM
     /**
      * Lets views know that an update has occurred
      */
-    public void update();
+    public void notifyListeners();
+
 }
