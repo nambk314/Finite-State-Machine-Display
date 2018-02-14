@@ -16,6 +16,8 @@ public class ConcreteFSM implements FSM
     {
       Node newNode = new Node(label);
       Nodes.add(newNode);
+
+
       // notifyListeners();
       return newNode;
     }
@@ -64,7 +66,8 @@ public class ConcreteFSM implements FSM
     /**
      * Returns an ArrayList len = 2
      * The first item is an ArrayList of nodes
-     * The second item is an ArrayList of edges
+     * The second item is an ArrayList of edges>>>>>>> 7ed39c511264e189c98442804bae19801fbde4dd
+
      * Each node is an ArrayList containing
      * x and y position, label, and whether or not it's accepting
      * Each edge is an ArrayList containing

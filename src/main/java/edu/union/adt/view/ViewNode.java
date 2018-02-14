@@ -10,17 +10,13 @@ public class ViewNode
     Ellipse2D.Double circle; // int int int int
 
     public ViewNode(int x, int y, int w, int h, Node newNode) {
-    	circle = new Ellipse2D.Double(x + w, y - w, w ,h);
+    	circle = new Ellipse2D.Double(x - w/2, y - w/2, w ,h);
     	selected = false;
     	node = newNode;
     }
 
     public Ellipse2D getCircle() {
     	return circle;
-    }
-
-    public boolean isSelected() {
-    	return selected;
     }
 
     public void changeSelected(boolean change) {
