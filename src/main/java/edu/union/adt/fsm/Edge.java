@@ -15,4 +15,9 @@ public class Edge
       this.to = startTo;
       this.from = startFrom;
     }
+
+    public String getLabel(){
+      return this.label;
+    }
+
 }

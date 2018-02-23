@@ -14,9 +14,8 @@ public class ConcreteFSM implements FSM
      */
     public Node addNode(char label)
     {
-      Node newNode = new Node(label);  
+      Node newNode = new Node(label);
       Nodes.add(newNode);
-
 
       // notifyListeners();
       return newNode;
@@ -31,7 +30,7 @@ public class ConcreteFSM implements FSM
      * Add an arrow to the current FSM
      */
     public Edge addArrow(Node from, Node to, String label)
-    {  
+    {
       Edge newEdge = new Edge(from, to, label);
       Edges.add(newEdge);
       return newEdge;
@@ -90,12 +89,12 @@ public class ConcreteFSM implements FSM
     {
         listeners.add(l);
     }
-    
+
     public void removeListener(addFSMListener l)
     {
         listeners.remove(l);
     }
-    
+
     public void notifyListeners()
     {
         for (addFSMListener l : listeners) {
