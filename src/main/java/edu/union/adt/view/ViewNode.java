@@ -9,12 +9,14 @@ public class ViewNode
     Ellipse2D.Double circle; // int int int int
     private double posX;
     private double posY;
+    private double posW;
 
     public ViewNode(double x, double y, double w, double h, Node newNode) {
     	circle = new Ellipse2D.Double(x - w/2, y - w/2, w ,h);
     	node = newNode;
     	posX = x;
     	posY = y;
+    	posW = w;
     }
 
     public Ellipse2D getCircle() {
@@ -31,6 +33,20 @@ public class ViewNode
 
     public double getY() {
     	return posY;
+    }
+
+    public void setX(double x) {
+    	circle = new Ellipse2D.Double(x - posW/2, posY - posW/2, posW ,posW);
+    	posX = x;
+    }
+
+    public void setY(double y) {
+    	circle = new Ellipse2D.Double(posX - posW/2, y - posW/2, posW ,posW);
+    	posY = y;
+    }
+
+    public void moveCircle(double x, double y) {
+    	circle = new Ellipse2D.Double(x - posW/2, y-posW/2, posW, posW);
     }
 
 }
