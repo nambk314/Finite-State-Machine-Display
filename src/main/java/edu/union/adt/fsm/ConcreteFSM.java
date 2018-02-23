@@ -5,9 +5,24 @@ public class ConcreteFSM implements FSM
 {
     ArrayList<Node> Nodes = new ArrayList<Node>();
     ArrayList<Edge> Edges = new ArrayList<Edge>();
+    Node start = null;
 
     //Listener to the view
     private ArrayList<addFSMListener> listeners;
+
+    /**
+     * Set which node is the start
+     */
+     public void setStart(Node toStart){
+       this.start = toStart;
+     }
+
+     /**
+      * Get which node is the start
+      */
+      public Node getStart(){
+        return this.start;
+      }
 
     /**
      * Add a blank node to the current FSM
@@ -29,7 +44,7 @@ public class ConcreteFSM implements FSM
     /**
      * Add an arrow to the current FSM
      */
-    public Edge addArrow(Node from, Node to, String label)
+    public Edge addEdge(Node from, Node to, String label)
     {
       Edge newEdge = new Edge(from, to, label);
       Edges.add(newEdge);
@@ -85,8 +100,7 @@ public class ConcreteFSM implements FSM
      * Lets views know that an update has occurred
      */
 
-    public void addListener(addFSMListener l)
-    {
+    public void addListener(addFSMListener l) {
         listeners.add(l);
     }
 

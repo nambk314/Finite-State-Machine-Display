@@ -11,10 +11,10 @@ public class ViewEdge {
     Line2D.Double line;
     Path2D myPath;
     double[] original = new double[4];
-    
 
 
-    
+
+
     public  ViewEdge(double x1, double y1, double x2, double y2, Edge newEdge) {
 	// line = new Line2D.Double(x1, y1, x2, y2);
 	original[0] = x1;
@@ -22,12 +22,12 @@ public class ViewEdge {
 	original[2] = x2;
 	original[3] = y2;
 
-	
+
 	line = new Line2D.Double(niceLine(original)[0], niceLine(original)[1], niceLine(original)[2], niceLine(original)[3]);
 	myPath = new Path2D.Double();
 	myPath.moveTo(niceLine(original)[2], niceLine(original)[3]);
-    myPath.lineTo(niceLine(original)[4], niceLine(original)[5]);
-    myPath.lineTo(niceLine(original)[6], niceLine(original)[7]);
+  myPath.lineTo(niceLine(original)[4], niceLine(original)[5]);
+  myPath.lineTo(niceLine(original)[6], niceLine(original)[7]);
 	myPath.closePath();
 
 	edge = newEdge;
@@ -78,7 +78,9 @@ public class ViewEdge {
     public Path2D getPath() {
     	return myPath;
     }
-    
+
+    public Edge getEdge(){
+      return this.edge;
+    }
+
 }
-
-

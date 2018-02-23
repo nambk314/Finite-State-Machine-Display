@@ -3,6 +3,17 @@ import java.util.*;
 
 public interface FSM
 {
+
+  /**
+   * Set which node is the start
+   */
+   public void setStart(Node toStart);
+
+   /**
+    * Get which node is the start
+    */
+    public Node getStart();
+
     /**
      * Add a blank node to the current FSM
      */
@@ -11,7 +22,7 @@ public interface FSM
     /**
      * Add an edge to the current FSM
      */
-    public Edge addArrow(Node from, Node to, String label);
+    public Edge addEdge(Node from, Node to, String label);
 
     /**
      * Edit the label of a node of the FSM
@@ -22,6 +33,12 @@ public interface FSM
      * Edit the label of an edge of the FSM
      */
     public void setEdgeLabel(Edge toEdit, String newLabel);
+
+    /**
+     * Change the accepting state of a Node
+     */
+    public void changeAccept(Node toChange);
+
 
     // /**
     //  * Remove a Node from the FSM
