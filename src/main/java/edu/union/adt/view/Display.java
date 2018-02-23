@@ -59,8 +59,8 @@ public class Display extends JComponent
 	private UpdateHandler myHandler;
 	
 	//defaut WIDTH and HEIGHT for the circle
-	private static int WIDTH = 30;
-	private static int HEIGHT = 30;
+	private static int WIDTH = 50;
+	private static int HEIGHT = 50;
 
 	//Keep track of coordinates
 	private int x;
@@ -122,6 +122,12 @@ public class Display extends JComponent
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
 				g.draw(circle);
+				if (piece.isAccept()) {
+					Ellipse2D smallCircle = piece.getSmallCircle();
+					g.setStroke(new BasicStroke(2));
+					g.setColor(Color.BLACK);
+					g.draw(smallCircle);
+				}
 			}
 			ViewEdge egdePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
@@ -136,12 +142,12 @@ public class Display extends JComponent
 				g.draw(path);
 			}
 
-			if (selectedNode != null && Pressed.equals("D")) {
-				Ellipse2D circle = selectedNode.getCircle();
-				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLACK);
-				g.draw(circle);
-			}
+			// if (selectedNode != null && Pressed.equals("D")) {
+			// 	Ellipse2D circle = selectedNode.getCircle();
+			// 	g.setStroke(new BasicStroke(2));
+			// 	g.setColor(Color.BLACK);
+			// 	g.draw(circle);
+			// }
 
 
 //Function to draw the State and transition to Blue
@@ -293,6 +299,22 @@ public class Display extends JComponent
 	        }
 	    });
 
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "pressed A");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "released A");
+	    Ac.put("pressed A", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "A";
+	                System.out.println("Pressed A");
+	            }
+	        });
+
+	    Ac.put("released A", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released A");
+	        }
+	    });
 
 
 	    setFocusable(true);
@@ -378,6 +400,13 @@ public class Display extends JComponent
 		 			selectedNode = null;
 		 			repaint();
  		 		}
+	 		}
+	 	}
+
+	 	if (Pressed.equals("A")) {
+	 		if (checkOccupied) {
+	 			finiteStateMachine.changeAccept(selectedNode.getNode());
+	 			repaint();
 	 		}
 	 	}
 	 }
