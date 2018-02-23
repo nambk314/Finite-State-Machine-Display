@@ -16,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -50,7 +51,7 @@ import java.util.ArrayList;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Display extends JComponent
-	implements addFSMListener, MouseListener
+	implements addFSMListener, MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = 1;
 	//Finite state machine
@@ -81,6 +82,12 @@ public class Display extends JComponent
 	private double[] T2= new double[2];
 	private Node fromNode;
 	private Node toNode;
+
+	//Variable to know if it is inDrag or not
+	private boolean inDrag = false;
+	//Variable to know the distance went dragging
+	private double distanceX = 0;
+	private double distanceY = 0;
 	
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
@@ -95,6 +102,7 @@ public class Display extends JComponent
 		
 		myHandler = new UpdateHandler(this, finiteStateMachine);
 		addMouseListener(this);
+		addMouseMotionListener(this);
 		buttonActions();
 
 	}
@@ -128,19 +136,28 @@ public class Display extends JComponent
 				g.draw(path);
 			}
 
-			if (selectedNode != null) {
+			if (selectedNode != null && Pressed.equals("D")) {
 				Ellipse2D circle = selectedNode.getCircle();
 				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLUE);
+				g.setColor(Color.BLACK);
 				g.draw(circle);
 			}
 
-			if (selectedEdge != null) {
-				Line2D line = selectedEdge.getLine();
-				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLUE);
-				g.draw(line);
-			}
+
+//Function to draw the State and transition to Blue
+			// if (selectedNode != null) {
+			// 	Ellipse2D circle = selectedNode.getCircle();
+			// 	g.setStroke(new BasicStroke(2));
+			// 	g.setColor(Color.BLUE);
+			// 	g.draw(circle);
+			// }
+
+			// if (selectedEdge != null) {
+			// 	Line2D line = selectedEdge.getLine();
+			// 	g.setStroke(new BasicStroke(2));
+			// 	g.setColor(Color.BLUE);
+			// 	g.draw(line);
+			// }
 
 			// Vector<Integer> piece;
 			// for (int i=0; i< finiteStateMachine.length(); i++) {
@@ -258,7 +275,24 @@ public class Display extends JComponent
 	            System.out.println("released T");
 	        }
 	    });
-	    
+
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "pressed D");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "released D");
+	    Ac.put("pressed D", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "D";
+	                System.out.println("Pressed D");
+	            }
+	        });
+
+	    Ac.put("released D", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released D");
+	        }
+	    });
+
 
 
 	    setFocusable(true);
@@ -392,13 +426,45 @@ public class Display extends JComponent
      }
      public void mousePressed(MouseEvent e)
      {
+     	System.out.println("mousePressed at " + e.getX() + ", " + e.getY());
+     	if (Pressed.equals("D") && isStateOccupied(e)){
+		    
+		    distanceX = e.getX();
+		    distanceY = e.getY();
+		    System.out.println("mousePressed at " + distanceX + ", " + distanceY);
+		    inDrag = true;
+     	}
      	
      }
      
      public void mouseReleased(MouseEvent e) 
      {
-     	
+     	inDrag = false;
+     	System.out.println(distanceX + ", " + distanceY);
+     	distanceX = 0;
+     	distanceY = 0;
+	    
      }
+
+     public void mouseDragged(MouseEvent e) {
+	    // System.err.println("mouse drag to " + p);
+
+	    distanceX = e.getX() - distanceX;
+	    distanceY = e.getY() - distanceY;
+
+	    double curX = selectedNode.getX();
+	    double curY = selectedNode.getY();
+	    // selectedNode.setX(curX + distanceX);
+	    // selectedNode.setY(curY + distanceY);
+	    selectedNode.moveCircle(e.getX(), e.getY());
+	    if (inDrag) {
+	      repaint();
+	    }
+	  }
+
+  public void mouseMoved(MouseEvent e) {
+    // System.out.println("mouse Moved to " + e.getX() + e.getY());
+  }
 
 
 
