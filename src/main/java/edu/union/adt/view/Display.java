@@ -57,7 +57,7 @@ public class Display extends JComponent
 	//Finite state machine
 	private ConcreteFSM finiteStateMachine;
 	private UpdateHandler myHandler;
-	
+
 	//defaut WIDTH and HEIGHT for the circle
 	private static int WIDTH = 30;
 	private static int HEIGHT = 30;
@@ -88,32 +88,32 @@ public class Display extends JComponent
 	//Variable to know the distance went dragging
 	private double distanceX = 0;
 	private double distanceY = 0;
-	
+
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
 		this.setFont(myFont);
 		FontMetrics metrics = getFontMetrics(myFont);
-		
+
 		setSize(new Dimension(400, 400));
 		setPreferredSize(new Dimension(400, 400));
-				
+
 		finiteStateMachine = theFiniteStateMachine;
-		
+
 		myHandler = new UpdateHandler(this, finiteStateMachine);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		buttonActions();
 
 	}
-	
+
 	//Paint the graphics
 	public void paintComponent(Graphics graphics)
 	{
 		Graphics2D g = (Graphics2D) graphics;
-		
+
 		super.paintComponent(g);
-		
+
 			ViewNode piece;
 			for (int i = 0; i < viewNodeList.size(); i++) {
 				piece = viewNodeList.get(i);
@@ -171,7 +171,7 @@ public class Display extends JComponent
 			// 	g.setStroke(new BasicStroke(2));
 			// 	g.setColor(Color.BLACK);
 			// 	g.draw(circle);
-			
+
 			// 	// g.drawOval(piece.get(0).intValue(), piece.get(1).intValue(), WIDTH, HEIGHT);
 			// }
 	}
@@ -179,7 +179,7 @@ public class Display extends JComponent
 	{
 		new Thread(myHandler).start();
 	}
-	
+
 	public void go()
 	{
 		addMouseListener(this);
@@ -296,7 +296,7 @@ public class Display extends JComponent
 
 
 	    setFocusable(true);
-	    requestFocusInWindow(); 
+	    requestFocusInWindow();
 	}
 
 	// private void buttonInput(String input) {
@@ -320,7 +320,7 @@ public class Display extends JComponent
 	// 	    });
 	//     }
 
-	//Handling mouse click events	
+	//Handling mouse click events
 	public void mouseClicked(MouseEvent e)
 	 {
 	 	boolean checkOccupied = isStateOccupied(e);
@@ -348,13 +348,13 @@ public class Display extends JComponent
 	 		if (checkOccupied || checkOccupied2) {
 	 			repaint();
 	 		}
-	 		
+
 	 	}
 
 	 	if (Pressed.equals("T")) {
-	 		
-	 		
-	 		
+
+
+
 	 		if (checkOccupied) {
 		 		if (tCount % 2 != 0) {
 		 			double posX = selectedNode.getX();
@@ -371,7 +371,7 @@ public class Display extends JComponent
 		 			T2 = new double[2];
 		 			T2[0] = posX;
 		 			T2[1] = posY;
-		 			Edge newEdge = finiteStateMachine.addArrow(fromNode, toNode, "a");
+		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, "a");
 		 			ViewEdge newViewEdge = new ViewEdge(T1[0],T1[1],T2[0],T2[1], newEdge);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
@@ -399,9 +399,9 @@ public class Display extends JComponent
 	 	boolean temp = false;
 	 	double posX = (double) e.getX();
 		double posY = (double) e.getY();
-		Point2D point = new Point2D.Double(posX, posY);	
+		Point2D point = new Point2D.Double(posX, posY);
 			for (ViewEdge element : viewEdgeList) {
-			
+
 	 		if (element.getLine().contains(point)) {
 	 			selectedNode = null;
 	 			selectedEdge = element;
@@ -418,32 +418,32 @@ public class Display extends JComponent
 
     public void mouseEntered(MouseEvent e)
      {
-     	
+
      }
      public void mouseExited(MouseEvent e)
      {
-     	
+
      }
      public void mousePressed(MouseEvent e)
      {
      	System.out.println("mousePressed at " + e.getX() + ", " + e.getY());
      	if (Pressed.equals("D") && isStateOccupied(e)){
-		    
+
 		    distanceX = e.getX();
 		    distanceY = e.getY();
 		    System.out.println("mousePressed at " + distanceX + ", " + distanceY);
 		    inDrag = true;
      	}
-     	
+
      }
-     
-     public void mouseReleased(MouseEvent e) 
+
+     public void mouseReleased(MouseEvent e)
      {
      	inDrag = false;
      	System.out.println(distanceX + ", " + distanceY);
      	distanceX = 0;
      	distanceY = 0;
-	    
+
      }
 
      public void mouseDragged(MouseEvent e) {

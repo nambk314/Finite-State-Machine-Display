@@ -1,9 +1,10 @@
 package edu.union.adt.view;
 
 import java.io.*;
-import edu.union.adt.fsm;
+import java.util.*;
+import edu.union.adt.fsm.*;
 
-public class FileOpener.java
+public class FileOpener
 {
     /**
      *
@@ -12,12 +13,16 @@ public class FileOpener.java
      File f;
      FileReader fr;
 
-    public FileSaver(String filename)
+    public void FileSaver(String filename)
     {
+      try {
       f = new File(filename);
       fr = new FileReader(f);
       br = new BufferedReader(fr);
+    } catch (IOException ioexcept) {
+
     }
+  }
 
     /**
      * Saves the given machine to the file
@@ -25,12 +30,13 @@ public class FileOpener.java
      * the first contained ArrayList is of ViewNodes
      * the second contained ArrayList is of ViewEdges
      */
-    public save(ArrayList machine)
+    public boolean save(ArrayList machine)
     {
-      try {
-      } catch (IOException ioexcept) {
-
-      }
+      // try {
+      //   return true;
+      // } catch (IOException ioexcept) {
+         return false;
+      // }
     }
 
 }
