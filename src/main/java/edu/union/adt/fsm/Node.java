@@ -9,4 +9,13 @@ public class Node
     {
       this.label = startLabel;
     }
+
+    public char getLabel(){
+      return this.label;
+    }
+
+    public boolean getAccepting(){
+      return this.accept;
+    }
+
 }
