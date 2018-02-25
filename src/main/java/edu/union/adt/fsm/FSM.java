@@ -27,7 +27,7 @@ public interface FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public void setNodeLabel(Node toEdit, char newLabel);
+    public boolean setNodeLabel(Node toEdit, char newLabel);
 
     /**
      * Edit the label of an edge of the FSM
