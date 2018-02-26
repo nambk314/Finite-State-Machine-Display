@@ -9,14 +9,14 @@ public interface FSM
    */
    public void setStart(Node toStart);
 
-   /**
-    * Get which node is the start
-    */
-    public Node getStart();
+  /**
+   * Get which node is the start
+   */
+   public Node getStart();
 
-    /**
-     * Add a blank node to the current FSM
-     */
+   /**
+    * Add a blank node to the current FSM
+    */
     public Node addNode(char label);
 
     /**

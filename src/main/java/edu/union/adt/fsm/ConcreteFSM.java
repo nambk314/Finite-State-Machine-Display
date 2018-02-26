@@ -133,4 +133,16 @@ public class ConcreteFSM implements FSM
             l.update();
         }
     }
+
+    public boolean containsNode(Node node) {
+	boolean contains = false;
+	int k = 0;
+	while (k<Nodes.size() && contains==false) {
+	    if (Nodes.get(k).getLabel().equals(node.getLabel())) {
+		contains = true;
+	    }
+	}
+	return contains;
+    }
+    
 }

@@ -40,12 +40,14 @@ public class SimpleFSMtests
     public void construct()
     {
     	fsm = new FSMfactory().createFSM();
+	assertFalse("Constructing an FSM does not cause null",null,fsm);
     }
 
     @Test
     public void nodeConstructor()
     {
       Node a = new Node('a');
+      assertEquals("adding a node with label 'a' creates a node with label 'a'",'a',a.getLabel());
     }
 
     @Test
