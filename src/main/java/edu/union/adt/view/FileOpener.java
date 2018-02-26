@@ -74,30 +74,50 @@
 //         ArrayList<ViewNode> viewNodes = new ArrayList();
 //         HashMap<Node,ViewNode> nodeToViewNode = new HashMap<Node,ViewNode>();
 
+<<<<<<< HEAD
 //         HashMap<Character,Node> charToNode = new HashMap<Character,Node>();
+=======
+        HashMap<String,Node> StringToNode = new HashMap<String,Node>();
+>>>>>>> master
 
 //         String line = this.br.readLine();      //get first line
 //         line = this.br.readLine();      //get next line (first line is "NODES")
 
+<<<<<<< HEAD
 //         while (!line.equals("EDGES")){
 //           String[] tokens = line.split(" ");
 //           Character label = tokens[0].charAt(0);
 //           boolean accepting = tokens[1].equals("true");
 //           double x = Double.parseDouble(tokens[2]);
 //           double y = Double.parseDouble(tokens[3]);
+=======
+        while (!line.equals("EDGES")){
+          String[] tokens = line.split("®");
+          String label = tokens[0];
+          boolean accepting = tokens[1].equals("true");
+          double x = Double.parseDouble(tokens[2]);
+          double y = Double.parseDouble(tokens[3]);
+>>>>>>> master
 
 //           Node newNode = fsm.addNode(label);
 //           ViewNode newV = new ViewNode(x, y, this.SIZE, this.SIZE, newNode);
 //           viewNodes.add(newV);
 
+<<<<<<< HEAD
 //           charToNode.put(label,newNode);
 //           nodeToViewNode.put(newNode,newV);
+=======
+          StringToNode.put(label,newNode);
+
+          nodeToViewNode.put(newNode,newV);
+>>>>>>> master
 
 //           line = br.readLine();
 //         }
 
 //         line = br.readLine();           //Skip over the "EDGES" line
 
+<<<<<<< HEAD
 //         while(!line.equals(null)){
 //           String[] tokens = line.split(" ");            //Split the line on spaces
 //           //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
@@ -111,6 +131,21 @@
 //                                         nodeToViewNode.get(to).getY(),
 //                                         newEdge);
 //         }
+=======
+        while(!line.equals(null)){
+          String[] tokens = line.split("®");            //Split the line on spaces
+          //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
+          String label = tokens[0];
+          Node to = StringToNode.get(tokens[1]);
+          Node from = StringToNode.get(tokens[2]);
+          Edge newEdge = fsm.addEdge(from,to,label);
+          ViewEdge newVE = new ViewEdge(nodeToViewNode.get(from).getX(),
+                                        nodeToViewNode.get(from).getY(),
+                                        nodeToViewNode.get(to).getX(),
+                                        nodeToViewNode.get(to).getY(),
+                                        newEdge);
+        }
+>>>>>>> master
 
 //          return true;
 //       } catch (IOException ioexcept) {

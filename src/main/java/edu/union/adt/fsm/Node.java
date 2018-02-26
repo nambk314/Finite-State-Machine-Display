@@ -2,15 +2,15 @@ package edu.union.adt.fsm;
 
 public class Node
 {
-    char label;
+    String label;
     boolean accept;
 
-    public Node(char startLabel)
+    public Node(String startLabel)
     {
       this.label = startLabel;
     }
 
-    public char getLabel(){
+    public String getLabel(){
       return this.label;
     }
 

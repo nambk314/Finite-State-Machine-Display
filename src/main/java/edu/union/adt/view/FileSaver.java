@@ -40,11 +40,11 @@ public class FileSaver
         for (Object o : viewNodes){
           ViewNode v = (ViewNode)o;
           fw.write(String.valueOf(v.getNode().getLabel()));
-          fw.write(" ");
+          fw.write("®");
           fw.write(String.valueOf(v.getNode().getAccepting()));
-          fw.write(" ");
+          fw.write("®");
           fw.write(String.valueOf(v.getX()));
-          fw.write(" ");
+          fw.write("®");
           fw.write(String.valueOf(v.getY()));
           fw.write("\n");
         }
@@ -53,9 +53,9 @@ public class FileSaver
         for (Object o : viewEdges){
           ViewEdge e = (ViewEdge)o;
           fw.write(String.valueOf(e.getEdge().getLabel()));
-          fw.write(" ");
+          fw.write("®");
           fw.write(String.valueOf(e.getEdge().getTo().getLabel()));
-          fw.write(" ");
+          fw.write("®");
           fw.write(String.valueOf(e.getEdge().getFrom().getLabel()));
           fw.write("\n");
         }

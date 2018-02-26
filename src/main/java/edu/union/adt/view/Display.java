@@ -345,7 +345,6 @@ public class Display extends JComponent
 	 		selectedNode = null;
 	 		System.out.println("click S");
 	 		String name = JOptionPane.showInputDialog("Please input a chararter for the node name");
-	 		char nameChar = name.charAt(0);
 	 		System.out.println(nameChar);
 	 		Node newNode = finiteStateMachine.addNode(nameChar);
 	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
