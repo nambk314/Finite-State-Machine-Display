@@ -41,8 +41,14 @@ import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 
+//For the node's name
+import javax.swing.JOptionPane;
+
 import edu.union.adt.fsm.*;
 import java.util.ArrayList;
+// import java.text.StringCharacterIterator;
+// import java.text.AttributedCharacterIterator;
+
 
 /**
  * @author cassa
@@ -122,12 +128,17 @@ public class Display extends JComponent
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLACK);
 				g.draw(circle);
+
 				if (piece.isAccept()) {
 					Ellipse2D smallCircle = piece.getSmallCircle();
 					g.setStroke(new BasicStroke(2));
 					g.setColor(Color.BLACK);
 					g.draw(smallCircle);
 				}
+				int intX = (int)piece.getX();
+				int intY = (int)piece.getY();
+				g.drawString("a", intX, intY);
+				//g.drawString("a", 100, 100);
 			}
 			ViewEdge egdePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
@@ -321,27 +332,6 @@ public class Display extends JComponent
 	    requestFocusInWindow();
 	}
 
-	// private void buttonInput(String input) {
-	// 		InputMap In = getInputMap(WHEN_IN_FOCUSED_WINDOW);
-	//     	ActionMap Ac = getActionMap();
-	//     	In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed " + input);
-	// 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released " + input);
-	// 	    Ac.put("pressed "  + input, new AbstractAction() {
-	// 	            @Override
-	// 	            public void actionPerformed(ActionEvent e) {
-	// 	            	Pressed =  input;
-	// 	                System.out.println("Pressed "  + input);
-	// 	            }
-	// 	        });
-
-	// 	    Ac.put("released "  + input, new AbstractAction() {
-	// 	        @Override
-	// 	        public void actionPerformed(ActionEvent e) {
-	// 	            System.out.println("released " + input);
-	// 	        }
-	// 	    });
-	//     }
-
 	//Handling mouse click events
 	public void mouseClicked(MouseEvent e)
 	 {
@@ -354,7 +344,10 @@ public class Display extends JComponent
 	 		tCount = 1;
 	 		selectedNode = null;
 	 		System.out.println("click S");
-	 		Node newNode = finiteStateMachine.addNode('a');
+	 		String name = JOptionPane.showInputDialog("Please input a chararter for the node name");
+	 		char nameChar = name.charAt(0);
+	 		System.out.println(nameChar);
+	 		Node newNode = finiteStateMachine.addNode(nameChar);
 	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
 	 		viewNodeList.add(newViewNode);
 	 		repaint();

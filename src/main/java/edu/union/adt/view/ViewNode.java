@@ -48,6 +48,8 @@ public class ViewNode
     }
 
     public void moveCircle(double x, double y) {
+        posX = x;
+        posY = y;
     	circle = new Ellipse2D.Double(x - posW/2, y-posW/2, posW, posW);
         smallCircle = new Ellipse2D.Double(x - (posW/2 - 3.5), y-(posW/2 - 3.5), posW-7, posW-7); 
     }
