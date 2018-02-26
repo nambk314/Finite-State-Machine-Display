@@ -17,7 +17,7 @@ public interface FSM
     /**
      * Add a blank node to the current FSM
      */
-    public Node addNode(char label);
+    public Node addNode(String label);
 
     /**
      * Add an edge to the current FSM
@@ -27,7 +27,7 @@ public interface FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public boolean setNodeLabel(Node toEdit, char newLabel);
+    public boolean setNodeLabel(Node toEdit, String newLabel);
 
     /**
      * Edit the label of an edge of the FSM

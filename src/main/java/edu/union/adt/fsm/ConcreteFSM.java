@@ -5,7 +5,7 @@ public class ConcreteFSM implements FSM
 {
     ArrayList<Node> Nodes = new ArrayList<Node>();                  //ArrayList of Nodes
     ArrayList<Edge> Edges = new ArrayList<Edge>();                  //ArrayList of Edges
-    ArrayList<Character> extantNodes = new ArrayList<Character>();  //ArrayList of node characters, to make checking for duplicates faster / cleaner
+    ArrayList<String> extantNodes = new ArrayList<String>();  //ArrayList of node Strings, to make checking for duplicates faster / cleaner
     Node start = null;
 
     //Listener to the view
@@ -28,7 +28,7 @@ public class ConcreteFSM implements FSM
     /**
      * Add a blank node to the current FSM
      */
-    public Node addNode(char label)
+    public Node addNode(String label)
     {
       if(extantNodes.contains(label)){                //If this node exists, return null
         return null;
@@ -67,7 +67,7 @@ public class ConcreteFSM implements FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public boolean setNodeLabel(Node toEdit, char newLabel)
+    public boolean setNodeLabel(Node toEdit, String newLabel)
     {
       if (extantNodes.contains(newLabel)){
         return false;
