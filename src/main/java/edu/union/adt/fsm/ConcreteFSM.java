@@ -3,8 +3,9 @@ import java.util.*;
 import edu.union.adt.view.addFSMListener;
 public class ConcreteFSM implements FSM
 {
-    ArrayList<Node> Nodes = new ArrayList<Node>();
-    ArrayList<Edge> Edges = new ArrayList<Edge>();
+    ArrayList<Node> Nodes = new ArrayList<Node>();                  //ArrayList of Nodes
+    ArrayList<Edge> Edges = new ArrayList<Edge>();                  //ArrayList of Edges
+    ArrayList<Character> extantNodes = new ArrayList<Character>();  //ArrayList of node characters, to make checking for duplicates faster / cleaner
     Node start = null;
 
     //Listener to the view
@@ -29,12 +30,18 @@ public class ConcreteFSM implements FSM
      */
     public Node addNode(char label)
     {
-      Node newNode = new Node(label);
+      if(extantNodes.contains(label)){                //If this node exists, return null
+        return null;
+    } else {
+      Node newNode = new Node(label);                 //Else, create it, add it to Nodes, and remember that it exists
       Nodes.add(newNode);
+      extantNodes.add(label);
 
       // notifyListeners();
+
       return newNode;
-    }
+      }
+  }
 
     public void changeAccept(Node toChange)
     {
@@ -46,20 +53,31 @@ public class ConcreteFSM implements FSM
      */
     public Edge addEdge(Node from, Node to, String label)
     {
-      Edge newEdge = new Edge(from, to, label);
-      Edges.add(newEdge);
-      return newEdge;
-      // notifyListeners();
+      try{                                                      //Add a new edge
+        Edge newEdge = new Edge(from, to, label);
+        Edges.add(newEdge);
+        return newEdge;
+        // notifyListeners();
+      } catch (NullPointerException e){                         //Catch nullPointer (i.e., if one of the nodes does not exist)
+        return null;
+      }
 
     }
 
     /**
      * Edit the label of a node of the FSM
      */
-    public void setNodeLabel(Node toEdit, char newLabel)
+    public boolean setNodeLabel(Node toEdit, char newLabel)
     {
-      toEdit.label = newLabel;
-      // notifyListeners();
+      if (extantNodes.contains(newLabel)){
+        return false;
+      } else {
+        int index = extantNodes.indexOf(toEdit.label);
+        extantNodes.set(index, newLabel);
+        toEdit.label = newLabel;
+        // notifyListeners();
+        return true;
+      }
     }
 
     public void setEdgeLabel(Edge toEdit, String newLabel)
