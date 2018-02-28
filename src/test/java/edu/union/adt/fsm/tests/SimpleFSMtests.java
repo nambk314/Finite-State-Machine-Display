@@ -53,14 +53,40 @@ public class SimpleFSMtests
     @Test
     public void addNode()
     {
-      FSM fsm = new FSMfactory().createFSM();
-      Node nodeOne = fsm.addNode("a");
-      assertEquals("Adding 'a' will cause it to exist in the empty FSM", true, fsm.containsNode(nodeOne));
-      Node nodeTwo = fsm.addNode("b");
-      assertEquals("Adding 'b' will cause it to exist in the FSM thats not empty before", true, fsm.containsNode(nodeTwo));
+	FSM fsm = new FSMfactory().createFSM();
+	Node nodeOne = fsm.addNode("a");
+	assertEquals("Adding 'a' will cause it to exist in the empty FSM", true, fsm.containsNode(nodeOne));
+	Node nodeTwo = fsm.addNode("b");
+	assertEquals("Adding 'b' will cause it to exist in the FSM thats not empty before", true, fsm.containsNode(nodeTwo));
 
     }
 
+    @Test
+    public void setStart()
+    {
+	FSM fsm = new FSMfactory().createFSM();
+	Node a = fsm.addNode("a");
+	Node b = fsm.addNode("b");
+	Node c = fsm.addNode("c");
+	assertEquals("If the start is not set, there is no start node",null,fsm.getStart());
+	fsm.setStart(b);
+	assertEquals("After the start is set to 'b', there is a start and it's 'b'",b,fsm.getStart());
+
+    }
+
+    
+    @Test
+    public void changeState()
+    {
+	FSM fsm = new FSMfactory().createFSM();
+	Node a = fsm.addNode("a");
+	assertEquals("The default state of a node is false (not accepting)",false,a.getAccepting());
+	fsm.changeAccept(a);
+	assertEquals("The accepting state of the node is changed to true (accepting)",true,a.getAccepting());
+    }
+    
+
+    
     @Test
     public void edgeConstructor()
     {
