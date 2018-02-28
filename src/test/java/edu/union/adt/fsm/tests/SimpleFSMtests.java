@@ -79,7 +79,7 @@ public class SimpleFSMtests
       Node b = fsm.addNode("b");
       Edge ab = fsm.addEdge(a,b,"Hello");
       assertEquals("Adding an edge called 'Hello' between nodes 'a' and 'b' causes it to form","Hello",ab.getLabel());
-      // AssertEquals("Adding an edge causes it to exist in the fsm",true,fsm.containsEdge(ab));
+      assertEquals("Adding an edge causes it to exist in the fsm",true,fsm.containsEdge(ab));
     }
 
     @Test
@@ -87,7 +87,9 @@ public class SimpleFSMtests
     {
       FSM fsm = new FSMfactory().createFSM();
       Node a = fsm.addNode("a");
+      assertEquals("Newly created node has a label called 'a'","a",a.getLabel());
       fsm.setNodeLabel(a,"b");
+      assertEquals("After node's label is changed from 'a' to 'b', its label is 'b' now","b",a.getLabel());
     }
 
     @Test
@@ -96,8 +98,10 @@ public class SimpleFSMtests
       FSM fsm = new FSMfactory().createFSM();
       Node a = fsm.addNode("a");
       Node b = fsm.addNode("b");
-      Edge ab = fsm.addEdge(a,b,"");
+      Edge ab = fsm.addEdge(a,b,"table");
+      assertEquals("Newly created edge has a label called 'table'","table",ab.getLabel());
       fsm.setEdgeLabel(ab,"whhat");
+      assertEquals("After edge's label is changed from 'table' to 'whhat', its label is 'whhat' now","whhat",ab.getLabel());
     }
 
     @Test
@@ -106,8 +110,18 @@ public class SimpleFSMtests
       FSM fsm = new FSMfactory().createFSM();
       Node a = fsm.addNode("a");
       Node b = fsm.addNode("b");
-      Edge ab = fsm.addEdge(a,b,"");
+      Edge ab = fsm.addEdge(a,b,"hi");
       ArrayList<ArrayList> testMachine = fsm.getMachine();
+      ArrayList<ArrayList> result = new ArrayList<ArrayList>();
+      ArrayList<Node> Nodes = new ArrayList<Node>();
+      Nodes.add(a);
+      Nodes.add(b);
+      ArrayList<Edge> Edges = new ArrayList<Edge>();
+      Edges.add(ab);
+      result.add(Nodes);
+      result.add(Edges);
+      assertEquals("The machine shows edges and nodes in an order",result,testMachine);
+      
     }
 
 }
