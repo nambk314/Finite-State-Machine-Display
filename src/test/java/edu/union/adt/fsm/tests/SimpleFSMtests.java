@@ -40,30 +40,33 @@ public class SimpleFSMtests
     public void construct()
     {
     	fsm = new FSMfactory().createFSM();
-	assertFalse("Constructing an FSM does not cause null",null,fsm);
+	assertFalse("Constructing an FSM does not cause null",fsm.equals(null));
     }
 
     @Test
     public void nodeConstructor()
     {
-      Node a = new Node('a');
-      assertEquals("adding a node with label 'a' creates a node with label 'a'",'a',a.getLabel());
+      Node a = new Node("a");
+      assertEquals("adding a node with label 'a' creates a node with label 'a'","a",a.getLabel());
     }
 
     @Test
     public void addNode()
     {
       FSM fsm = new FSMfactory().createFSM();
-      fsm.addNode('a');
-      fsm.addNode('b');
+      Node nodeOne = fsm.addNode("a");
+      assertEquals("Adding 'a' will cause it to exist in the empty FSM", true, fsm.containsNode(nodeOne));
+      Node nodeTwo = fsm.addNode("b");
+      assertEquals("Adding 'b' will cause it to exist in the FSM thats not empty before", true, fsm.containsNode(nodeTwo));
+
     }
 
     @Test
     public void edgeConstructor()
     {
       FSM fsm = new FSMfactory().createFSM();
-      Node a = fsm.addNode('a');
-      Node b = fsm.addNode('b');
+      Node a = fsm.addNode("a");
+      Node b = fsm.addNode("b");
       Edge ab = new Edge(a,b,"");
     }
 
@@ -72,25 +75,27 @@ public class SimpleFSMtests
     public void addEdge()
     {
       FSM fsm = new FSMfactory().createFSM();
-      Node a = fsm.addNode('a');
-      Node b = fsm.addNode('b');
-      Edge ab = fsm.addEdge(a,b,"");
+      Node a = fsm.addNode("a");
+      Node b = fsm.addNode("b");
+      Edge ab = fsm.addEdge(a,b,"Hello");
+      assertEquals("Adding an edge called 'Hello' between nodes 'a' and 'b' causes it to form","Hello",ab.getLabel());
+      // AssertEquals("Adding an edge causes it to exist in the fsm",true,fsm.containsEdge(ab));
     }
 
     @Test
     public void setNodeLabel()
     {
       FSM fsm = new FSMfactory().createFSM();
-      Node a = fsm.addNode('a');
-      fsm.setNodeLabel(a,'b');
+      Node a = fsm.addNode("a");
+      fsm.setNodeLabel(a,"b");
     }
 
     @Test
     public void setEdgeLabel()
     {
       FSM fsm = new FSMfactory().createFSM();
-      Node a = fsm.addNode('a');
-      Node b = fsm.addNode('b');
+      Node a = fsm.addNode("a");
+      Node b = fsm.addNode("b");
       Edge ab = fsm.addEdge(a,b,"");
       fsm.setEdgeLabel(ab,"whhat");
     }
@@ -99,8 +104,8 @@ public class SimpleFSMtests
     public void getMachine()
     {
       FSM fsm = new FSMfactory().createFSM();
-      Node a = fsm.addNode('a');
-      Node b = fsm.addNode('b');
+      Node a = fsm.addNode("a");
+      Node b = fsm.addNode("b");
       Edge ab = fsm.addEdge(a,b,"");
       ArrayList<ArrayList> testMachine = fsm.getMachine();
     }

@@ -39,14 +39,14 @@ public class FileOpener
         ArrayList<ViewNode> viewNodes = new ArrayList();
         HashMap<Node,ViewNode> nodeToViewNode = new HashMap<Node,ViewNode>();
 
-        HashMap<Character,Node> charToNode = new HashMap<Character,Node>();
+        HashMap<String,Node> StringToNode = new HashMap<String,Node>();
 
         String line = this.br.readLine();      //get first line
         line = this.br.readLine();      //get next line (first line is "NODES")
 
         while (!line.equals("EDGES")){
-          String[] tokens = line.split(" ");
-          Character label = tokens[0].charAt(0);
+          String[] tokens = line.split("®");
+          String label = tokens[0];
           boolean accepting = tokens[1].equals("true");
           double x = Double.parseDouble(tokens[2]);
           double y = Double.parseDouble(tokens[3]);
@@ -55,7 +55,8 @@ public class FileOpener
           ViewNode newV = new ViewNode(x, y, this.SIZE, this.SIZE, newNode);
           viewNodes.add(newV);
 
-          charToNode.put(label,newNode);
+          StringToNode.put(label,newNode);
+
           nodeToViewNode.put(newNode,newV);
 
           line = br.readLine();
@@ -64,12 +65,12 @@ public class FileOpener
         line = br.readLine();           //Skip over the "EDGES" line
 
         while(!line.equals(null)){
-          String[] tokens = line.split(" ");            //Split the line on spaces
+          String[] tokens = line.split("®");            //Split the line on spaces
           //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
           String label = tokens[0];
-          Node to = charToNode.get(tokens[1].charAt(0));
-          Node from = charToNode.get(tokens[2].charAt(0));
-          Edge newEdge = new Edge(from,to,label);
+          Node to = StringToNode.get(tokens[1]);
+          Node from = StringToNode.get(tokens[2]);
+          Edge newEdge = fsm.addEdge(from,to,label);
           ViewEdge newVE = new ViewEdge(nodeToViewNode.get(from).getX(),
                                         nodeToViewNode.get(from).getY(),
                                         nodeToViewNode.get(to).getX(),

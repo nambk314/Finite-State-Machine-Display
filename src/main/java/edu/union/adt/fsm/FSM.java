@@ -9,15 +9,16 @@ public interface FSM
    */
    public void setStart(Node toStart);
 
-  /**
-   * Get which node is the start
-   */
-   public Node getStart();
 
    /**
     * Add a blank node to the current FSM
     */
-    public Node addNode(char label);
+    public Node getStart();
+
+    /**
+     * Add a blank node to the current FSM
+     */
+    public Node addNode(String label);
 
     /**
      * Add an edge to the current FSM
@@ -27,7 +28,7 @@ public interface FSM
     /**
      * Edit the label of a node of the FSM
      */
-    public boolean setNodeLabel(Node toEdit, char newLabel);
+    public boolean setNodeLabel(Node toEdit, String newLabel);
 
     /**
      * Edit the label of an edge of the FSM
@@ -65,5 +66,18 @@ public interface FSM
      * Lets views know that an update has occurred
      */
     public void notifyListeners();
+
+    /**
+       Returns true if node exists in fsm,
+       else, returns false.
+     */
+    public boolean containsNode(Node node);
+
+    /**
+       Returns true if the edge exists in fsm,
+       else, returns false.
+     */
+    public boolean containsEdge(Edge edge);
+
 
 }

@@ -332,7 +332,7 @@ public class Display extends JComponent
 	 		tCount = 1;
 	 		selectedNode = null;
 	 		System.out.println("click S");
-	 		Node newNode = finiteStateMachine.addNode('a');
+	 		Node newNode = finiteStateMachine.addNode("a");
 	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
 	 		viewNodeList.add(newViewNode);
 	 		repaint();
