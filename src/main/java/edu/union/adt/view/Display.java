@@ -85,8 +85,6 @@ public class Display extends JComponent
 
 	//count number of time T being press
 	private int tCount = 1;
-	private double[] T1= new double[2];
-	private double[] T2= new double[2];
 	private Node fromNode;
 	private Node toNode;
 
@@ -179,12 +177,14 @@ public class Display extends JComponent
 			// 	g.draw(startShape);
 			// }
 
-			// if (selectedNode != null && Pressed.equals("D")) {
-			// 	Ellipse2D circle = selectedNode.getCircle();
-			// 	g.setStroke(new BasicStroke(2));
-			// 	g.setColor(Color.BLACK);
-			// 	g.draw(circle);
-			// }
+			if (selectedEdge != null && Pressed.equals("E")) {
+				Line2D selectedLine = selectedEdge.getLine();
+				Line2D selectedPath = selectedPath.getPath();
+				g.setStroke(new BasicStroke(2));
+				g.setColor(Color.BLUE);
+				g.draw(selectedLine);
+				g.draw(selectedPath);
+			}
 
 
 //Function to draw the State and transition to Blue
@@ -408,19 +408,13 @@ public class Display extends JComponent
 		 			double posX = selectedNode.getX();
 		 			double posY = selectedNode.getY();
 		 			fromNode = selectedNode.getNode();
-		 			T1 = new double[2];
-		 			T1[0] = posX;
-		 			T1[1] = posY;
 		 			tCount = 0;
  		 		} else {
  		 			double posX = selectedNode.getX();
 		 			double posY = selectedNode.getY();
 		 			toNode = selectedNode.getNode();
-		 			T2 = new double[2];
-		 			T2[0] = posX;
-		 			T2[1] = posY;
 		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, "a");
-		 			ViewEdge newViewEdge = new ViewEdge(map.get(fromNode), map.get(toNode), newEdge);
+		 			ViewEdge newViewEdge = new ViewEdge(map, newEdge);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
 		 			selectedNode = null;
@@ -463,13 +457,14 @@ public class Display extends JComponent
 		double posY = (double) e.getY();
 		Point2D point = new Point2D.Double(posX, posY);
 			for (ViewEdge element : viewEdgeList) {
-
-	 		if (element.getLine().contains(point)) {
+			Line2D checkLine = (Line2D) element.getLine();
+	 		if (checkLine.ptSegDist(point) <= 5) {
 	 			selectedNode = null;
 	 			selectedEdge = element;
 	 			temp = true;
 	 		}
 	 	}
+	 	System.out.println(temp);
 	 	return temp;
 	 }
 
@@ -519,7 +514,7 @@ public class Display extends JComponent
 	    // selectedNode.setX(curX + distanceX);
 	    // selectedNode.setY(curY + distanceY);
 	    //selectedNode.makeStart();
-	    selectedNode.setStart();
+	    selectedNode.makeStart();
 	    selectedNode.moveCircle(e.getX(), e.getY());
 	    if (inDrag) {
 	      repaint();

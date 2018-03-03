@@ -1,7 +1,7 @@
 package edu.union.adt.view;
 
 import java.awt.geom.Ellipse2D;
-import edu.union.adt.fsm.Node;
+import edu.union.adt.fsm.*;
 import java.awt.geom.Line2D;
 
 public class ViewNode
@@ -24,6 +24,8 @@ public class ViewNode
     	posW = w;
         circle = new Ellipse2D.Double(posX - w/2, posY - w/2, w ,h);
         smallCircle = new Ellipse2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
+        startPathOne = new Line2D.Double();
+        startPathTwo = new Line2D.Double();
 
     }
 
@@ -57,23 +59,18 @@ public class ViewNode
     	circle.setFrame(x - posW/2, y-posW/2, posW, posW);
         smallCircle.setFrame(x - (posW/2 - 3.5), y-(posW/2 - 3.5), posW-7, posW-7); 
     }
-
+// Function to create the start symbol for the starting node
     public void makeStart() {
-        double radius = posW/2;
-        startPathOne = new Line2D.Double(posX - 3*(radius/2), posY - radius/2,posX - radius, posY);
-        startPathTwo = new Line2D.Double(posX - 3*(radius/2), posY + radius/2,posX - radius, posY);
-        
-        // startPath.moveTo(posX - 3*(radius/2), posY - radius/2);
-        // startPath.lineTo(posX - radius, posY);
-        // startPath.lineTo(posX - 3*(radius/2), posY + radius/2);
-        //startPath.closePath();
-    }
-
-    public void setStart() {
         double radius = posW/2;
         startPathOne.setLine(posX - 3*(radius/2), posY - radius/2,posX - radius, posY);
         startPathTwo.setLine(posX - 3*(radius/2), posY + radius/2,posX - radius, posY);
     }
+
+    // public void setStart() {
+    //     double radius = posW/2;
+    //     startPathOne.setLine(posX - 3*(radius/2), posY - radius/2,posX - radius, posY);
+    //     startPathTwo.setLine(posX - 3*(radius/2), posY + radius/2,posX - radius, posY);
+    // }
 
     public Line2D[] getStartShape() {
         Line2D[] startShape = new Line2D[2];

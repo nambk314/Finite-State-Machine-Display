@@ -1,9 +1,15 @@
 package edu.union.adt.view;
+//Package for shapes
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Path2D;
 import edu.union.adt.fsm.Edge;
+
 import java.lang.Math;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.union.adt.fsm.*;
 
 public class ViewEdge {
 
@@ -14,9 +20,19 @@ public class ViewEdge {
     ViewNode fromViewNode;
     ViewNode toViewNode;
     int diameter =50;
-
-
-
+//Constructor that take a hashmap and an edge as parameters
+    public ViewEdge(HashMap map, Edge newEdge) {
+        Node fromNode = newEdge.getFrom();
+        Node toNode = newEdge.getTo();
+        fromViewNode = (ViewNode) map.get(fromNode);
+        toViewNode = (ViewNode) map.get(toNode);
+        original[0] = fromViewNode.getX();
+        original[1] = fromViewNode.getY();
+        original[2] = toViewNode.getX();
+        original[3] = toViewNode.getY();
+        edge = newEdge;
+    }
+//Constructor that take a fromViewNode toViewNode and a newEdge as constructor
     public  ViewEdge(ViewNode fromViewNodeNew, ViewNode toViewNodeNew, Edge newEdge) {
 	// line = new Line2D.Double(x1, y1, x2, y2);
     fromViewNode = fromViewNodeNew;
@@ -25,18 +41,10 @@ public class ViewEdge {
 	original[1] = fromViewNode.getY();
 	original[2] = toViewNode.getX();
 	original[3] = toViewNode.getY();
-
-
-	// line = new Line2D.Double(niceLine(original)[0], niceLine(original)[1], niceLine(original)[2], niceLine(original)[3]);
-	// myPath = new Path2D.Double();
-	// myPath.moveTo(niceLine(original)[2], niceLine(original)[3]);
- //    myPath.lineTo(niceLine(original)[4], niceLine(original)[5]);
- //    myPath.lineTo(niceLine(original)[6], niceLine(original)[7]);
-	// myPath.closePath();
-
 	edge = newEdge;
     }
 
+    //Function that produce the nice line that do not go into the circle
     private double[] niceLine(double[] posList) {
         int radius = diameter/2;
     	double x1 = posList[0];
@@ -78,7 +86,16 @@ public class ViewEdge {
 
     	return newList;
     	 }
+//Function to get the line graphic to represent the edge
 
+    public void makeLine() {
+        original[0] = fromViewNode.getX();
+        original[1] = fromViewNode.getY();
+        original[2] = toViewNode.getX();
+        original[3] = toViewNode.getY();
+        line = new Line2D.Double(niceLine(original)[0], niceLine(original)[1], niceLine(original)[2], niceLine(original)[3]);
+        
+    }     
     public Line2D getLine() {
         original[0] = fromViewNode.getX();
         original[1] = fromViewNode.getY();
@@ -87,6 +104,14 @@ public class ViewEdge {
         line = new Line2D.Double(niceLine(original)[0], niceLine(original)[1], niceLine(original)[2], niceLine(original)[3]);
         
 		return line;
+    }
+
+    public void makePath() {
+        myPath = new Path2D.Double();
+        myPath.moveTo(niceLine(original)[2], niceLine(original)[3]);
+        myPath.lineTo(niceLine(original)[4], niceLine(original)[5]);
+        myPath.lineTo(niceLine(original)[6], niceLine(original)[7]);
+        myPath.closePath();
     }
 
     public Path2D getPath() {
