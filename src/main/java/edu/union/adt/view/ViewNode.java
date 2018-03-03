@@ -2,6 +2,7 @@ package edu.union.adt.view;
 
 import java.awt.geom.Ellipse2D;
 import edu.union.adt.fsm.Node;
+import java.awt.geom.Line2D;
 
 public class ViewNode
 {
@@ -11,14 +12,19 @@ public class ViewNode
     private double posY;
     private double posW;
     Ellipse2D.Double smallCircle;
+    Line2D startPathOne;
+    Line2D startPathTwo;
+    double diameter;
 
     public ViewNode(double x, double y, double w, double h, Node newNode) {
-    	circle = new Ellipse2D.Double(x - w/2, y - w/2, w ,h);
+    	
     	node = newNode;
     	posX = x;
     	posY = y;
     	posW = w;
-        smallCircle = new Ellipse2D.Double(x -(w/2 - 3.5), y-(w/2 - 3.5), w-7, h-7);
+        circle = new Ellipse2D.Double(posX - w/2, posY - w/2, w ,h);
+        smallCircle = new Ellipse2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
+
     }
 
     public Ellipse2D getCircle() {
@@ -38,22 +44,43 @@ public class ViewNode
     }
 
     public void setX(double x) {
-    	circle = new Ellipse2D.Double(x - posW/2, posY - posW/2, posW ,posW);
-    	posX = x;
+        posX = x;
     }
 
     public void setY(double y) {
-    	circle = new Ellipse2D.Double(posX - posW/2, y - posW/2, posW ,posW);
-    	posY = y;
+        posY = y;
     }
 
     public void moveCircle(double x, double y) {
         posX = x;
         posY = y;
-    	circle = new Ellipse2D.Double(x - posW/2, y-posW/2, posW, posW);
-        smallCircle = new Ellipse2D.Double(x - (posW/2 - 3.5), y-(posW/2 - 3.5), posW-7, posW-7); 
+    	circle.setFrame(x - posW/2, y-posW/2, posW, posW);
+        smallCircle.setFrame(x - (posW/2 - 3.5), y-(posW/2 - 3.5), posW-7, posW-7); 
     }
 
+    public void makeStart() {
+        double radius = posW/2;
+        startPathOne = new Line2D.Double(posX - 3*(radius/2), posY - radius/2,posX - radius, posY);
+        startPathTwo = new Line2D.Double(posX - 3*(radius/2), posY + radius/2,posX - radius, posY);
+        
+        // startPath.moveTo(posX - 3*(radius/2), posY - radius/2);
+        // startPath.lineTo(posX - radius, posY);
+        // startPath.lineTo(posX - 3*(radius/2), posY + radius/2);
+        //startPath.closePath();
+    }
+
+    public void setStart() {
+        double radius = posW/2;
+        startPathOne.setLine(posX - 3*(radius/2), posY - radius/2,posX - radius, posY);
+        startPathTwo.setLine(posX - 3*(radius/2), posY + radius/2,posX - radius, posY);
+    }
+
+    public Line2D[] getStartShape() {
+        Line2D[] startShape = new Line2D[2];
+        startShape[0] = startPathOne;
+        startShape[1] = startPathTwo;
+        return startShape;
+    }
     public boolean isAccept (){
         return node.getAccepting();
     }

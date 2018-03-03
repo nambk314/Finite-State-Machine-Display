@@ -43,7 +43,8 @@ import java.awt.event.KeyEvent;
 
 //For the node's name
 import javax.swing.JOptionPane;
-
+import java.util.HashMap;
+import java.util.Map;
 import edu.union.adt.fsm.*;
 import java.util.ArrayList;
 // import java.text.StringCharacterIterator;
@@ -95,6 +96,13 @@ public class Display extends JComponent
 	private double distanceX = 0;
 	private double distanceY = 0;
 
+	//Variable to indicated start view ndoe
+	private ViewNode startViewNode = null;
+
+
+	//Hash table to hold the key and value
+	HashMap<Node, ViewNode> map;
+
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
@@ -107,6 +115,7 @@ public class Display extends JComponent
 		finiteStateMachine = theFiniteStateMachine;
 
 		myHandler = new UpdateHandler(this, finiteStateMachine);
+		map = new HashMap<>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		buttonActions();
@@ -131,13 +140,22 @@ public class Display extends JComponent
 
 				if (piece.isAccept()) {
 					Ellipse2D smallCircle = piece.getSmallCircle();
-					g.setStroke(new BasicStroke(2));
-					g.setColor(Color.BLACK);
+					// g.setStroke(new BasicStroke(2));
+					// g.setColor(Color.BLACK);
 					g.draw(smallCircle);
 				}
 				int intX = (int)piece.getX();
 				int intY = (int)piece.getY();
-				g.drawString("a", intX, intY);
+				g.drawString(piece.getNode().getLabel(), intX, intY);
+
+				if (piece == startViewNode) {
+					startViewNode.makeStart();
+					Line2D[] startShape = startViewNode.getStartShape();
+					// g.setStroke(new BasicStroke(2));
+					// g.setColor(Color.BLACK);
+					g.draw(startShape[0]);
+					g.draw(startShape[1]);
+				}
 				//g.drawString("a", 100, 100);
 			}
 			ViewEdge egdePiece;
@@ -147,11 +165,19 @@ public class Display extends JComponent
 				egdePiece = viewEdgeList.get(i);
 				Line2D line = egdePiece.getLine();
 				Path2D path = egdePiece.getPath();
-				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLACK);
+				// g.setStroke(new BasicStroke(2));
+				// g.setColor(Color.BLACK);
 				g.draw(line);
 				g.draw(path);
 			}
+
+			// if (startViewNode != null) {
+			// 	startViewNode.makeStart();
+			// 	Path2D startShape = startViewNode.getStartShape();
+			// 	// g.setStroke(new BasicStroke(2));
+			// 	// g.setColor(Color.BLACK);
+			// 	g.draw(startShape);
+			// }
 
 			// if (selectedNode != null && Pressed.equals("D")) {
 			// 	Ellipse2D circle = selectedNode.getCircle();
@@ -259,22 +285,6 @@ public class Display extends JComponent
 	        }
 	    });
 
-	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "pressed E");
-	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "released E");
-	    Ac.put("pressed E", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	Pressed = "E";
-	                System.out.println("Pressed E");
-	            }
-	        });
-
-	    Ac.put("released E", new AbstractAction() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            System.out.println("released E");
-	        }
-	    });
 
 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, false), "pressed T");
 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, true), "released T");
@@ -327,6 +337,23 @@ public class Display extends JComponent
 	        }
 	    });
 
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, false), "pressed H");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, true), "released H");
+	    Ac.put("pressed H", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Pressed = "H";
+	                System.out.println("Pressed H");
+	            }
+	        });
+
+	    Ac.put("released H", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            System.out.println("released H");
+	        }
+	    });
+
 
 	    setFocusable(true);
 	    requestFocusInWindow();
@@ -345,10 +372,17 @@ public class Display extends JComponent
 	 		selectedNode = null;
 	 		System.out.println("click S");
 	 		String name = JOptionPane.showInputDialog("Please input a chararter for the node name");
-	 		System.out.println(nameChar);
-	 		Node newNode = finiteStateMachine.addNode(nameChar);
-	 		ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
-	 		viewNodeList.add(newViewNode);
+	 		if (name.equals("")) {
+	 			name = JOptionPane.showInputDialog("You can not have node without label");
+	 		}
+	 		System.out.println(name);
+	 		Node newNode = finiteStateMachine.addNode(name);
+	 		if (newNode != null) {
+	 			ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
+	 			viewNodeList.add(newViewNode);
+	 			map.put(newNode, newViewNode);
+	 		}
+	 		
 	 		repaint();
 	 	}
 
@@ -386,7 +420,7 @@ public class Display extends JComponent
 		 			T2[0] = posX;
 		 			T2[1] = posY;
 		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, "a");
-		 			ViewEdge newViewEdge = new ViewEdge(T1[0],T1[1],T2[0],T2[1], newEdge);
+		 			ViewEdge newViewEdge = new ViewEdge(map.get(fromNode), map.get(toNode), newEdge);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
 		 			selectedNode = null;
@@ -398,6 +432,13 @@ public class Display extends JComponent
 	 	if (Pressed.equals("A")) {
 	 		if (checkOccupied) {
 	 			finiteStateMachine.changeAccept(selectedNode.getNode());
+	 			repaint();
+	 		}
+	 	}
+
+	 	if (Pressed.equals("H")) {
+	 		if (checkOccupied) {
+	 			startViewNode = selectedNode;
 	 			repaint();
 	 		}
 	 	}
@@ -447,7 +488,7 @@ public class Display extends JComponent
      }
      public void mousePressed(MouseEvent e)
      {
-     	System.out.println("mousePressed at " + e.getX() + ", " + e.getY());
+     	//System.out.println("mousePressed at " + e.getX() + ", " + e.getY());
      	if (Pressed.equals("D") && isStateOccupied(e)){
 
 		    distanceX = e.getX();
@@ -477,6 +518,8 @@ public class Display extends JComponent
 	    double curY = selectedNode.getY();
 	    // selectedNode.setX(curX + distanceX);
 	    // selectedNode.setY(curY + distanceY);
+	    //selectedNode.makeStart();
+	    selectedNode.setStart();
 	    selectedNode.moveCircle(e.getX(), e.getY());
 	    if (inDrag) {
 	      repaint();
