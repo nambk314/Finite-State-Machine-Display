@@ -20,6 +20,7 @@ public class ViewEdge {
     ViewNode fromViewNode;
     ViewNode toViewNode;
     int diameter =50;
+    HashMap<Node, ViewNode> map;
 
 //Constructor that take a hashmap and an edge as parameters
     public ViewEdge(HashMap map, Edge newEdge) {

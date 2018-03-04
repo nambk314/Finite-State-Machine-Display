@@ -7,11 +7,16 @@ import java.awt.geom.Line2D;
 public class ViewNode
 {
     Node node; //String, boolean
+
+ //For circle shape   
     Ellipse2D.Double circle; // int int int int
+    Ellipse2D.Double smallCircle;
+
+    
     private double posX;
     private double posY;
     private double posW;
-    Ellipse2D.Double smallCircle;
+    
     Line2D startPathOne;
     Line2D startPathTwo;
     double diameter;
