@@ -71,11 +71,7 @@ public class FileOpener
           Node to = StringToNode.get(tokens[1]);
           Node from = StringToNode.get(tokens[2]);
           Edge newEdge = fsm.addEdge(from,to,label);
-          ViewEdge newVE = new ViewEdge(nodeToViewNode.get(from).getX(),
-                                        nodeToViewNode.get(from).getY(),
-                                        nodeToViewNode.get(to).getX(),
-                                        nodeToViewNode.get(to).getY(),
-                                        newEdge);
+          ViewEdge newVE = new ViewEdge(nodeToViewNode, newEdge);
         }
 
          return true;
