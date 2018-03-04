@@ -20,6 +20,7 @@ public class ViewEdge {
     ViewNode fromViewNode;
     ViewNode toViewNode;
     int diameter =50;
+
 //Constructor that take a hashmap and an edge as parameters
     public ViewEdge(HashMap map, Edge newEdge) {
         Node fromNode = newEdge.getFrom();
@@ -125,6 +126,16 @@ public class ViewEdge {
 
     public Edge getEdge(){
       return this.edge;
+    }
+//Position the label equal to 1/4 the total length of the edge
+    public double getTextX() {
+        double textX = (3*original[0] + original[2])/4;
+        return textX;
+    }
+
+    public double getTextY() {
+        double textY = (3*original[1] + original[3])/4;
+        return textY;
     }
 
 }

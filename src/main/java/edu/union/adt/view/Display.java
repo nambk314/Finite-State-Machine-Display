@@ -142,9 +142,9 @@ public class Display extends JComponent
 					// g.setColor(Color.BLACK);
 					g.draw(smallCircle);
 				}
-				int intX = (int)piece.getX();
-				int intY = (int)piece.getY();
-				g.drawString(piece.getNode().getLabel(), intX, intY);
+				int stateX = (int)piece.getX();
+				int stateY = (int)piece.getY();
+				g.drawString(piece.getNode().getLabel(), stateX, stateY);
 
 				if (piece == startViewNode) {
 					startViewNode.makeStart();
@@ -156,17 +156,21 @@ public class Display extends JComponent
 				}
 				//g.drawString("a", 100, 100);
 			}
-			ViewEdge egdePiece;
+			ViewEdge edgePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
-
-
-				egdePiece = viewEdgeList.get(i);
-				Line2D line = egdePiece.getLine();
-				Path2D path = egdePiece.getPath();
+				edgePiece = viewEdgeList.get(i);
+				
+				
+				Line2D line = edgePiece.getLine();
+				Path2D path = edgePiece.getPath();
 				// g.setStroke(new BasicStroke(2));
 				// g.setColor(Color.BLACK);
 				g.draw(line);
 				g.draw(path);
+				int edgeX = (int)edgePiece.getTextX() - 10;
+				int edgeY = (int)edgePiece.getTextY()  - 10;
+				g.drawString(edgePiece.getEdge().getLabel(), edgeX, edgeY);
+
 			}
 
 			// if (startViewNode != null) {
@@ -179,7 +183,7 @@ public class Display extends JComponent
 
 			if (selectedEdge != null && Pressed.equals("E")) {
 				Line2D selectedLine = selectedEdge.getLine();
-				Line2D selectedPath = selectedPath.getPath();
+				Path2D selectedPath = selectedEdge.getPath();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(Color.BLUE);
 				g.draw(selectedLine);
@@ -372,7 +376,7 @@ public class Display extends JComponent
 	 		selectedNode = null;
 	 		System.out.println("click S");
 	 		String name = JOptionPane.showInputDialog("Please input a chararter for the node name");
-	 		if (name.equals("")) {
+	 		while (name.equals("")) {
 	 			name = JOptionPane.showInputDialog("You can not have node without label");
 	 		}
 	 		System.out.println(name);
@@ -393,7 +397,19 @@ public class Display extends JComponent
 
 	 	if (Pressed.equals("E")) {
 	 		tCount = 1;
-	 		if (checkOccupied || checkOccupied2) {
+	 		if (checkOccupied) {
+	 			String newNodeName = JOptionPane.showInputDialog("Please input a chararter for the node name");
+		 		while (newNodeName.equals("") || finiteStateMachine.setNodeLabel(selectedNode.getNode(), newNodeName) == false) {
+		 			newNodeName = JOptionPane.showInputDialog("Your label can not be blank or be the same as other nodes");
+		 		}
+
+	 			repaint();
+	 		} else if (checkOccupied2) {
+	 			String newEdgeName = JOptionPane.showInputDialog("Please input a chararter for the node name");
+		 		while (newEdgeName.equals("")) {
+		 			newEdgeName = JOptionPane.showInputDialog("Your label can not be blank or be the same as other nodes");
+		 		}
+		 		finiteStateMachine.setEdgeLabel(selectedEdge.getEdge(), newEdgeName);
 	 			repaint();
 	 		}
 
@@ -413,7 +429,12 @@ public class Display extends JComponent
  		 			double posX = selectedNode.getX();
 		 			double posY = selectedNode.getY();
 		 			toNode = selectedNode.getNode();
-		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, "a");
+		 			String edgeName = JOptionPane.showInputDialog("Please input a chararter for the edge name");
+			 		while (edgeName.equals("")) {
+			 			edgeName = JOptionPane.showInputDialog("You can not have edge without label");
+			 		}
+			 		System.out.println(edgeName);
+		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, edgeName);
 		 			ViewEdge newViewEdge = new ViewEdge(map, newEdge);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
