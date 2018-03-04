@@ -102,6 +102,9 @@ public class Display extends JComponent
 	//Hash table to hold the key and value
 	HashMap<Node, ViewNode> map;
 
+	//File saver variable
+	FileSaver file;
+
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
@@ -376,6 +379,32 @@ public class Display extends JComponent
 	        public void actionPerformed(ActionEvent e) {
 
 	            System.out.println("released P");
+	            repaint();
+	        }
+	    });
+
+//TEST SAVING
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0, false), "pressed L");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0, true), "released L");
+	    Ac.put("pressed L", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	String fileName = JOptionPane.showInputDialog("Please input a name for the file name");
+			 		while (fileName.equals("")) {
+			 			fileName = JOptionPane.showInputDialog("You can not have a file without a name");
+			 		}
+	            	file = new FileSaver(fileName)
+	            	file.save(finiteStateMachine);
+	            	Pressed = "L";
+	                System.out.println("Pressed L");
+	            }
+	        });
+
+	    Ac.put("released L", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+
+	            System.out.println("released L");
 	            repaint();
 	        }
 	    });
