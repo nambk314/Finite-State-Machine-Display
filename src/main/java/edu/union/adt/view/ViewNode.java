@@ -71,17 +71,17 @@ public class ViewNode
     }
 
     public Color getColor() {
-        Color mainColor = Color.getColor(theme[1].trim().toUpperCase());        
-        // switch (theme[1].trim().toUpperCase()) {
-        //     case "BLACK":
-        //     mainColor = Color.getColor(theme[1].trim().toUpperCase);
-
-        //     case "BLUE":
-        //     mainColor = BLUE;
-
-        //     default:
-        //     mainColor = null;
-        // }
+        Color mainColor = Color.BLACK;        
+        switch (theme[1]) {
+            case "black":
+            mainColor = Color.BLACK;
+            break;
+            case "blue":
+            mainColor = Color.BLUE;
+            break;
+            default:
+            mainColor = null;
+        }
 
         return mainColor;
     }

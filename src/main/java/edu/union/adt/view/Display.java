@@ -365,7 +365,7 @@ public class Display extends JComponent
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	ViewNode temp = viewNodeList.get(0);
-	            	temp.changeTheme("rectangle", "black");
+	            	temp.changeTheme("rectangle", "blue");
 	            	Pressed = "P";
 	                System.out.println("Pressed P");
 	            }
