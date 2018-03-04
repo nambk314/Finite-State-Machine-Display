@@ -3,6 +3,9 @@ package edu.union.adt.view;
 import java.awt.geom.Ellipse2D;
 import edu.union.adt.fsm.*;
 import java.awt.geom.Line2D;
+import java.awt.Color;
+import java.awt.geom.RectangularShape;
+import java.awt.geom.Rectangle2D;
 
 public class ViewNode
 {
@@ -11,8 +14,10 @@ public class ViewNode
  //For circle shape   
     Ellipse2D.Double circle; // int int int int
     Ellipse2D.Double smallCircle;
-
+//For Square shape
+    Rectangle2D.Double rectangle;
     
+    static String[] theme;
     private double posX;
     private double posY;
     private double posW;
@@ -27,15 +32,30 @@ public class ViewNode
     	posX = x;
     	posY = y;
     	posW = w;
+        theme = new String[]{"circle", "black"};
         circle = new Ellipse2D.Double(posX - w/2, posY - w/2, w ,h);
+        rectangle = new Rectangle2D.Double(posX - w/2, posY - w/2, w ,h);
         smallCircle = new Ellipse2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
         startPathOne = new Line2D.Double();
         startPathTwo = new Line2D.Double();
 
-    }
 
-    public Ellipse2D getCircle() {
-    	return circle;
+    }
+//Getter method
+    public RectangularShape getNodeShape() {
+        RectangularShape shape;
+    	switch (theme[0]) {
+            case "rectangle":
+            shape = (RectangularShape) rectangle;
+            break;
+            case "circle":
+            shape = (RectangularShape) circle;
+            break;
+            default:
+            shape = (RectangularShape) circle;
+        }
+        
+        return shape;
     }
 
     public Node getNode() {
@@ -50,6 +70,23 @@ public class ViewNode
     	return posY;
     }
 
+    public Color getColor() {
+        Color mainColor = Color.getColor(theme[1].trim().toUpperCase());        
+        // switch (theme[1].trim().toUpperCase()) {
+        //     case "BLACK":
+        //     mainColor = Color.getColor(theme[1].trim().toUpperCase);
+
+        //     case "BLUE":
+        //     mainColor = BLUE;
+
+        //     default:
+        //     mainColor = null;
+        // }
+
+        return mainColor;
+    }
+
+//Setter methods
     public void setX(double x) {
         posX = x;
     }
@@ -58,7 +95,15 @@ public class ViewNode
         posY = y;
     }
 
-    public void moveCircle(double x, double y) {
+    public void setTheme(String shape, String color) {
+        theme[0] = shape;
+        theme[1] = color;
+    }
+
+    public void makeShape() {
+       
+    }
+    public void moveShape(double x, double y) {
         posX = x;
         posY = y;
     	circle.setFrame(x - posW/2, y-posW/2, posW, posW);
@@ -87,8 +132,13 @@ public class ViewNode
         return node.getAccepting();
     }
 
-    public Ellipse2D getSmallCircle() {
+    public Ellipse2D getSmallShape() {
         return smallCircle;
+    }
+
+    public void changeTheme(String shape, String color) {
+        theme[0] = shape;
+        theme[1] = color;
     }
 
 }

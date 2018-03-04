@@ -25,9 +25,10 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.RectangularShape;
 
 import java.awt.Shape;
-
+import java.awt.Color;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -131,13 +132,13 @@ public class Display extends JComponent
 			for (int i = 0; i < viewNodeList.size(); i++) {
 				piece = viewNodeList.get(i);
 				// Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
-				Ellipse2D circle = piece.getCircle();
+				RectangularShape Shape = piece.getNodeShape();
 				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLACK);
-				g.draw(circle);
+				g.setColor(piece.getColor());
+				g.draw(Shape);
 
 				if (piece.isAccept()) {
-					Ellipse2D smallCircle = piece.getSmallCircle();
+					Ellipse2D smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
 					// g.setColor(Color.BLACK);
 					g.draw(smallCircle);
@@ -357,6 +358,27 @@ public class Display extends JComponent
 	            System.out.println("released H");
 	        }
 	    });
+//TEST CHANGING THEME
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "pressed P");
+	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, true), "released P");
+	    Ac.put("pressed P", new AbstractAction() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	ViewNode temp = viewNodeList.get(0);
+	            	temp.changeTheme("rectangle", "black");
+	            	Pressed = "P";
+	                System.out.println("Pressed P");
+	            }
+	        });
+
+	    Ac.put("released P", new AbstractAction() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+
+	            System.out.println("released P");
+	            repaint();
+	        }
+	    });
 
 
 	    setFocusable(true);
@@ -462,7 +484,7 @@ public class Display extends JComponent
 	 private boolean isStateOccupied (MouseEvent e) {
 	 	boolean temp = false;
 	 	for (ViewNode element : viewNodeList) {
-	 		if (element.getCircle().contains(e.getX(), e.getY())) {
+	 		if (element.getNodeShape().contains(e.getX(), e.getY())) {
 	 			selectedNode = element;
 	 			selectedEdge = null;
 	 			temp = true;
@@ -536,7 +558,7 @@ public class Display extends JComponent
 	    // selectedNode.setY(curY + distanceY);
 	    //selectedNode.makeStart();
 	    selectedNode.makeStart();
-	    selectedNode.moveCircle(e.getX(), e.getY());
+	    selectedNode.moveShape(e.getX(), e.getY());
 	    if (inDrag) {
 	      repaint();
 	    }
