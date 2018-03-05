@@ -115,6 +115,9 @@ public class Display extends JComponent
 	//File saver variable
 	FileSaver file;
 
+	//For testing theme
+	int themeCount = 0;
+
 	//Buttons
 	private JButton open = new JButton("Open"), save = new JButton("Save");
 
@@ -148,6 +151,7 @@ public class Display extends JComponent
 			for (int i = 0; i < viewNodeList.size(); i++) {
 				piece = viewNodeList.get(i);
 				// Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
+				piece.makeShape();
 				RectangularShape Shape = piece.getNodeShape();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(piece.getColor());
@@ -385,7 +389,14 @@ public class Display extends JComponent
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	            	ViewNode temp = viewNodeList.get(0);
-	            	temp.changeTheme("rectangle", "blue");
+	            	if (themeCount % 2 == 0) {
+	            		temp.changeTheme("rectangle", "blue");
+	            		themeCount = 1;
+	            	} else if (themeCount % 2 == 1){
+	            		temp.changeTheme("circle", "black");
+	            		themeCount = 0;
+	            	}
+	            	
 	            	Pressed = "P";
 	                System.out.println("Pressed P");
 	            }

@@ -101,13 +101,36 @@ public class ViewNode
     }
 
     public void makeShape() {
-       
+       switch (theme[0]) {
+            case "rectangle":
+            rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
+        
+            break;
+            case "circle":
+            circle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
+            smallCircle.setFrame(posX - (posW/2 - 3.5), posY-(posW/2 - 3.5), posW-7, posW-7); 
+            break;
+            default:
+            
+        }
     }
     public void moveShape(double x, double y) {
         posX = x;
         posY = y;
-    	circle.setFrame(x - posW/2, y-posW/2, posW, posW);
-        smallCircle.setFrame(x - (posW/2 - 3.5), y-(posW/2 - 3.5), posW-7, posW-7); 
+
+        switch (theme[0]) {
+            case "rectangle":
+            rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
+        
+            break;
+            case "circle":
+            circle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
+            smallCircle.setFrame(posX - (posW/2 - 3.5), posY-(posW/2 - 3.5), posW-7, posW-7); 
+            break;
+            default:
+            
+        }
+    	
     }
 // Function to create the start symbol for the starting node
     public void makeStart() {
