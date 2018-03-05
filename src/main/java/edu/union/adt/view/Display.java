@@ -48,6 +48,16 @@ import java.util.HashMap;
 import java.util.Map;
 import edu.union.adt.fsm.*;
 import java.util.ArrayList;
+//Buttons, textField, FileChooser
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 // import java.text.StringCharacterIterator;
 // import java.text.AttributedCharacterIterator;
 
@@ -81,8 +91,8 @@ public class Display extends JComponent
 	private ViewEdge selectedEdge = null;
 
 	//Keep track of viewNode and edgeNode
-	private ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
-	private ArrayList<ViewEdge> viewEdgeList = new ArrayList<ViewEdge>();
+	ArrayList<ViewNode> viewNodeList = new ArrayList<ViewNode>();
+	ArrayList<ViewEdge> viewEdgeList = new ArrayList<ViewEdge>();
 
 	//count number of time T being press
 	private int tCount = 1;
@@ -105,14 +115,17 @@ public class Display extends JComponent
 	//File saver variable
 	FileSaver file;
 
+	//Buttons
+	private JButton open = new JButton("Open"), save = new JButton("Save");
+
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
 		this.setFont(myFont);
 		FontMetrics metrics = getFontMetrics(myFont);
 
-		setSize(new Dimension(400, 400));
-		setPreferredSize(new Dimension(400, 400));
+		setSize(new Dimension(1000, 1000));
+		setPreferredSize(new Dimension(1000, 1000));
 
 		finiteStateMachine = theFiniteStateMachine;
 
