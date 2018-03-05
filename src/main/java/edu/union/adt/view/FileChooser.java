@@ -71,11 +71,8 @@ public class FileChooser extends JComponent {
         String fileName = c.getSelectedFile().getName();
         // dir.setText(c.getCurrentDirectory().toString());
 
-        FileSaver file = new FileSaver(fileName);
-        ArrayList<ArrayList> ViewMachine = new ArrayList<>();
-        ViewMachine.add(display.viewNodeList);
-        ViewMachine.add(display.viewEdgeList);
-        file.save(ViewMachine);
+        FileOpener file = new FileOpener(fileName);
+        file.open(finiteStateMachine, display);
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
         // filename.setText("You pressed cancel");

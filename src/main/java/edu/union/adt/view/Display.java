@@ -244,6 +244,10 @@ public class Display extends JComponent
 		new Thread(myHandler).start();
 	}
 
+	public void paint(){
+		repaint();
+	}
+
 	public void go()
 	{
 		addMouseListener(this);

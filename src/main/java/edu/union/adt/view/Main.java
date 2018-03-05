@@ -31,7 +31,7 @@ public class Main {
 		frame.pack();
 		frame.setVisible(true);
 		
-		finiteStateMachine.addListener(display);
+		//finiteStateMachine.addListener(display);
 		
 		display.go();
 	}

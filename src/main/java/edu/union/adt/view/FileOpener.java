@@ -2,6 +2,7 @@ package edu.union.adt.view;
 
 import java.io.*;
 import java.util.*;
+import java.util.ArrayList;
 import edu.union.adt.fsm.*;
 
 public class FileOpener
@@ -14,10 +15,11 @@ public class FileOpener
      FileReader fr;
      double SIZE = 50;
 
-    public void FileOpener(String filename)
+    public FileOpener(String filename)
     {
       try {
-      f = new File(filename);
+      String textFile = filename + ".txt";
+      f = new File(textFile);
       fr = new FileReader(f);
       br = new BufferedReader(fr);
     } catch (IOException ioexcept) {
@@ -25,19 +27,21 @@ public class FileOpener
     }
   }
 
-    /**
+    /** 
      * Saves the given machine to the file
      * The machine is an ArrayList containing two Arraylists
      * the first contained ArrayList is of ViewNodes
      * the second contained ArrayList is of ViewEdges
      */
-    public boolean open(FSM fsm)
+    public boolean open(ConcreteFSM fsm, Display display)
     {
       try {
         //The next three elements should be returned somehow
-        ArrayList<ViewEdge> viewEdges = new ArrayList();
-        ArrayList<ViewNode> viewNodes = new ArrayList();
-        HashMap<Node,ViewNode> nodeToViewNode = new HashMap<Node,ViewNode>();
+        ArrayList<ViewEdge> viewEdgeList = new ArrayList();
+        ArrayList<ViewNode> viewNodeList = new ArrayList();
+        
+        HashMap<Node,ViewNode> map = new HashMap<Node,ViewNode>();
+        
 
         HashMap<String,Node> StringToNode = new HashMap<String,Node>();
 
@@ -53,11 +57,11 @@ public class FileOpener
 
           Node newNode = fsm.addNode(label);
           ViewNode newV = new ViewNode(x, y, this.SIZE, this.SIZE, newNode);
-          viewNodes.add(newV);
+          display.viewNodeList.add(newV);
 
           StringToNode.put(label,newNode);
 
-          nodeToViewNode.put(newNode,newV);
+          map.put(newNode,newV);
 
           line = br.readLine();
         }
@@ -71,9 +75,16 @@ public class FileOpener
           Node to = StringToNode.get(tokens[1]);
           Node from = StringToNode.get(tokens[2]);
           Edge newEdge = fsm.addEdge(from,to,label);
-          ViewEdge newVE = new ViewEdge(nodeToViewNode, newEdge);
+          ViewEdge newVE = new ViewEdge(map, newEdge);
+          display.viewEdgeList.add(newVE);
         }
 
+         
+
+         display.viewNodeList = new ArrayList<ViewNode>(viewNodeList);
+         display.viewEdgeList = new ArrayList<ViewEdge>(viewEdgeList);         
+         display.map = new HashMap<Node,ViewNode>(map);
+         display.paint();
          return true;
       } catch (IOException ioexcept) {
           return false;
