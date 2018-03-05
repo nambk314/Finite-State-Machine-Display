@@ -389,12 +389,7 @@ public class Display extends JComponent
 	    Ac.put("pressed L", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	String fileName = JOptionPane.showInputDialog("Please input a name for the file name");
-			 		while (fileName.equals("")) {
-			 			fileName = JOptionPane.showInputDialog("You can not have a file without a name");
-			 		}
-	            	file = new FileSaver(fileName)
-	            	file.save(finiteStateMachine);
+	            	
 	            	Pressed = "L";
 	                System.out.println("Pressed L");
 	            }
@@ -405,7 +400,6 @@ public class Display extends JComponent
 	        public void actionPerformed(ActionEvent e) {
 
 	            System.out.println("released L");
-	            repaint();
 	        }
 	    });
 
@@ -508,7 +502,21 @@ public class Display extends JComponent
 	 			repaint();
 	 		}
 	 	}
+
+	 	if(Pressed.equals("L")) {
+	 		String fileName = JOptionPane.showInputDialog("Please input a name for the file name");
+	 		while (fileName.equals("")) {
+	 			fileName = JOptionPane.showInputDialog("You can not have a file without a name");
+	 		}
+	    	file = new FileSaver(fileName);
+	    	ArrayList<ArrayList> ViewMachine = new ArrayList<>();
+	    	ViewMachine.add(viewNodeList);
+	    	ViewMachine.add(viewEdgeList);
+	    	file.save(ViewMachine);
+	    	System.out.println("saving");
+	 	}
 	 }
+
 	 //Check if the place the mouse click is occupied or not
 	 private boolean isStateOccupied (MouseEvent e) {
 	 	boolean temp = false;

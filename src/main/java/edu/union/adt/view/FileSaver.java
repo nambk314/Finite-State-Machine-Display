@@ -15,7 +15,8 @@ public class FileSaver
     public FileSaver(String filename)
     {
       try {
-      f = new File(filename);
+      String fullname = filename+".txt";  
+      f = new File(fullname);
       fw = new FileWriter(f);
     } catch (IOException ioexcept) {
     }
@@ -28,8 +29,9 @@ public class FileSaver
      * the second contained ArrayList is of ViewEdges
      * ViewEdges and ViewNodes are used so position can be saved
      */
-    public boolean save(ArrayList ViewMachine)
+    public void save(ArrayList ViewMachine)
     {
+
       // DECIDE WHETHER USING VIEWNODES / ViewEdges
       // OR NODES / EDGES
       // NODE SECTION USING NODES CURRENTLY
@@ -49,7 +51,7 @@ public class FileSaver
           fw.write("\n");
         }
         fw.write("EDGES\n");
-        ArrayList viewEdges = (ArrayList)ViewMachine.get(0);
+        ArrayList viewEdges = (ArrayList)ViewMachine.get(1);
         for (Object o : viewEdges){
           ViewEdge e = (ViewEdge)o;
           fw.write(String.valueOf(e.getEdge().getLabel()));
@@ -59,9 +61,11 @@ public class FileSaver
           fw.write(String.valueOf(e.getEdge().getFrom().getLabel()));
           fw.write("\n");
         }
-        return true;
+
+        fw.close();
+        // return true;
     } catch (IOException ioexcept) {
-        return false;
+        // return false;
     }
     }
 }
