@@ -16,7 +16,7 @@ public class ViewNode
     Ellipse2D.Double smallCircle;
 //For Square shape
     Rectangle2D.Double rectangle;
-    
+    Rectangle2D.Double smallRectangle;
     static String[] theme;
     private double posX;
     private double posY;
@@ -36,6 +36,7 @@ public class ViewNode
         circle = new Ellipse2D.Double(posX - w/2, posY - w/2, w ,h);
         rectangle = new Rectangle2D.Double(posX - w/2, posY - w/2, w ,h);
         smallCircle = new Ellipse2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
+        smallRectangle = new Rectangle2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
         startPathOne = new Line2D.Double();
         startPathTwo = new Line2D.Double();
 
@@ -121,7 +122,7 @@ public class ViewNode
         switch (theme[0]) {
             case "rectangle":
             rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
-        
+        	smallRectangle.setFrame(posX - (posW/2 - 3.5), posY-(posW/2 - 3.5), posW-7, posW-7); 
             break;
             case "circle":
             circle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
@@ -155,8 +156,20 @@ public class ViewNode
         return node.getAccepting();
     }
 
-    public Ellipse2D getSmallShape() {
-        return smallCircle;
+    public RectangularShape getSmallShape() {
+    	RectangularShape shape;
+    	switch (theme[0]) {
+            case "rectangle":
+            shape = (RectangularShape) smallRectangle;
+            break;
+            case "circle":
+            shape = (RectangularShape) smallCircle;
+            break;
+            default:
+            shape = (RectangularShape) circle;
+        }
+        
+        return shape;
     }
 
     public void changeTheme(String shape, String color) {

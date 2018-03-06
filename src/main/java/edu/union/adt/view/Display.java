@@ -158,7 +158,7 @@ public class Display extends JComponent
 				g.draw(Shape);
 
 				if (piece.isAccept()) {
-					Ellipse2D smallCircle = piece.getSmallShape();
+					RectangularShape smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
 					// g.setColor(Color.BLACK);
 					g.draw(smallCircle);
