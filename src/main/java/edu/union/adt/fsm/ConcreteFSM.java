@@ -123,15 +123,19 @@ public class ConcreteFSM implements FSM
        ArrayList<Node> toReturn = new ArrayList<Node>();
 
        //get all initial edges from starting nodes that have ϵ-edges
-       for (Node initialNode : nodes){
+       ArrayList<Node> newerNodes = new ArrayList<Node>();
+      for (Node initialNode : nodes){
+        do{
+          newerNodes.clear();
          for (Edge potentialE : this.Edges){
            if ((potentialE.from == initialNode) && (potentialE.hasTransition("ϵ"))){
-             if (!nodes.contains(potentialE.from)){
-               nodes.add(potentialE.from);
+             if (!nodes.contains(potentialE.to)){
+               nodes.add(potentialE.to);
+               newerNodes.add(potentialE.to)
              }
            }
          }
-       }
+       } while (newerNodes.size() != 0)
 
        //checks for the transition
        for (Node nodeCheck : nodes){
