@@ -82,7 +82,7 @@ public class ConcreteFSM implements FSM
 
     public void setEdgeLabel(Edge toEdit, String newLabel)
     {
-      toEdit.label = newLabel;
+      toEdit.setLabel(newLabel);
       // notifyListeners();
     }
 
@@ -113,6 +113,47 @@ public class ConcreteFSM implements FSM
       toReturn.add(Edges);
       return toReturn;
     }
+
+
+    /**
+     * Takes an ArrayList of Nodes and a string, returns
+     * an ArrayList of Nodes which can be reached.
+     */
+     public ArrayList<Node> getNextStates(ArrayList<Node> nodes, String transition){
+       ArrayList<Node> toReturn = new ArrayList<Node>();
+
+       //get all initial edges from starting nodes that have ϵ-edges
+       for (Node initialNode : nodes){
+         for (Edge potentialE : this.Edges){
+           if ((potentialE.from == initialNode) && (potentialE.hasTransition("ϵ"))){
+             if (!nodes.contains(potentialE.from)){
+               nodes.add(potentialE.from);
+             }
+           }
+         }
+       }
+
+       //checks for the transition
+       for (Node nodeCheck : nodes){
+         for (Edge checkEdge : this.Edges){
+           if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
+             if (!toReturn.contains(checkEdge.to)){
+               toReturn.add(checkEdge.to);
+             }
+           }
+         }
+       }
+       return toReturn;
+     }
+
+     /**
+      * Takes an ArrayList of Strings
+      * returns whether or not an accepting state is reached
+      */
+      public boolean isSeriesAccepted(ArrayList<String> series){
+        return false;
+      }
+
 
     /**
      * Lets views know that an update has occurred
