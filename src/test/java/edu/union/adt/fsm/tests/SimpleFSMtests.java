@@ -39,7 +39,7 @@ public class SimpleFSMtests
     @Test
     public void construct()
     {
-    	fsm = new FSMfactory().createFSM();
+	fsm = new FSMfactory().createFSM();
 	assertFalse("Constructing an FSM does not cause null",fsm.equals(null));
     }
 
@@ -47,12 +47,12 @@ public class SimpleFSMtests
     public void nodeConstructor()
     {
       Node a = new Node("a");
-      assertEquals("adding a node with label 'a' creates a node with label 'a'","a",a.getLabel());
+      assertEquals("Making a node with label 'a' creates a node with label 'a'","a",a.getLabel());
     }
 
     @Test
     public void addNode()
-    {
+     {
 	FSM fsm = new FSMfactory().createFSM();
 	Node nodeOne = fsm.addNode("a");
 	assertEquals("Adding 'a' will cause it to exist in the empty FSM", true, fsm.containsNode(nodeOne));
@@ -71,6 +71,7 @@ public class SimpleFSMtests
 	assertEquals("If the start is not set, there is no start node",null,fsm.getStart());
 	fsm.setStart(b);
 	assertEquals("After the start is set to 'b', there is a start and it's 'b'",b,fsm.getStart());
+	
 
     }
 
@@ -93,7 +94,8 @@ public class SimpleFSMtests
       FSM fsm = new FSMfactory().createFSM();
       Node a = fsm.addNode("a");
       Node b = fsm.addNode("b");
-      Edge ab = new Edge(a,b,"");
+      Edge ab = new Edge(a,b,"hi");
+      assertEquals("Creating an edge with label 'hi' causes it to exist","hi",ab.getLabel());
     }
 
 
