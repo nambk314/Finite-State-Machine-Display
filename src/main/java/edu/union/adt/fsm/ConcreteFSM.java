@@ -14,6 +14,9 @@ public class ConcreteFSM implements FSM
     /**
      * Set which node is the start
      */
+    public ConcreteFSM () {
+      listeners = new ArrayList();
+    }
      public void setStart(Node toStart){
        this.start = toStart;
      }

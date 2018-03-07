@@ -105,7 +105,7 @@ public class ViewNode
        switch (theme[0]) {
             case "rectangle":
             rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
-        
+        	smallRectangle.setFrame(posX - (posW/2 - 3.5), posY-(posW/2 - 3.5), posW-7, posW-7); 
             break;
             case "circle":
             circle.setFrame(posX - posW/2, posY-posW/2, posW, posW);

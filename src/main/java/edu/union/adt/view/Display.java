@@ -134,8 +134,6 @@ public class Display extends JComponent
 
 		myHandler = new UpdateHandler(this, finiteStateMachine);
 		map = new HashMap<>();
-		addMouseListener(this);
-		addMouseMotionListener(this);
 		buttonActions();
 
 	}
@@ -255,6 +253,7 @@ public class Display extends JComponent
 	public void go()
 	{
 		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 
 	//Handling the keyboard actions
@@ -459,8 +458,8 @@ public class Display extends JComponent
 	 			viewNodeList.add(newViewNode);
 	 			map.put(newNode, newViewNode);
 	 		}
-	 		
-	 		repaint();
+	 		finiteStateMachine.notifyListeners();
+	 		//repaint();
 	 	}
 
 	 	if (Pressed.equals("C")) {
@@ -476,14 +475,14 @@ public class Display extends JComponent
 		 			newNodeName = JOptionPane.showInputDialog("Your label can not be blank or be the same as other nodes");
 		 		}
 
-	 			repaint();
+	 			finiteStateMachine.notifyListeners();
 	 		} else if (checkOccupied2) {
 	 			String newEdgeName = JOptionPane.showInputDialog("Please input a chararter for the node name");
 		 		while (newEdgeName.equals("")) {
 		 			newEdgeName = JOptionPane.showInputDialog("Your label can not be blank or be the same as other nodes");
 		 		}
 		 		finiteStateMachine.setEdgeLabel(selectedEdge.getEdge(), newEdgeName);
-	 			repaint();
+	 			finiteStateMachine.notifyListeners();
 	 		}
 
 	 	}
@@ -512,7 +511,7 @@ public class Display extends JComponent
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
 		 			selectedNode = null;
-		 			repaint();
+		 			finiteStateMachine.notifyListeners();
  		 		}
 	 		}
 	 	}

@@ -27,13 +27,14 @@ public class Main {
 
 		p.add(fileChooser.getOpen());
 		p.add(fileChooser.getSave());
+		
+		
+		finiteStateMachine.addListener(display);
+		System.out.println("go");
+		display.go();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-		
-		finiteStateMachine.addListener(display);
-		
-		display.go();
 	}
 	
 	public static void main(String[] args)
