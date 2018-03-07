@@ -123,21 +123,31 @@ public class ConcreteFSM implements FSM
        ArrayList<Node> toReturn = new ArrayList<Node>();
 
        //get all initial edges from starting nodes that have ϵ-edges
+       //I THINK this should work.
        ArrayList<Node> newerNodes = new ArrayList<Node>();
+       ArrayList<Node> removeNodes;
       for (Node initialNode : nodes){
+        newerNodes.add(initialNode);
         do{
-          newerNodes.clear();
-         for (Edge potentialE : this.Edges){
-           if ((potentialE.from == initialNode) && (potentialE.hasTransition("ϵ"))){
-             if (!nodes.contains(potentialE.to)){
-               nodes.add(potentialE.to);
-               newerNodes.add(potentialE.to)
+          removeNodes = (ArrayList<Node>)newerNodes.clone();
+          for (Node secondaryNode : newerNodes){
+           for (Edge potentialE : this.Edges){
+             if ((potentialE.from == secondaryNode) && (potentialE.hasTransition("ϵ"))){
+               if (!nodes.contains(potentialE.to)){
+                 nodes.add(potentialE.to);
+                 newerNodes.add(potentialE.to);
+               }
              }
            }
          }
-       } while (newerNodes.size() != 0)
+         for (Node toRemove : removeNodes){
+           newerNodes.remove(toRemove);
+         }
+         removeNodes.clear();
+       } while (newerNodes.size() != 0);
+     }
 
-       //checks for the transition
+       //adds all nodes
        for (Node nodeCheck : nodes){
          for (Edge checkEdge : this.Edges){
            if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
@@ -147,6 +157,7 @@ public class ConcreteFSM implements FSM
            }
          }
        }
+
        return toReturn;
      }
 
