@@ -91,17 +91,4 @@ public interface FSM
      */
     public void notifyListeners();
 
-    /**
-       Returns true if node exists in fsm,
-       else, returns false.
-     */
-    public boolean containsNode(Node node);
-
-    /**
-       Returns true if the edge exists in fsm,
-       else, returns false.
-     */
-    public boolean containsEdge(Edge edge);
-
-
 }
