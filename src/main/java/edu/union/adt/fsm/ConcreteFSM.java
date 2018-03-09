@@ -214,6 +214,19 @@ public class ConcreteFSM implements FSM
         return toReturn;
       }
 
+      /**
+       * Returns true if the given node exists in the FSM, false otherwise
+       */
+    public boolean containsNode(Node node) {
+      return this.Nodes.contains(node);
+    }
+
+    /**
+     * Returns true if the given edge exists in the FSM, false otherwise
+     */
+    public boolean containsEdge(Edge edge) {
+      return this.Edges.contains(edge);
+    }
 
     /**
      * Lets views know that an update has occurred
