@@ -30,11 +30,12 @@ public class Main {
 		
 		
 		finiteStateMachine.addListener(display);
-		System.out.println("go");
 		display.go();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+		System.out.println("go");
+
 	}
 	
 	public static void main(String[] args)

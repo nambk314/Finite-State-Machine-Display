@@ -1,8 +1,5 @@
 /*
- * Created on Jan 18, 2006
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ Author: Nam Bui
  */
 package edu.union.adt.view;
 import java.util.Vector;
@@ -26,6 +23,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.RectangularShape;
+import java.awt.Shape;
 
 import java.awt.Shape;
 import java.awt.Color;
@@ -150,13 +148,13 @@ public class Display extends JComponent
 				piece = viewNodeList.get(i);
 				// Ellipse2D circle = new Ellipse2D.Float(x + WIDTH, y - WIDTH, WIDTH, HEIGHT);
 				piece.makeShape();
-				RectangularShape Shape = piece.getNodeShape();
+				Shape Shape = piece.getNodeShape();
 				g.setStroke(new BasicStroke(2));
 				g.setColor(piece.getColor());
 				g.draw(Shape);
 
 				if (piece.isAccept()) {
-					RectangularShape smallCircle = piece.getSmallShape();
+					Shape smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
 					// g.setColor(Color.BLACK);
 					g.draw(smallCircle);
@@ -167,7 +165,7 @@ public class Display extends JComponent
 
 				if (piece == startViewNode) {
 					startViewNode.makeStart();
-					Line2D[] startShape = startViewNode.getStartShape();
+					Shape[] startShape = startViewNode.getStartShape();
 					// g.setStroke(new BasicStroke(2));
 					// g.setColor(Color.BLACK);
 					g.draw(startShape[0]);
@@ -526,7 +524,8 @@ public class Display extends JComponent
 	 	if (Pressed.equals("H")) {
 	 		if (checkOccupied) {
 	 			startViewNode = selectedNode;
-	 			repaint();
+	 			finiteStateMachine.setStart(startViewNode.getNode());
+	 			finiteStateMachine.notifyListeners();
 	 		}
 	 	}
 
@@ -604,7 +603,7 @@ public class Display extends JComponent
      public void mouseReleased(MouseEvent e)
      {
      	inDrag = false;
-     	System.out.println(distanceX + ", " + distanceY);
+     	//System.out.println(distanceX + ", " + distanceY);
      	distanceX = 0;
      	distanceY = 0;
 
