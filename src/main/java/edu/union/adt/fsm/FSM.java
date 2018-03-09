@@ -9,8 +9,9 @@ public interface FSM
    */
    public void setStart(Node toStart);
 
+
    /**
-    * Get which node is the start
+    * Add a blank node to the current FSM
     */
     public Node getStart();
 
@@ -89,5 +90,18 @@ public interface FSM
      * Lets views know that an update has occurred
      */
     public void notifyListeners();
+
+    /**
+       Returns true if node exists in fsm,
+       else, returns false.
+     */
+    public boolean containsNode(Node node);
+
+    /**
+       Returns true if the edge exists in fsm,
+       else, returns false.
+     */
+    public boolean containsEdge(Edge edge);
+
 
 }
