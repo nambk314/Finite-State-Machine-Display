@@ -1,4 +1,5 @@
 package edu.union.adt.fsm;
+import java.util.*;
 
 public class Edge
 {
@@ -6,6 +7,7 @@ public class Edge
      *
      */
     String label;
+    ArrayList<String> transitionList;
     Node to;
     Node from;
 
@@ -27,5 +29,20 @@ public class Edge
     public Node getTo(){
       return this.to;
     }
+
+    public boolean hasTransition(String transition){
+      if (this.transitionList.contains(transition)){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    public void setLabel(String newLabel){
+      this.label = newLabel;
+      String[] x = newLabel.split(",");
+      this.transitionList = new ArrayList<String>(Arrays.asList(x));
+    }
+
 
 }

@@ -85,7 +85,7 @@ public class ConcreteFSM implements FSM
 
     public void setEdgeLabel(Edge toEdit, String newLabel)
     {
-      toEdit.label = newLabel;
+      toEdit.setLabel(newLabel);
       // notifyListeners();
     }
 
@@ -117,6 +117,120 @@ public class ConcreteFSM implements FSM
       return toReturn;
     }
 
+
+    /**
+     * Takes an ArrayList of Nodes and a string, returns
+     * an ArrayList of Nodes which can be reached.
+     */
+     public ArrayList<Node> getNextStates(ArrayList<Node> startingNodes, String transition){
+       ArrayList<Node> toReturn = new ArrayList<Node>();
+
+       //adds all nodes reached only through ϵ-transitions
+       ArrayList<Node> newerNodes = new ArrayList<Node>();
+       ArrayList<Node> removeNodes;
+      for (Node initialNode : startingNodes){
+        newerNodes.add(initialNode);
+        do{
+          removeNodes = (ArrayList<Node>)newerNodes.clone();
+          for (Node secondaryNode : newerNodes){
+           for (Edge potentialE : this.Edges){
+             if ((potentialE.from == secondaryNode) && (potentialE.hasTransition("ϵ"))){
+               if (!toReturn.contains(potentialE.to)){
+                 toReturn.add(potentialE.to);
+                 newerNodes.add(potentialE.to);
+               }
+             }
+           }
+         }
+         for (Node toRemove : removeNodes){
+           newerNodes.remove(toRemove);
+         }
+         removeNodes.clear();
+       } while (newerNodes.size() != 0);
+     }
+
+       //adds all nodes reached through the transition, starting
+       //at a node reached through a an ϵ-transition
+       for (Node nodeCheck : toReturn){
+         for (Edge checkEdge : this.Edges){
+           if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
+             if (!toReturn.contains(checkEdge.to)){
+               toReturn.add(checkEdge.to);
+             }
+           }
+         }
+       }
+      //adds all nodes reached through only the transition
+       for (Node nodeCheck : startingNodes){
+         for (Edge checkEdge : this.Edges){
+           if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
+             if (!toReturn.contains(checkEdge.to)){
+               toReturn.add(checkEdge.to);
+             }
+           }
+         }
+       }
+
+       //adds all nodes reached through ϵ-transitions, after
+       //nodes have been reached through the given transition
+      newerNodes.clear();
+      for (Node initialNode : startingNodes){
+        newerNodes.add(initialNode);
+        do{
+          removeNodes = (ArrayList<Node>)newerNodes.clone();
+          for (Node secondaryNode : newerNodes){
+           for (Edge potentialE : this.Edges){
+             if ((potentialE.from == secondaryNode) && (potentialE.hasTransition("ϵ"))){
+               if (!toReturn.contains(potentialE.to)){
+                 toReturn.add(potentialE.to);
+                 newerNodes.add(potentialE.to);
+               }
+             }
+           }
+         }
+         for (Node toRemove : removeNodes){
+           newerNodes.remove(toRemove);
+         }
+         removeNodes.clear();
+       } while (newerNodes.size() != 0);
+     }
+
+       return toReturn;
+     }
+
+     /**
+      * Takes an ArrayList of Strings
+      * returns whether or not an accepting state is reached
+      */
+      public boolean isSeriesAccepted(ArrayList<String> series){
+        ArrayList<Node> currentNodes = new ArrayList<Node>();
+        currentNodes.add(this.start);
+        for (String transition : series){
+          currentNodes = getNextStates(currentNodes, transition);
+        }
+        boolean toReturn = false;
+        for (Node ending : currentNodes){
+          if (ending.getAccepting()){
+            toReturn = true;
+          }
+        }
+        return toReturn;
+      }
+
+      /**
+       * Returns true if the given node exists in the FSM, false otherwise
+       */
+    public boolean containsNode(Node node) {
+      return this.Nodes.contains(node);
+    }
+
+    /**
+     * Returns true if the given edge exists in the FSM, false otherwise
+     */
+    public boolean containsEdge(Edge edge) {
+      return this.Edges.contains(edge);
+    }
+
     /**
      * Lets views know that an update has occurred
      */
@@ -137,28 +251,4 @@ public class ConcreteFSM implements FSM
         }
     }
 
-    public boolean containsNode(Node node) {
-    	boolean contains = false;
-    	int k = 0;
-    	while (k<Nodes.size() && contains==false) {
-    	    if (Nodes.get(k).getLabel().equals(node.getLabel())) {
-    		contains = true;
-    	    }
-    	    k++;
-    	}
-    	return contains;
-    }
-
-    public boolean containsEdge(Edge edge) {
-    	boolean contains = false;
-    	int k = 0;
-    	while (k<Edges.size() && contains==false) {
-    	    if (Edges.get(k).getLabel().equals(edge.getLabel())) {
-    		contains = true;
-    	    }
-    	    k++;
-    	}
-    	return contains;
-        }
-        
 }

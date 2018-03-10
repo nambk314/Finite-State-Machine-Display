@@ -40,6 +40,17 @@ public interface FSM
      */
     public void changeAccept(Node toChange);
 
+    /**
+     * Takes an ArrayList of Nodes and a string, returns
+     * an ArrayList of Nodes which can be reached.
+     */
+     public ArrayList<Node> getNextStates(ArrayList<Node> nodes, String transition);
+
+     /**
+      * Takes an ArrayList of Strings
+      * returns whether or not an accepting state is reached
+      */
+      public boolean isSeriesAccepted(ArrayList<String> series);
 
     // /**
     //  * Remove a Node from the FSM
@@ -62,10 +73,6 @@ public interface FSM
      */
     public ArrayList getMachine();
 
-    /**
-     * Lets views know that an update has occurred
-     */
-    public void notifyListeners();
 
     /**
        Returns true if node exists in fsm,
@@ -79,5 +86,9 @@ public interface FSM
      */
     public boolean containsEdge(Edge edge);
 
+    /**
+     * Lets views know that an update has occurred
+     */
+    public void notifyListeners();
 
 }
