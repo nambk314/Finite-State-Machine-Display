@@ -11,6 +11,6 @@ public interface FileHandlerStrategy {
 
   //given a String filename, creates a new FSM and populates it
   //returns an ArrayList with ArrayLists containing ViewNodes, ViewEdges, a HashMap (Node to viewNode), and an FSM
-  public ArrayList<Object> load(String file, FSM fsm);
+  public boolean load(String file, FSM fsm, Display display);
 
 }
