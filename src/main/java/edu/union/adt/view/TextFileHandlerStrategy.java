@@ -7,6 +7,7 @@ import edu.union.adt.fsm.*;
 public class TextFileHandlerStrategy implements FileHandlerStrategy{
 
   public TextFileHandlerStrategy(){
+
   }
 
   //given a list of viewNodes, viewEdges, a start Node, and a string file
@@ -133,7 +134,7 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
              display.viewNodeList = new ArrayList<ViewNode>(viewNodeList);
              display.viewEdgeList = new ArrayList<ViewEdge>(viewEdgeList);
              display.map = new HashMap<Node,ViewNode>(map);
-             display.paint();
+             fsm.notifyListeners();
              return true;
           } catch (IOException ioexcept) {
               return false;

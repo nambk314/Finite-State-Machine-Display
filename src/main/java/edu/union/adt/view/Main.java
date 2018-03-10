@@ -20,7 +20,7 @@ public class Main {
 		frame = new JFrame("Finite State Machine Display 1");
 		display = new Display(finiteStateMachine);
 		frame.getContentPane().add(display);
-		FileChooser fileChooser = new FileChooser(display, finiteStateMachine);
+		ButtonPanel fileChooser = new ButtonPanel(display, finiteStateMachine);
 		JPanel p = new JPanel();
 		Container cp = frame.getContentPane();
    		cp.add(p, BorderLayout.SOUTH);

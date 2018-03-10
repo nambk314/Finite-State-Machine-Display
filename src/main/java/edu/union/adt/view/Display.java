@@ -61,7 +61,7 @@ import javax.swing.JTextField;
 
 
 /**
- * @author cassa
+ * @author Nam Bui
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
@@ -132,7 +132,7 @@ public class Display extends JComponent
 
 		myHandler = new UpdateHandler(this, finiteStateMachine);
 		map = new HashMap<>();
-		buttonActions();
+		keyActions();
 
 	}
 
@@ -255,7 +255,7 @@ public class Display extends JComponent
 	}
 
 	//Handling the keyboard actions
-		public void buttonActions() {
+		public void keyActions() {
 		InputMap In = getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	    ActionMap Ac = getActionMap();
 
