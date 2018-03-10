@@ -128,7 +128,7 @@ public class ViewNode
     public void moveShape(double x, double y) {
         posX = x;
         posY = y;
-
+        nodeShape.moveShape(x, y);
         // switch (theme[0]) {
         //     case "rectangle":
         //     rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);
