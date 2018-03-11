@@ -3,6 +3,7 @@ package edu.union.adt.view;
 import edu.union.adt.fsm.*;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -33,6 +34,9 @@ public class SimulatorPanel extends JComponent {
   ConcreteFSM finiteStateMachine;
 
   FileHandlerStrategy FileHandler;
+
+  String simulatedWord;
+  ArrayList<String> simulatedWordList;
 
   public SimulatorPanel(Display display, ConcreteFSM finiteStateMachine) {
     // JPanel p = new JPanel();
@@ -83,28 +87,34 @@ public class SimulatorPanel extends JComponent {
   class Simulate implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
-      // String name = JOptionPane.showInputDialog("Please input a string to simulate");
-      // ArrayList<Node> listNode = new ArrayList<Node>();
-      // ArrayList<ViewNode> currentViewNodes = display.currentViewNodes;
-      // HashMap<Node, ViewNode> map = display.map;
-      // for (ViewNode element : currentViewNodes) {
-      //   listNode.add(element.getNode());
-      // }
-      // listNode = new ArrayList<Node>(finiteStateMachine.getNextStates(listNode, name));
-      // currentViewNodes = new ArrayList<ViewNode>();
-      // for (Node element : listNode) {
-      //   ViewNode ViewNodeElement = map.get(element);
-      //   currentViewNodes.add(ViewNodeElement);
-      // }
-      // label.setText("Entered String: " + name);
+      simulatedWord = JOptionPane.showInputDialog("Please input a string to simulate");
+      simulatedWordList = new ArrayList(Arrays.asList(simulatedWord.split(",")));
+      
+      label.setText("Entered String: " + simulatedWord);
     }
   }
 
   class Next implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
-    
-    }
+        if (simulatedWordList.size() != 0) {
+          String currentWord = simulatedWordList.get(0);
+          simulatedWordList.remove(0);
+          ArrayList<Node> listNode = new ArrayList<Node>();
+          ArrayList<ViewNode> currentViewNodes = display.currentViewNodes;
+          HashMap<Node, ViewNode> map = display.map;
+          for (ViewNode element : currentViewNodes) {
+            listNode.add(element.getNode());
+          }
+          listNode = new ArrayList<Node>(finiteStateMachine.getNextStates(listNode, currentWord));
+          currentViewNodes = new ArrayList<ViewNode>();
+          for (Node element : listNode) {
+            ViewNode ViewNodeElement = map.get(element);
+            currentViewNodes.add(ViewNodeElement);
+          }
+        } 
+        
+      }
   }
 
   // public static void main(String[] args) {
