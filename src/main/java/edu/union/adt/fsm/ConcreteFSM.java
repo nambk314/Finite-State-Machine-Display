@@ -194,7 +194,7 @@ public class ConcreteFSM implements FSM
          removeNodes.clear();
        } while (newerNodes.size() != 0);
      }
-
+        System.out.println(toReturn);
        return toReturn;
      }
 
@@ -258,6 +258,14 @@ public class ConcreteFSM implements FSM
       toReturn += "\n Edges:\n";
       toReturn += this.Edges.toString();
       return toReturn;
+    }
+
+    public void clear(){
+      this.Nodes = new ArrayList<Node>();                  //ArrayList of Nodes
+      this.Edges = new ArrayList<Edge>();                  //ArrayList of Edges
+      this.extantNodes = new ArrayList<String>();  //ArrayList of node Strings, to make checking for duplicates faster / cleaner
+      this.start = null;
+      //notifyListeners();
     }
 
 }

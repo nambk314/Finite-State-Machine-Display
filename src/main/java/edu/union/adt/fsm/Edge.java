@@ -16,6 +16,7 @@ public class Edge
       this.label = startLabel;
       this.to = startTo;
       this.from = startFrom;
+      setLabel(startLabel);
     }
 
     public String getLabel(){

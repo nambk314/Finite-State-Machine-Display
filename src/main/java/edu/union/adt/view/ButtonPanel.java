@@ -72,8 +72,9 @@ public class ButtonPanel extends JComponent {
       int rVal = c.showOpenDialog(ButtonPanel.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
         String fileName = c.getSelectedFile().toString();
-        display.finiteStateMachine = new ConcreteFSM();                    //this is hardcoded for now; it should test what the type of the FSM is and make a new one of those
-        finiteStateMachine = display.finiteStateMachine;
+        display.finiteStateMachine.clear();                    //this is hardcoded for now; it should test what the type of the FSM is and make a new one of those
+        display.viewNodeList = new ArrayList<ViewNode>();
+        display.viewEdgeList = new ArrayList<ViewEdge>();
         fileHandler.load(fileName, finiteStateMachine, display);
 
         // FileOpener file = new FileOpener(fileName);

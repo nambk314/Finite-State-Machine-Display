@@ -91,4 +91,6 @@ public interface FSM
      */
     public void notifyListeners();
 
+    public void clear();
+
 }
