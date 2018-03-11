@@ -15,7 +15,8 @@ public class FileSaver
     public FileSaver(String filename)
     {
       try {
-      String fullname = filename+".txt";  
+      String fullname = filename+".txt";
+      System.out.println("filenamd = " + filename);
       f = new File(fullname);
       fw = new FileWriter(f);
     } catch (IOException ioexcept) {

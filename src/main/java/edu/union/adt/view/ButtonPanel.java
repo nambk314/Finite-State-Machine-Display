@@ -89,7 +89,7 @@ public class ButtonPanel extends JComponent {
       // Demonstrate "Save" dialog:
       int rVal = c.showSaveDialog(ButtonPanel.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
-        String fileName = c.getSelectedFile().getName();
+        String fileName = c.getSelectedFile().toString();
         // dir.setText(c.getCurrentDirectory().toString());
 
         FileSaver file = new FileSaver(fileName);
