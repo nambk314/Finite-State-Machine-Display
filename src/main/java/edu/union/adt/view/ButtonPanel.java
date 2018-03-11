@@ -92,10 +92,9 @@ public class ButtonPanel extends JComponent {
         String fileName = c.getSelectedFile().toString();
         // dir.setText(c.getCurrentDirectory().toString());
 
-        FileSaver file = new FileSaver(fileName);
+        TextFileHandlerStrategy file = new TextFileHandlerStrategy();
 
-
-        FileHandler.save(display.viewNodeList, display.viewEdgeList, finiteStateMachine.getStart(), fileName);
+        file.save(display.viewNodeList, display.viewEdgeList, finiteStateMachine.getStart(), fileName);
         // ArrayList<ArrayList> ViewMachine = new ArrayList<>();
         // ViewMachine.add(display.viewNodeList);
         // ViewMachine.add(display.viewEdgeList);

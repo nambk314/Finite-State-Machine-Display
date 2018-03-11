@@ -110,9 +110,6 @@ public class Display extends JComponent
 	//Hash table to hold the key and value
 	HashMap<Node, ViewNode> map;
 
-	//File saver variable
-	FileSaver file;
-
 	//For testing theme
 	int themeCount = 0;
 	String[] theme;
@@ -121,8 +118,6 @@ public class Display extends JComponent
 	ArrayList<ViewNode> currentViewNodes = new ArrayList<ViewNode>();
 
 	//Buttons
-	private JButton open = new JButton("Open"), save = new JButton("Save");
-
 	public Display(ConcreteFSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
@@ -161,7 +156,7 @@ public class Display extends JComponent
 					g.setColor(Color.yellow);
 					g.fill(Shape);
 				}
-				
+
 				if (piece.isAccept()) {
 					Shape smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
@@ -186,8 +181,8 @@ public class Display extends JComponent
 			ViewEdge edgePiece;
 			for (int i=0; i < viewEdgeList.size(); i++) {
 				edgePiece = viewEdgeList.get(i);
-				
-				
+
+
 				Line2D line = edgePiece.getLine();
 				Path2D path = edgePiece.getPath();
 				g.draw(line);
@@ -354,7 +349,7 @@ public class Display extends JComponent
 	    Ac.put("pressed L", new AbstractAction() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	
+
 	            	Pressed = "L";
 	                System.out.println("Pressed L");
 	            }
@@ -471,18 +466,6 @@ public class Display extends JComponent
 	 		}
 	 	}
 
-	 	if(Pressed.equals("L")) {
-	 		String fileName = JOptionPane.showInputDialog("Please input a name for the file name");
-	 		while (fileName.equals("")) {
-	 			fileName = JOptionPane.showInputDialog("You can not have a file without a name");
-	 		}
-	    	file = new FileSaver(fileName);
-	    	ArrayList<ArrayList> ViewMachine = new ArrayList<>();
-	    	ViewMachine.add(viewNodeList);
-	    	ViewMachine.add(viewEdgeList);
-	    	file.save(ViewMachine);
-	    	System.out.println("saving");
-	 	}
 	 }
 
 	 //Check if the place the mouse click is occupied or not
