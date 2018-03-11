@@ -71,7 +71,7 @@ public class Display extends JComponent
 {
 	private static final long serialVersionUID = 1;
 	//Finite state machine
-	private ConcreteFSM finiteStateMachine;
+	FSM finiteStateMachine;
 	private UpdateHandler myHandler;
 
 	//defaut WIDTH and HEIGHT for the circle
@@ -118,7 +118,7 @@ public class Display extends JComponent
 	ArrayList<ViewNode> currentViewNodes = new ArrayList<ViewNode>();
 
 	//Buttons
-	public Display(ConcreteFSM theFiniteStateMachine)
+	public Display(FSM theFiniteStateMachine)
 	{
 		Font myFont = new Font("TimesRoman", Font.PLAIN, 12);
 		this.setFont(myFont);

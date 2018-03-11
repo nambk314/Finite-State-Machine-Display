@@ -1,20 +1,20 @@
 package edu.union.adt.view;
 
 import javax.swing.JOptionPane;
-import edu.union.adt.fsm.ConcreteFSM;
+import edu.union.adt.fsm.*;
 
-public class UpdateHandler implements Runnable 
+public class UpdateHandler implements Runnable
 {
 	private Display myDisplay;
-	private ConcreteFSM myFiniteStateMachine;
-	
-	public UpdateHandler(Display d, ConcreteFSM f)
+	private FSM myFiniteStateMachine;
+
+	public UpdateHandler(Display d, FSM f)
 	{
 		myDisplay = d;
 		myFiniteStateMachine = f;
 	}
-	
-	public void run() 
+
+	public void run()
 	{
 		myDisplay.repaint();
 	}

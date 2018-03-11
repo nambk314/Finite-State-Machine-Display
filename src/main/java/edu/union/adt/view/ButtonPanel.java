@@ -1,6 +1,6 @@
 
 package edu.union.adt.view;
-import edu.union.adt.fsm.ConcreteFSM;
+import edu.union.adt.fsm.*;
 import java.util.ArrayList;
 
 import java.awt.BorderLayout;
@@ -26,11 +26,11 @@ public class ButtonPanel extends JComponent {
 
   Display display;
 
-  ConcreteFSM finiteStateMachine;
+  FSM finiteStateMachine;
 
-  FileHandlerStrategy FileHandler;
+  FileHandlerStrategy fileHandler;
 
-  public ButtonPanel(Display display, ConcreteFSM finiteStateMachine) {
+  public ButtonPanel(Display display, FSM finiteStateMachine) {
     // JPanel p = new JPanel();
     open.addActionListener(new OpenL());
     // p.add(open);
@@ -39,7 +39,7 @@ public class ButtonPanel extends JComponent {
     this.display = display;
     this.finiteStateMachine = finiteStateMachine;
 
-    FileHandler = new TextFileHandlerStrategy();
+    this.fileHandler = new GraphicFileHandlerStrategy();
     // p.add(save);
     // Container cp = getContentPane();
     // cp.add(p, BorderLayout.SOUTH);
@@ -71,9 +71,11 @@ public class ButtonPanel extends JComponent {
       // Demonstrate "Open" dialog:
       int rVal = c.showOpenDialog(ButtonPanel.this);
       if (rVal == JFileChooser.APPROVE_OPTION) {
-        String fileName = c.getSelectedFile().getName();
+        String fileName = c.getSelectedFile().toString();
+        display.finiteStateMachine = new ConcreteFSM();                    //this is hardcoded for now; it should test what the type of the FSM is and make a new one of those
+        finiteStateMachine = display.finiteStateMachine;
+        fileHandler.load(fileName, finiteStateMachine, display);
 
-        FileHandler.load(fileName, finiteStateMachine, display);
         // FileOpener file = new FileOpener(fileName);
         // file.open(finiteStateMachine, display);
       }
@@ -85,6 +87,7 @@ public class ButtonPanel extends JComponent {
 
   class SaveL implements ActionListener {
     public void actionPerformed(ActionEvent e) {
+      System.out.println(finiteStateMachine.toString());
       JFileChooser c = new JFileChooser();
       // Demonstrate "Save" dialog:
       int rVal = c.showSaveDialog(ButtonPanel.this);
@@ -92,9 +95,7 @@ public class ButtonPanel extends JComponent {
         String fileName = c.getSelectedFile().toString();
         // dir.setText(c.getCurrentDirectory().toString());
 
-        TextFileHandlerStrategy file = new TextFileHandlerStrategy();
-
-        file.save(display.viewNodeList, display.viewEdgeList, finiteStateMachine.getStart(), fileName);
+        fileHandler.save(display.viewNodeList, display.viewEdgeList, finiteStateMachine.getStart(), fileName);
         // ArrayList<ArrayList> ViewMachine = new ArrayList<>();
         // ViewMachine.add(display.viewNodeList);
         // ViewMachine.add(display.viewEdgeList);

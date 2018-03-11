@@ -1,12 +1,11 @@
 package edu.union.adt.view;
 import java.io.*;
 import java.util.*;
-import java.util.ArrayList;
 import edu.union.adt.fsm.*;
 
-public class TextFileHandlerStrategy implements FileHandlerStrategy{
+public class GraphicFileHandlerStrategy implements FileHandlerStrategy{
 
-  public TextFileHandlerStrategy(){
+  public GraphicFileHandlerStrategy(){
 
   }
 
@@ -72,10 +71,13 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
 
 
           try {
+          System.out.println(textFile);
           f = new File(textFile);
           fr = new FileReader(f);
           br = new BufferedReader(fr);
         } catch (IOException ioexcept) {
+          System.out.println("error 1");
+
           return false;
         }
 
@@ -92,8 +94,6 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
             String[] defaultTheme = new String[]{"circle", "black"};
 
             HashMap<Node,ViewNode> map = new HashMap<Node,ViewNode>();
-
-
             HashMap<String,Node> StringToNode = new HashMap<String,Node>();
 
             String line = br.readLine();      //get first line
@@ -118,8 +118,9 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
             }
 
             line = br.readLine();           //Skip over the "EDGES" line
-
-            while(!line.equals(null)){
+            System.out.println(line);
+            while(line != null){
+              System.out.println(line);
               String[] tokens = line.split("®");            //Split the line on spaces
               //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
               String label = tokens[0];
@@ -128,15 +129,16 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
               Edge newEdge = fsm.addEdge(from,to,label);
               ViewEdge newVE = new ViewEdge(map, newEdge);
               display.viewEdgeList.add(newVE);
+              line = br.readLine();
+              System.out.println(line);
             }
-
-             display.viewNodeList = new ArrayList<ViewNode>(viewNodeList);
-             display.viewEdgeList = new ArrayList<ViewEdge>(viewEdgeList);
-             display.map = new HashMap<Node,ViewNode>(map);
              fsm.notifyListeners();
              return true;
           } catch (IOException ioexcept) {
+            System.out.println("error 2");
               return false;
+          } catch (NullPointerException nullp){
+            return false;
           }
 
   }

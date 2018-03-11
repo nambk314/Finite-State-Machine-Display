@@ -251,4 +251,13 @@ public class ConcreteFSM implements FSM
         }
     }
 
+    public String toString(){
+      String toReturn = "Start = " + this.start;
+      toReturn += "\n Nodes:\n";
+      toReturn += this.Nodes.toString();
+      toReturn += "\n Edges:\n";
+      toReturn += this.Edges.toString();
+      return toReturn;
+    }
+
 }

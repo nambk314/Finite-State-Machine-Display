@@ -44,5 +44,9 @@ public class Edge
       this.transitionList = new ArrayList<String>(Arrays.asList(x));
     }
 
+    public String toString(){
+      return "from = " + from.label + " to = " + to.label +" transitions are " + this.label;
+    }
+
 
 }

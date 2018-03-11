@@ -18,4 +18,8 @@ public class Node
       return this.accept;
     }
 
+    public String toString(){
+      return this.label;
+    }
+
 }
