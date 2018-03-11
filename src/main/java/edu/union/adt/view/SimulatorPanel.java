@@ -83,20 +83,20 @@ public class SimulatorPanel extends JComponent {
   class Simulate implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
-      String name = JOptionPane.showInputDialog("Please input a string to simulate");
-      ArrayList<Node> listNode = new ArrayList<Node>();
-      ArrayList<ViewNode> currentViewNodes = display.currentViewNodes;
-      HashMap<Node, ViewNode> map = display.map;
-      for (ViewNode element : currentViewNodes) {
-        listNode.add(element.getNode());
-      }
-      listNode = new ArrayList<Node>(finiteStateMachine.getNextStates(listNode, name));
-      currentViewNodes = new ArrayList<ViewNode>();
-      for (Node element : listNode) {
-        ViewNode ViewNodeElement = map.get(element);
-        currentViewNodes.add(ViewNodeElement);
-      }
-      label.setText("Entered String: " + name);
+      // String name = JOptionPane.showInputDialog("Please input a string to simulate");
+      // ArrayList<Node> listNode = new ArrayList<Node>();
+      // ArrayList<ViewNode> currentViewNodes = display.currentViewNodes;
+      // HashMap<Node, ViewNode> map = display.map;
+      // for (ViewNode element : currentViewNodes) {
+      //   listNode.add(element.getNode());
+      // }
+      // listNode = new ArrayList<Node>(finiteStateMachine.getNextStates(listNode, name));
+      // currentViewNodes = new ArrayList<ViewNode>();
+      // for (Node element : listNode) {
+      //   ViewNode ViewNodeElement = map.get(element);
+      //   currentViewNodes.add(ViewNodeElement);
+      // }
+      // label.setText("Entered String: " + name);
     }
   }
 
