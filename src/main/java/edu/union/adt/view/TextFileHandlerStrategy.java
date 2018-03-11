@@ -89,6 +89,7 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
             //The next three elements should be returned somehow
             ArrayList<ViewEdge> viewEdgeList = new ArrayList();
             ArrayList<ViewNode> viewNodeList = new ArrayList();
+            String[] defaultTheme = new String[]{"circle", "black"};
 
             HashMap<Node,ViewNode> map = new HashMap<Node,ViewNode>();
 
@@ -106,7 +107,7 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
               double y = Double.parseDouble(tokens[3]);
 
               Node newNode = fsm.addNode(label);
-              ViewNode newV = new ViewNode(x, y, SIZE, SIZE, newNode);
+              ViewNode newV = new ViewNode(x, y, SIZE, SIZE, newNode, defaultTheme);
               display.viewNodeList.add(newV);
 
               StringToNode.put(label,newNode);

@@ -115,6 +115,7 @@ public class Display extends JComponent
 
 	//For testing theme
 	int themeCount = 0;
+	String[] theme;
 
 	//Variable for holding the current ViewNode list during simulation
 	ArrayList<ViewNode> currentViewNodes = new ArrayList<ViewNode>();
@@ -132,6 +133,7 @@ public class Display extends JComponent
 		setPreferredSize(new Dimension(1000, 1000));
 
 		finiteStateMachine = theFiniteStateMachine;
+		theme = new String[] {"circle", "black"};
 
 		myHandler = new UpdateHandler(this, finiteStateMachine);
 		map = new HashMap<>();
@@ -188,8 +190,6 @@ public class Display extends JComponent
 				
 				Line2D line = edgePiece.getLine();
 				Path2D path = edgePiece.getPath();
-				// g.setStroke(new BasicStroke(2));
-				// g.setColor(Color.BLACK);
 				g.draw(line);
 				g.draw(path);
 				int edgeX = (int)edgePiece.getTextX() - 10;
@@ -198,13 +198,6 @@ public class Display extends JComponent
 
 			}
 
-			// if (startViewNode != null) {
-			// 	startViewNode.makeStart();
-			// 	Path2D startShape = startViewNode.getStartShape();
-			// 	// g.setStroke(new BasicStroke(2));
-			// 	// g.setColor(Color.BLACK);
-			// 	g.draw(startShape);
-			// }
 			if (selectedEdge != null && Pressed.equals("E")) {
 				Line2D selectedLine = selectedEdge.getLine();
 				Path2D selectedPath = selectedEdge.getPath();
@@ -213,38 +206,6 @@ public class Display extends JComponent
 				g.draw(selectedLine);
 				g.draw(selectedPath);
 			}
-
-
-//Function to draw the State and transition to Blue
-			// if (selectedNode != null) {
-			// 	Ellipse2D circle = selectedNode.getCircle();
-			// 	g.setStroke(new BasicStroke(2));
-			// 	g.setColor(Color.BLUE);
-			// 	g.draw(circle);
-			// }
-
-			// if (selectedEdge != null) {
-			// 	Line2D line = selectedEdge.getLine();
-			// 	g.setStroke(new BasicStroke(2));
-			// 	g.setColor(Color.BLUE);
-			// 	g.draw(line);
-			// }
-
-			// Vector<Integer> piece;
-			// for (int i=0; i< finiteStateMachine.length(); i++) {
-			// 	piece = finiteStateMachine.getPosition(i);
-			// 	// if (blue == true) {
-			// 	// 	g.setStroke(new BasicStroke(2));
-			// 	// 	g.setColor(Color.BLUE);
-			// 	// }
-			// 	circle = new Ellipse2D.Float(piece.get(0).intValue(), piece.get(1).intValue(), WIDTH, HEIGHT);
-			// 	// arc = new Arc2D.Float(piece.get(0).intValue(), piece.get(1).intValue(), WIDTH, HEIGHT,0, 60, 0);
-			// 	g.setStroke(new BasicStroke(2));
-			// 	g.setColor(Color.BLACK);
-			// 	g.draw(circle);
-
-			// 	// g.drawOval(piece.get(0).intValue(), piece.get(1).intValue(), WIDTH, HEIGHT);
-			// }
 	}
 	public void update()
 	{
@@ -386,34 +347,6 @@ public class Display extends JComponent
 	            System.out.println("released H");
 	        }
 	    });
-//TEST CHANGING THEME
-	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "pressed P");
-	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, true), "released P");
-	    Ac.put("pressed P", new AbstractAction() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	ViewNode temp = viewNodeList.get(0);
-	            	if (themeCount % 2 == 0) {
-	            		temp.changeTheme("rectangle", "blue");
-	            		themeCount = 1;
-	            	} else if (themeCount % 2 == 1){
-	            		temp.changeTheme("circle", "black");
-	            		themeCount = 0;
-	            	}
-	            	
-	            	Pressed = "P";
-	                System.out.println("Pressed P");
-	            }
-	        });
-
-	    Ac.put("released P", new AbstractAction() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-
-	            System.out.println("released P");
-	            repaint();
-	        }
-	    });
 
 //TEST SAVING
 	    In.put(KeyStroke.getKeyStroke(KeyEvent.VK_L, 0, false), "pressed L");
@@ -459,7 +392,7 @@ public class Display extends JComponent
 	 		System.out.println(name);
 	 		Node newNode = finiteStateMachine.addNode(name);
 	 		if (newNode != null) {
-	 			ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode);
+	 			ViewNode newViewNode = new ViewNode(x,y,WIDTH, HEIGHT, newNode, theme);
 	 			viewNodeList.add(newViewNode);
 	 			map.put(newNode, newViewNode);
 	 		}

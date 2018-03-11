@@ -23,7 +23,7 @@ public class ViewNode
 //For Square shape
     Rectangle2D.Double rectangle;
     Rectangle2D.Double smallRectangle;
-    static String[] theme;
+    String[] theme;
     double posX;
     double posY;
     double posW;
@@ -33,13 +33,13 @@ public class ViewNode
     ShapeNodeFactory factory;
     ShapeNode nodeShape;   
 
-    public ViewNode(double x, double y, double w, double h, Node newNode) {
+    public ViewNode(double x, double y, double w, double h, Node newNode, String [] theme) {
     	
     	node = newNode;
     	posX = x;
     	posY = y;
     	posW = w;
-        theme = new String[]{"circle", "black"};
+        //theme = new String[]{"circle", "black"};
         // circle = new Ellipse2D.Double(posX - w/2, posY - w/2, w ,h);
         // rectangle = new Rectangle2D.Double(posX - w/2, posY - w/2, w ,h);
         // smallCircle = new Ellipse2D.Double(posX -(w/2 - 3.5), posY-(w/2 - 3.5), w-7, h-7);
@@ -47,6 +47,7 @@ public class ViewNode
         // startPathOne = new Line2D.Double();
         // startPathTwo = new Line2D.Double();
         factory = new ShapeNodeFactory();
+        this.theme = theme;
         nodeShape = factory.getShapeNode(theme[0], this);
 
     }
@@ -86,8 +87,11 @@ public class ViewNode
             case "black":
             mainColor = Color.BLACK;
             break;
-            case "blue":
-            mainColor = Color.BLUE;
+            case "green":
+            mainColor = Color.GREEN;
+            break;
+            case "red":
+            mainColor = Color.RED;
             break;
             default:
             mainColor = null;
@@ -185,9 +189,9 @@ public class ViewNode
     	return nodeShape.getSmallShape();
     }
 
-    public void changeTheme(String shape, String color) {
-        theme[0] = shape;
-        theme[1] = color;
-    }
+    // public void changeTheme(String shape, String color) {
+    //     theme[0] = shape;
+    //     theme[1] = color;
+    // }
 
 }
