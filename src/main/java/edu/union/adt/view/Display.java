@@ -160,7 +160,7 @@ public class Display extends JComponent
 				if (piece.isAccept()) {
 					Shape smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
-					// g.setColor(Color.BLACK);
+					g.setColor(piece.getColor());
 					g.draw(smallCircle);
 				}
 				int stateX = (int)piece.getX();
