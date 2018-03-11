@@ -116,6 +116,9 @@ public class Display extends JComponent
 	//For testing theme
 	int themeCount = 0;
 
+	//Variable for holding the current ViewNode list during simulation
+	ArrayList<ViewNode> currentViewNodes = new ArrayList<ViewNode>();
+
 	//Buttons
 	private JButton open = new JButton("Open"), save = new JButton("Save");
 
@@ -152,7 +155,11 @@ public class Display extends JComponent
 				g.setStroke(new BasicStroke(2));
 				g.setColor(piece.getColor());
 				g.draw(Shape);
-
+				if (currentViewNodes.contains(piece)) {
+					g.setColor(Color.yellow);
+					g.fill(Shape);
+				}
+				
 				if (piece.isAccept()) {
 					Shape smallCircle = piece.getSmallShape();
 					// g.setStroke(new BasicStroke(2));
@@ -161,6 +168,7 @@ public class Display extends JComponent
 				}
 				int stateX = (int)piece.getX();
 				int stateY = (int)piece.getY();
+				g.setColor(piece.getColor());
 				g.drawString(piece.getNode().getLabel(), stateX, stateY);
 
 				if (piece == startViewNode) {
@@ -197,7 +205,6 @@ public class Display extends JComponent
 			// 	// g.setColor(Color.BLACK);
 			// 	g.draw(startShape);
 			// }
-
 			if (selectedEdge != null && Pressed.equals("E")) {
 				Line2D selectedLine = selectedEdge.getLine();
 				Path2D selectedPath = selectedEdge.getPath();
@@ -524,6 +531,8 @@ public class Display extends JComponent
 	 	if (Pressed.equals("H")) {
 	 		if (checkOccupied) {
 	 			startViewNode = selectedNode;
+	 			currentViewNodes = new ArrayList();
+	 			currentViewNodes.add(startViewNode);
 	 			finiteStateMachine.setStart(startViewNode.getNode());
 	 			finiteStateMachine.notifyListeners();
 	 		}

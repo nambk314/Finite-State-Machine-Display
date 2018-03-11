@@ -4,6 +4,7 @@ import edu.union.adt.fsm.ConcreteFSM;
 import java.util.ArrayList;
 
 import java.awt.BorderLayout;
+
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.BoxLayout;
 
 public class ButtonPanel extends JComponent {
   //private JTextField filename = new JTextField(), dir = new JTextField();
