@@ -40,22 +40,22 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
             fw.write("Edge: goes from <fromNode label> to <toNodeLabel> with the following transtitons; <edgeLabel>\n");
             fw.write("Begin info:\n");
             for (ViewNode v : viewNodes){
-              fw.write("Node: ")
+              fw.write("Node: ");
               fw.write(String.valueOf(v.getNode().getLabel()));
               fw.write(", is");
               if (!v.getNode().getAccepting()){
-                fw.write(" not")
+                fw.write(" not");
               }
-              fw.write(" accepting.")
+              fw.write(" accepting.");
               fw.write("\n");
             }
             fw.write("EDGES\n");
             for (ViewEdge e : viewEdges){
-              fw.write("Edge: goes from ")
+              fw.write("Edge: goes from ");
               fw.write(String.valueOf(e.getEdge().getFrom().getLabel()));
               fw.write(" to ");
               fw.write(String.valueOf(e.getEdge().getTo().getLabel()));
-              fw.write(" with the following transitions; ")
+              fw.write(" with the following transitions; ");
               fw.write(String.valueOf(e.getEdge().getLabel()));
               fw.write("\n");
             }
@@ -124,8 +124,8 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
               line = br.readLine();
             }
 
-            line = br.readLine();           //Skip over the "EDGES" line
 
+            line = br.readLine();           //Skip over the "EDGES" line
             while(!line.equals(null)){
               String[] tokens = line.split("®");            //Split the line on spaces
               //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
