@@ -117,7 +117,7 @@ public class TextFileHandlerStrategy extends FileFilter  implements FileHandlerS
             //The next three elements should be returned somehow
             ArrayList<ViewEdge> viewEdgeList = new ArrayList();
             ArrayList<ViewNode> viewNodeList = new ArrayList();
-            String[] defaultTheme = new String[]{"circle", "black"};
+            String[] defaultTheme = display.theme;
 
             HashMap<Node,ViewNode> map = new HashMap<Node,ViewNode>();
 
