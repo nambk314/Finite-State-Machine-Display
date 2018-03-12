@@ -19,7 +19,7 @@ public class CircleShape implements ShapeNode {
 
     Line2D startPathOne;
     Line2D startPathTwo;
-
+//Graphics for the node
     public CircleShape(ViewNode viewNode) {
     	posX = viewNode.posX;
     	posY = viewNode.posY;
@@ -59,5 +59,6 @@ public class CircleShape implements ShapeNode {
         startShape[1] = startPathTwo;
         return startShape;
 	}
-
+//Graphics for the edge
+    
 }

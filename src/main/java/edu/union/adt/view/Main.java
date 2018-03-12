@@ -23,8 +23,8 @@ public class Main {
 		frame = new JFrame("Finite State Machine Display 1");
 		display = new Display(finiteStateMachine);
 		frame.getContentPane().add(display);
-		ButtonPanel fileChooser = new ButtonPanel(display, finiteStateMachine);
-		SimulatorPanel simulator = new SimulatorPanel(display, finiteStateMachine);
+		ButtonPanel fileChooser = new ButtonPanel(display);
+		SimulatorPanel simulator = new SimulatorPanel(display);
 		ThemePanel themePanel = new ThemePanel(display);
 		JPanel p = new JPanel();
 		// JPanel p2 = new JPanel();
@@ -40,6 +40,7 @@ public class Main {
    		p.add(simulator.getLabel());
    		p.add(simulator.getSimulate());
    		p.add(simulator.getNext());
+   		p.add(simulator.getReset());
 
    		//Theme
    		p.add(themePanel.getLabel());

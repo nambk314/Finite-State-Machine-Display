@@ -3,12 +3,34 @@ import java.io.*;
 import java.util.*;
 import java.util.ArrayList;
 import edu.union.adt.fsm.*;
+import javax.swing.filechooser.FileFilter;
 
-public class TextFileHandlerStrategy implements FileHandlerStrategy{
+public class TextFileHandlerStrategy extends FileFilter  implements FileHandlerStrategy {
+
+
+  private String extension;
+  private String description;
 
   public TextFileHandlerStrategy(){
-
+    extension = ".txt";
+    description = "Text File";
   }
+
+  public boolean accept(File file) {
+        if (file.isDirectory()) {
+            return true;
+        }
+        return file.getName().endsWith(extension);
+    }
+ 
+    public String getDescription() {
+        return description + ", *" +extension;
+    }
+
+    public String getExtension() {
+      return extension;
+    }
+  
 
   //given a list of viewNodes, viewEdges, a start Node, and a string file
   //save the given FSM to the file in plaintext format
@@ -16,6 +38,7 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
       File f;
       FileWriter fw;
           try {
+          file += extension;  
           f = new File(file);
           fw = new FileWriter(f);
         } catch (IOException ioexcept) {
@@ -126,7 +149,7 @@ public class TextFileHandlerStrategy implements FileHandlerStrategy{
               Node to = StringToNode.get(tokens[1]);
               Node from = StringToNode.get(tokens[2]);
               Edge newEdge = fsm.addEdge(from,to,label);
-              ViewEdge newVE = new ViewEdge(map, newEdge);
+              ViewEdge newVE = new ViewEdge(map, newEdge, defaultTheme);
               display.viewEdgeList.add(newVE);
             }
 

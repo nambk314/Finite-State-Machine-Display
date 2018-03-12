@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 public class SimulatorPanel extends JComponent {
   //private JTextField filename = new JTextField(), dir = new JTextField();
 
-  private JButton simulate = new JButton("Simulate"), next = new JButton("Next");
+  private JButton simulate = new JButton("Simulate"), next = new JButton("Next"), reset = new JButton("Reset Head");
 
   //private JTextField input = new JTextField(10);
 
@@ -31,14 +31,14 @@ public class SimulatorPanel extends JComponent {
 
   Display display;
 
-  ConcreteFSM finiteStateMachine;
+  FSM finiteStateMachine;
 
   FileHandlerStrategy FileHandler;
 
   String simulatedWord;
   ArrayList<String> simulatedWordList;
 
-  public SimulatorPanel(Display display, ConcreteFSM finiteStateMachine) {
+  public SimulatorPanel(Display display) {
     // JPanel p = new JPanel();
     simulate.addActionListener(new Simulate());
     // p.add(open);
@@ -46,6 +46,9 @@ public class SimulatorPanel extends JComponent {
 
     next.addActionListener(new Next());
     next.setBounds(100,100,140,40);
+
+    reset.addActionListener(new Reset());
+    reset.setBounds(100,100,140,40);
           //enter name label
     label.setText("Entered String :");
     label.setBounds(10, 10, 100, 100);
@@ -55,7 +58,7 @@ public class SimulatorPanel extends JComponent {
           //textfield to enter name
     //input.setBounds(110, 50, 1300, 30);
     this.display = display;
-    this.finiteStateMachine = finiteStateMachine;
+    finiteStateMachine = (FSM) display.finiteStateMachine;
     // p.add(save);
     // Container cp = getContentPane();
     // cp.add(p, BorderLayout.SOUTH);
@@ -79,6 +82,9 @@ public class SimulatorPanel extends JComponent {
   public JButton getNext() {
     return next;
   }
+  public JButton getReset() {
+    return reset;
+  }
 
   public JLabel getLabel() {
     return label;
@@ -91,6 +97,15 @@ public class SimulatorPanel extends JComponent {
       simulatedWordList = new ArrayList(Arrays.asList(simulatedWord.split(",")));
 
       label.setText("Entered String: " + simulatedWord);
+    }
+  }
+
+  class Reset implements ActionListener {
+
+    public void actionPerformed(ActionEvent e) {
+      display.currentViewNodes = new ArrayList();
+      display.currentViewNodes.add(display.startViewNode);
+      display.update();
     }
   }
 
@@ -113,7 +128,7 @@ public class SimulatorPanel extends JComponent {
             display.currentViewNodes.add(ViewNodeElement);
           }
           // System.out.println(display.currentViewNodes.get(0).getNode().getLabel());
-          display.paint();
+          display.update();
         }
 
       }

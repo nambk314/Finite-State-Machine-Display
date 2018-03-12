@@ -104,14 +104,12 @@ public class Display extends JComponent
 	private double distanceY = 0;
 
 	//Variable to indicated start view ndoe
-	private ViewNode startViewNode = null;
+	ViewNode startViewNode = null;
 
 
 	//Hash table to hold the key and value
 	HashMap<Node, ViewNode> map;
 
-	//For testing theme
-	int themeCount = 0;
 	String[] theme;
 
 	//Variable for holding the current ViewNode list during simulation
@@ -136,11 +134,17 @@ public class Display extends JComponent
 
 	}
 
+	public void clear() {
+		viewNodeList = new ArrayList<ViewNode>();
+		viewEdgeList = new ArrayList<ViewEdge>();
+		currentViewNodes = new ArrayList<ViewNode>();
+		map = new HashMap<>();
+	}
+
 	//Paint the graphics
 	public void paintComponent(Graphics graphics)
 	{
 		Graphics2D g = (Graphics2D) graphics;
-
 		super.paintComponent(g);
 
 			ViewNode piece;
@@ -182,25 +186,36 @@ public class Display extends JComponent
 			for (int i=0; i < viewEdgeList.size(); i++) {
 				edgePiece = viewEdgeList.get(i);
 
-
-				Line2D line = edgePiece.getLine();
-				Path2D path = edgePiece.getPath();
+				edgePiece.makeLine();
+				edgePiece.makePath();
+				
+				Shape line = edgePiece.getLine();
+				Shape path = edgePiece.getPath();
+				
 				g.draw(line);
 				g.draw(path);
+				
 				int edgeX = (int)edgePiece.getTextX() - 10;
 				int edgeY = (int)edgePiece.getTextY()  - 10;
-				g.drawString(edgePiece.getEdge().getLabel(), edgeX, edgeY);
+
+				
+
+				if (edgePiece.fromViewNode.getNode().getLabel().equals(edgePiece.toViewNode.getNode().getLabel())) {
+					edgePiece.makeSelfLoop();
+					edgePiece.makeSelfLoopPath();
+					Shape selfLoop = edgePiece.getSelfLoop();
+					Shape selfLoopPath = edgePiece.getSelfLoopPath();
+					g.draw(selfLoop);
+					g.draw(selfLoopPath);
+					int edgeSelfX = (int) edgePiece.getTextXSelf();
+					int edgeSelfY = (int) edgePiece.getTextYSelf() - 10;
+					g.drawString(edgePiece.getEdge().getLabel(), edgeSelfX, edgeSelfY);
+				} else {
+					g.drawString(edgePiece.getEdge().getLabel(), edgeX, edgeY);
+				}
 
 			}
 
-			if (selectedEdge != null && Pressed.equals("E")) {
-				Line2D selectedLine = selectedEdge.getLine();
-				Path2D selectedPath = selectedEdge.getPath();
-				g.setStroke(new BasicStroke(2));
-				g.setColor(Color.BLUE);
-				g.draw(selectedLine);
-				g.draw(selectedPath);
-			}
 	}
 	public void update()
 	{
@@ -208,6 +223,7 @@ public class Display extends JComponent
 	}
 
 	public void paint(){
+		System.out.println("repaint");
 		repaint();
 	}
 
@@ -440,7 +456,7 @@ public class Display extends JComponent
 			 		}
 			 		System.out.println(edgeName);
 		 			Edge newEdge = finiteStateMachine.addEdge(fromNode, toNode, edgeName);
-		 			ViewEdge newViewEdge = new ViewEdge(map, newEdge);
+		 			ViewEdge newViewEdge = new ViewEdge(map, newEdge, theme);
 		 			viewEdgeList.add(newViewEdge);
 		 			tCount = 1;
 		 			selectedNode = null;

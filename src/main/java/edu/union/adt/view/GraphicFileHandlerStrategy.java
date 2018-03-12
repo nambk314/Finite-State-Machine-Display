@@ -2,12 +2,33 @@ package edu.union.adt.view;
 import java.io.*;
 import java.util.*;
 import edu.union.adt.fsm.*;
+import javax.swing.filechooser.FileFilter;
+public class GraphicFileHandlerStrategy extends FileFilter implements FileHandlerStrategy {
 
-public class GraphicFileHandlerStrategy implements FileHandlerStrategy{
+  private String extension;
+  private String description;
 
   public GraphicFileHandlerStrategy(){
-
+    this.extension = ".graphicFSM";
+    this.description = "Graphical FSM file";
   }
+
+  public boolean accept(File file) {
+        if (file.isDirectory()) {
+            return true;
+        }
+        return file.getName().endsWith(extension);
+    }
+ 
+    public String getDescription() {
+        return description + ", *" +extension;
+    }
+
+    public String getExtension() {
+      return extension;
+    }
+
+
 
   //given a list of viewNodes, viewEdges, a start Node, and a string file
   //save the given FSM to the file in plaintext format
@@ -15,6 +36,7 @@ public class GraphicFileHandlerStrategy implements FileHandlerStrategy{
       File f;
       FileWriter fw;
           try {
+          file += extension;  
           f = new File(file);
           fw = new FileWriter(f);
         } catch (IOException ioexcept) {
@@ -111,7 +133,6 @@ public class GraphicFileHandlerStrategy implements FileHandlerStrategy{
               display.viewNodeList.add(newV);
 
               StringToNode.put(label,newNode);
-
               map.put(newNode,newV);
 
               line = br.readLine();
@@ -127,11 +148,12 @@ public class GraphicFileHandlerStrategy implements FileHandlerStrategy{
               Node to = StringToNode.get(tokens[1]);
               Node from = StringToNode.get(tokens[2]);
               Edge newEdge = fsm.addEdge(from,to,label);
-              ViewEdge newVE = new ViewEdge(map, newEdge);
+              ViewEdge newVE = new ViewEdge(map, newEdge, defaultTheme);
               display.viewEdgeList.add(newVE);
               line = br.readLine();
               System.out.println(line);
             }
+            display.map = new HashMap<Node, ViewNode>(map);
              fsm.notifyListeners();
              return true;
           } catch (IOException ioexcept) {
