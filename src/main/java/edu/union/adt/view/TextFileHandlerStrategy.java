@@ -57,24 +57,29 @@ public class TextFileHandlerStrategy extends FileFilter  implements FileHandlerS
           // NODE SECTION USING NODES CURRENTLY
           // EDGES SECTION USING ViewEdges
           try {
-            fw.write("NODES\n");
+            fw.write("The following is a text representation of an FSM\n");
+            fw.write("The format is as follows:\n");
+            fw.write("Node: <label>, is (not) accepting\n");
+            fw.write("Edge: goes from <fromNode label> to <toNodeLabel> with the following transtitons; <edgeLabel>\n");
+            fw.write("Begin info:\n");
             for (ViewNode v : viewNodes){
+              fw.write("Node: ");
               fw.write(String.valueOf(v.getNode().getLabel()));
-              fw.write("®");
-              fw.write(String.valueOf(v.getNode().getAccepting()));
-              fw.write("®");
-              fw.write(String.valueOf(v.getX()));
-              fw.write("®");
-              fw.write(String.valueOf(v.getY()));
+              fw.write(", is");
+              if (!v.getNode().getAccepting()){
+                fw.write(" not");
+              }
+              fw.write(" accepting.");
               fw.write("\n");
             }
             fw.write("EDGES\n");
             for (ViewEdge e : viewEdges){
-              fw.write(String.valueOf(e.getEdge().getLabel()));
-              fw.write("®");
-              fw.write(String.valueOf(e.getEdge().getTo().getLabel()));
-              fw.write("®");
+              fw.write("Edge: goes from ");
               fw.write(String.valueOf(e.getEdge().getFrom().getLabel()));
+              fw.write(" to ");
+              fw.write(String.valueOf(e.getEdge().getTo().getLabel()));
+              fw.write(" with the following transitions; ");
+              fw.write(String.valueOf(e.getEdge().getLabel()));
               fw.write("\n");
             }
 
@@ -120,17 +125,19 @@ public class TextFileHandlerStrategy extends FileFilter  implements FileHandlerS
             HashMap<String,Node> StringToNode = new HashMap<String,Node>();
 
             String line = br.readLine();      //get first line
-            line = br.readLine();      //get next line (first line is "NODES")
+            line = br.readLine();      //get down to the appropriate area
+            line = br.readLine();
+            line = br.readLine();
+            line = br.readLine();
+            line = br.readLine();
 
-            while (!line.equals("EDGES")){
-              String[] tokens = line.split("®");
-              String label = tokens[0];
-              boolean accepting = tokens[1].equals("true");
-              double x = Double.parseDouble(tokens[2]);
-              double y = Double.parseDouble(tokens[3]);
+            while (line.charAt(0) != 'E'){
+              String[] tokens = line.split(" ");
+              String label = tokens[1];
+              boolean accepting = tokens[3].equals("accepting");
 
               Node newNode = fsm.addNode(label);
-              ViewNode newV = new ViewNode(x, y, SIZE, SIZE, newNode, defaultTheme);
+              ViewNode newV = new ViewNode(1, 1, SIZE, SIZE, newNode, defaultTheme);
               display.viewNodeList.add(newV);
 
               StringToNode.put(label,newNode);
@@ -140,14 +147,14 @@ public class TextFileHandlerStrategy extends FileFilter  implements FileHandlerS
               line = br.readLine();
             }
 
-            line = br.readLine();           //Skip over the "EDGES" line
 
+            line = br.readLine();           //Skip over the "EDGES" line
             while(!line.equals(null)){
               String[] tokens = line.split("®");            //Split the line on spaces
               //String[] transitions = tokens[0].split(",");  //Split the label on commas, for later use
-              String label = tokens[0];
-              Node to = StringToNode.get(tokens[1]);
-              Node from = StringToNode.get(tokens[2]);
+              String label = tokens[10];
+              Node to = StringToNode.get(tokens[5]);
+              Node from = StringToNode.get(tokens[3]);
               Edge newEdge = fsm.addEdge(from,to,label);
               ViewEdge newVE = new ViewEdge(map, newEdge, defaultTheme);
               display.viewEdgeList.add(newVE);

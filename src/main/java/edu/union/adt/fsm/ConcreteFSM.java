@@ -126,6 +126,7 @@ public class ConcreteFSM implements FSM
        ArrayList<Node> toReturn = new ArrayList<Node>();
 
        //adds all nodes reached only through ϵ-transitions
+       ArrayList<Node> tertiaryNodes = new ArrayList<Node>();
        ArrayList<Node> newerNodes = new ArrayList<Node>();
        ArrayList<Node> removeNodes;
       for (Node initialNode : startingNodes){
@@ -137,7 +138,7 @@ public class ConcreteFSM implements FSM
              if ((potentialE.from == secondaryNode) && (potentialE.hasTransition("ϵ"))){
                if (!toReturn.contains(potentialE.to)){
                  toReturn.add(potentialE.to);
-                 newerNodes.add(potentialE.to);
+                 tertiaryNodes.add(potentialE.to);
                }
              }
            }
@@ -146,21 +147,25 @@ public class ConcreteFSM implements FSM
            newerNodes.remove(toRemove);
          }
          removeNodes.clear();
+         newerNodes.addAll(tertiaryNodes);
+         tertiaryNodes.clear();
        } while (newerNodes.size() != 0);
      }
 
-       //adds all nodes reached through the transition, starting
-       //at a node reached through a an ϵ-transition
-       for (Node nodeCheck : toReturn){
-         for (Edge checkEdge : this.Edges){
-           if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
-             if (!toReturn.contains(checkEdge.to)){
-               toReturn.add(checkEdge.to);
-             }
-           }
-         }
-       }
+       // //adds all nodes reached through the transition, starting
+       // //at a node reached through a an ϵ-transition
+       // startingNodes = (ArrayList<Node>)toReturn.clone();
+       // for (Node nodeCheck : startingNodes){
+       //   for (Edge checkEdge : this.Edges){
+       //     if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
+       //       if (!toReturn.contains(checkEdge.to)){
+       //         toReturn.add(checkEdge.to);
+       //       }
+       //     }
+       //   }
+       // }
       //adds all nodes reached through only the transition
+      startingNodes.addAll(toReturn);
        for (Node nodeCheck : startingNodes){
          for (Edge checkEdge : this.Edges){
            if ((checkEdge.from == nodeCheck) && checkEdge.hasTransition(transition)){
@@ -174,6 +179,7 @@ public class ConcreteFSM implements FSM
        //adds all nodes reached through ϵ-transitions, after
        //nodes have been reached through the given transition
       newerNodes.clear();
+      startingNodes = (ArrayList<Node>)toReturn.clone();
       for (Node initialNode : startingNodes){
         newerNodes.add(initialNode);
         do{
@@ -183,7 +189,7 @@ public class ConcreteFSM implements FSM
              if ((potentialE.from == secondaryNode) && (potentialE.hasTransition("ϵ"))){
                if (!toReturn.contains(potentialE.to)){
                  toReturn.add(potentialE.to);
-                 newerNodes.add(potentialE.to);
+                 tertiaryNodes.add(potentialE.to);
                }
              }
            }
@@ -192,6 +198,8 @@ public class ConcreteFSM implements FSM
            newerNodes.remove(toRemove);
          }
          removeNodes.clear();
+         newerNodes.addAll(tertiaryNodes);
+         tertiaryNodes.clear();
        } while (newerNodes.size() != 0);
      }
         System.out.println(toReturn);
