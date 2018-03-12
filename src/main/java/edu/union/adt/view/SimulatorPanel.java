@@ -42,11 +42,11 @@ public class SimulatorPanel extends JComponent {
     // JPanel p = new JPanel();
     simulate.addActionListener(new Simulate());
     // p.add(open);
-    simulate.setBounds(100,100,140, 40);  
+    simulate.setBounds(100,100,140, 40);
 
     next.addActionListener(new Next());
-    next.setBounds(100,100,140,40);  
-          //enter name label   
+    next.setBounds(100,100,140,40);
+          //enter name label
     label.setText("Entered String :");
     label.setBounds(10, 10, 100, 100);
           //empty label which will show event after button clicked
@@ -89,7 +89,7 @@ public class SimulatorPanel extends JComponent {
     public void actionPerformed(ActionEvent e) {
       simulatedWord = JOptionPane.showInputDialog("Please input a string to simulate");
       simulatedWordList = new ArrayList(Arrays.asList(simulatedWord.split(",")));
-      
+
       label.setText("Entered String: " + simulatedWord);
     }
   }
@@ -107,13 +107,15 @@ public class SimulatorPanel extends JComponent {
             listNode.add(element.getNode());
           }
           listNode = new ArrayList<Node>(finiteStateMachine.getNextStates(listNode, currentWord));
-          currentViewNodes = new ArrayList<ViewNode>();
+          display.currentViewNodes = new ArrayList<ViewNode>();
           for (Node element : listNode) {
             ViewNode ViewNodeElement = map.get(element);
-            currentViewNodes.add(ViewNodeElement);
+            display.currentViewNodes.add(ViewNodeElement);
           }
-        } 
-        
+          // System.out.println(display.currentViewNodes.get(0).getNode().getLabel());
+          display.paint();
+        }
+
       }
   }
 
