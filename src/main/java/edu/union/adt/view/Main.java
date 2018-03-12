@@ -40,7 +40,8 @@ public class Main {
    		p.add(simulator.getLabel());
    		p.add(simulator.getSimulate());
    		p.add(simulator.getNext());
-   		p.add(simulator.getReset());
+   		p.add(simulator.getAccept());
+   		
 
    		//Theme
    		p.add(themePanel.getLabel());
@@ -48,6 +49,7 @@ public class Main {
    		p.add(themePanel.getColorMenu());
    		p.add(themePanel.getOK());
    		//Open and Save
+   		p.add(fileChooser.getReset());
 		p.add(fileChooser.getOpen());
 		p.add(fileChooser.getSave());
 

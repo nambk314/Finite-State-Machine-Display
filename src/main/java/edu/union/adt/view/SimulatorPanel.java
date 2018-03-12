@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 public class SimulatorPanel extends JComponent {
   //private JTextField filename = new JTextField(), dir = new JTextField();
 
-  private JButton simulate = new JButton("Simulate"), next = new JButton("Next"), reset = new JButton("Reset Head");
+  private JButton simulate = new JButton("Simulate"), next = new JButton("Next"), accept = new JButton("Accept");
 
   //private JTextField input = new JTextField(10);
 
@@ -47,8 +47,10 @@ public class SimulatorPanel extends JComponent {
     next.addActionListener(new Next());
     next.setBounds(100,100,140,40);
 
-    reset.addActionListener(new Reset());
-    reset.setBounds(100,100,140,40);
+    accept.addActionListener(new Accept());
+    accept.setBounds(100,100,140,40);
+
+    
           //enter name label
     label.setText("Entered String :");
     label.setBounds(10, 10, 100, 100);
@@ -82,9 +84,11 @@ public class SimulatorPanel extends JComponent {
   public JButton getNext() {
     return next;
   }
-  public JButton getReset() {
-    return reset;
+
+  public JButton getAccept() {
+    return accept;
   }
+ 
 
   public JLabel getLabel() {
     return label;
@@ -100,14 +104,16 @@ public class SimulatorPanel extends JComponent {
     }
   }
 
-  class Reset implements ActionListener {
+  class Accept implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
-      display.currentViewNodes = new ArrayList();
-      display.currentViewNodes.add(display.startViewNode);
-      display.update();
+      boolean condition = finiteStateMachine.isSeriesAccepted(simulatedWordList);
+      // String conditionS = condition.toString();
+      label.setText("Entered String: " + simulatedWord + " (" + condition +")");
     }
   }
+
+  
 
   class Next implements ActionListener {
 

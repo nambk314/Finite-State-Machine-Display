@@ -4,7 +4,7 @@
 
 
 package edu.union.adt.view;
-
+import edu.union.adt.shape.*;
 import java.awt.geom.Ellipse2D;
 import edu.union.adt.fsm.*;
 import java.awt.geom.Line2D;
@@ -21,8 +21,8 @@ public class ViewNode
     Ellipse2D.Double circle; // int int int int
     Ellipse2D.Double smallCircle;
 //For Square shape
-    Rectangle2D.Double rectangle;
-    Rectangle2D.Double smallRectangle;
+    // Rectangle2D.Double rectangle;
+    // Rectangle2D.Double smallRectangle;
     String[] theme;
     double posX;
     double posY;
@@ -31,7 +31,7 @@ public class ViewNode
     Line2D startPathOne;
     Line2D startPathTwo;
     ShapeNodeFactory factory;
-    ShapeNode nodeShape;   
+    ShapeNode nodeShape; 
 
     public ViewNode(double x, double y, double w, double h, Node newNode, String [] theme) {
     	
@@ -81,6 +81,10 @@ public class ViewNode
     	return posY;
     }
 
+    public double getW() {
+        return posW;
+    }
+
     public Color getColor() {
         Color mainColor = Color.BLACK;        
         switch (theme[1]) {
@@ -115,6 +119,7 @@ public class ViewNode
     }
 
     public void makeShape() {
+        nodeShape = factory.getShapeNode(theme[0], this);
        // switch (theme[0]) {
        //      case "rectangle":
        //      rectangle.setFrame(posX - posW/2, posY-posW/2, posW, posW);

@@ -36,7 +36,7 @@ public class ThemePanel extends JComponent {
 
   public ThemePanel(Display display) {
 
-    String[] ShapeItems = {"Circle", "Rectangle"};
+    String[] ShapeItems = {"Circle", "Square"};
     shape = new JComboBox(ShapeItems);
     shape.setEditable(false);
     shape.setSelectedItem("Circle");
@@ -97,8 +97,8 @@ public class ThemePanel extends JComponent {
       String selectedColor = (String) color.getSelectedItem();
       display.theme[0] = selectedShape;
       display.theme[1] = selectedColor;
-      System.out.println(display.theme[1]);
-      display.repaint();
+      System.out.println(display.theme[0]);
+      display.update();
   }
 
   class Next implements ActionListener {

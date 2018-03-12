@@ -27,7 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ButtonPanel extends JComponent {
   //private JTextField filename = new JTextField(), dir = new JTextField();
 
-  private JButton open = new JButton("Open"), save = new JButton("Save");
+  private JButton open = new JButton("Open"), save = new JButton("Save"), reset = new JButton("Reset display");
 
   Display display;
 
@@ -40,6 +40,8 @@ public class ButtonPanel extends JComponent {
     open.addActionListener(new OpenL());
     // p.add(open);
     save.addActionListener(new SaveL());
+    reset.addActionListener(new Reset());
+    reset.setBounds(100,100,140,40);
 
     this.display = display;
     finiteStateMachine = (FSM) display.finiteStateMachine;
@@ -67,6 +69,18 @@ public class ButtonPanel extends JComponent {
 
   public JButton getSave() {
     return save;
+  }
+   public JButton getReset() {
+    return reset;
+  }
+
+  class Reset implements ActionListener {
+
+    public void actionPerformed(ActionEvent e) {
+      display.clear();
+      display.finiteStateMachine.clear(); 
+      display.update();
+    }
   }
 
   class OpenL implements ActionListener {

@@ -1,5 +1,6 @@
 package edu.union.adt.view;
 //Package for shapes
+import edu.union.adt.shape.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Path2D;
@@ -23,6 +24,8 @@ public class ViewEdge {
     int diameter =50;
     HashMap<Node, ViewNode> map;
     ShapeEdge shapeEdge;
+    String[] theme;
+    ShapeEdgeFactory edgeFactory;
 
 //Constructor that take a hashmap and an edge as parameters
     public ViewEdge(HashMap map, Edge newEdge, String[] theme) {
@@ -35,8 +38,9 @@ public class ViewEdge {
         original[2] = toViewNode.getX();
         original[3] = toViewNode.getY();
         edge = newEdge;
-        ShapeEdgeFactory edgeFactory = new ShapeEdgeFactory();
-        shapeEdge = edgeFactory.getShapeEdge(theme[0], this);
+        edgeFactory = new ShapeEdgeFactory();
+        this.theme = theme;
+        // shapeEdge = edgeFactory.getShapeEdge(theme[0], this);
     }
 
     //Function that produce the nice line that do not go into the circle
@@ -81,9 +85,26 @@ public class ViewEdge {
 
     // 	return newList;
     // 	 }
-//Function to get the line graphic to represent the edge
+
+
+    //Getter
+    public double[] getOriginal() {
+
+        return original;
+    }
+
+    public ViewNode getFromViewNode() {
+        return fromViewNode;
+    }
+
+    public ViewNode getToViewNode() {
+        return toViewNode;
+    }
+
+//Function to make the line graphic to represent the edge
 
     public void makeLine() {
+        shapeEdge = edgeFactory.getShapeEdge(theme[0], this);
         // original[0] = fromViewNode.getX();
         // original[1] = fromViewNode.getY();
         // original[2] = toViewNode.getX();
