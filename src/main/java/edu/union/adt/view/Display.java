@@ -141,6 +141,10 @@ public class Display extends JComponent
 		map = new HashMap<>();
 	}
 
+	public String getPressed() {
+		return Pressed;
+	}
+
 	//Paint the graphics
 	public void paintComponent(Graphics graphics)
 	{
