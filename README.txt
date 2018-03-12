@@ -31,6 +31,8 @@ This release included:
 Next release:
 
 - Batch Simulation
-- Actions in states and/or in transitions.
-- Interactive simulation.
+	A relatively easy change; requires a way to load a batch, loop over it, and display the result.
+- Actions in states and/or in transitions. Requires changing structure.
+- (more) Interactive simulation. (we have stepping through)
 - Saving as Latex code and image.
+	Saving as Latex is partially implemented, but buggy.
