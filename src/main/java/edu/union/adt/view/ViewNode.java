@@ -17,19 +17,11 @@ public class ViewNode
 {
     Node node; //String, boolean
 
- //For circle shape   
-    Ellipse2D.Double circle; // int int int int
-    Ellipse2D.Double smallCircle;
-//For Square shape
-    // Rectangle2D.Double rectangle;
-    // Rectangle2D.Double smallRectangle;
     String[] theme;
     double posX;
     double posY;
     double posW;
     
-    Line2D startPathOne;
-    Line2D startPathTwo;
     ShapeNodeFactory factory;
     ShapeNode nodeShape; 
 
