@@ -21,18 +21,22 @@ to traverse through each string, you click “next”.
 
 This release included: 
 
-- Requirements from project 2
-- Simulating FSM - user can give a string and step through the operation with the String.
-- Support non-determinism. Support simulation of non-deterministic FSMs.
-- Support theme for basic color and shape of the node.
-- Saving from 2 different human-readble file format.
-- Implement reset button to reset the display and the FSM
+1. allow users to create Finite State Machines by drawing the states and connecting them with transi- tions.
+2. allow users to name/label states and transitions.
+3. allow users to mark states as start states and accept states. Accept states should be drawn with con- centric circles.
+4. allow users to save/load State Machines to/from files. You can choose/invent the file format, but it would be nice if it was human readable.
+5. allow users to move states around using the mouse (and have the transitions stay connected).
 
-Next release:
+6. Simulating FSM - user can give a string and step through the operation with the String.
+7. Support non-determinism. Support simulation of non-deterministic FSMs.
+8. Support theme for basic color and shape of the node.
+9. Saving from 2 different human-readble file format.
+10. Implement reset button to reset the display and the FSM
 
-- Batch Simulation
-	A relatively easy change; requires a way to load a batch, loop over it, and display the result.
-- Actions in states and/or in transitions. Requires changing structure.
-- (more) Interactive simulation. (we have stepping through)
-- Saving as Latex code and image.
-	Saving as Latex is partially implemented, but buggy.
+How to run the FSM:
+1. Requirement:
+- Gradle build tool
+2. Steps:
+- Clone the repository to your directory.
+- run "gradle build" in the terminal
+- run "gradle run" in the terminal inside the directory
